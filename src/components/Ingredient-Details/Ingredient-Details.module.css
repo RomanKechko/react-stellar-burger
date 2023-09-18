@@ -1,0 +1,28 @@
+.modal__title {
+  display: flex;
+  height: 64px;
+  margin: 0;
+}
+
+.container__ingridient_image {
+  width: 480px;
+  height: 240px;
+}
+
+.container__list_energy {
+  margin: 0;
+  padding-left: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.item__energy {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  width: 120px;
+  height: 56px;
+  gap: 8px;
+  text-align: center;
+}

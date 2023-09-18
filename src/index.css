@@ -1,3 +1,7 @@
-body {
-  margin: 0;
+@import "~normalize.css";
+.body {
+  height: 100vh;
+}
+.root {
+  background-color: #131316;
 }

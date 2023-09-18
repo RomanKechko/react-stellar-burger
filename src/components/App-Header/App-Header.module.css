@@ -1,0 +1,24 @@
+.header {
+  background: #1c1c21;
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+}
+.nav {
+  display: flex;
+  align-items: center;
+}
+.link {
+  display: flex;
+  text-decoration: none;
+  color: #f2f2f3;
+  gap: 8px;
+}
+.link__column_left {
+  display: flex;
+  gap: 8px;
+  margin: 0 112px 0 282px;
+}
+.link__column_right {
+  margin-left: 289px;
+}

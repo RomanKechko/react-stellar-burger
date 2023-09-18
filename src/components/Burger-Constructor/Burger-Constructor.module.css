@@ -1,0 +1,48 @@
+.section__constructor {
+  max-height: 65vh;
+}
+.stuffing {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 600px;
+  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: unset;
+  gap: 10px;
+}
+.stuffing::-webkit-scrollbar {
+  width: 12px;
+}
+
+.stuffing::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.stuffing::-webkit-scrollbar-thumb {
+  background: #8585ad;
+  border: 3px solid #2f2f37;
+  border-radius: 6px;
+}
+.single__fill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+}
+.container__order {
+  display: flex;
+  flex-direction: row;
+  float: right;
+  align-items: center;
+  gap: 40px;
+}
+.container__order_price {
+  display: flex;
+  flex-direction: row;
+}
+.icon {
+  max-width: 36px;
+  width: 100%;
+}

@@ -1,15 +1,33 @@
-import styles from "./app.module.css";
-import { data } from "../../utils/data";
+import React, { useEffect } from "react";
+import style from "./App.module.css";
+import AppHeader from "../App-Header/App-Header";
+import BurgerIngredients from "../Burger-Ingredients/Burger-Ingredients";
+import BurgerConstructor from "../Burger-Constructor/Burger-Constructor";
 
 function App() {
+  const [ingridients, setIngridients] = React.useState();
+  const url = "https://norma.nomoreparties.space/api/ingredients";
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((list) => {
+        setIngridients(list);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
-    <div className={styles.app}>
-      <pre style={{
-      	margin: "auto",
-      	fontSize: "1.5rem"
-      }}>
-      	Измените src/components/app/app.jsx и сохраните для обновления.
-      </pre>
+    <div className={style.page}>
+      <AppHeader />
+      {ingridients && (
+        <main className={style.main}>
+          <BurgerIngredients list={ingridients.data} />
+          <BurgerConstructor list={ingridients.data} />
+        </main>
+      )}
     </div>
   );
 }

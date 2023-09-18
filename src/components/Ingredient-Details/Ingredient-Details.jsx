@@ -1,0 +1,59 @@
+import React from "react";
+import cn from "classnames";
+import styles from "./Ingredient-Details.module.css";
+import PropTypes from "prop-types";
+
+function IngredientDetails({ ingridients }) {
+  return (
+    <div>
+      <span className={cn(styles.modal__title, "pt-10 pr-10 pl-10")}>
+        <h2 className={"text text_type_main-large pt-3"}>Детали ингридиента</h2>
+      </span>
+      <img
+        src={ingridients.image}
+        alt={ingridients.name}
+        className={styles.container__ingridient_image}
+      />
+      <p className="text text_type_main-medium pt-4 ">{ingridients.name}</p>
+      <ul className={cn(styles.container__list_energy, "pt-8")}>
+        <li className={styles.item__energy}>
+          <p className="text text_type_main-default text_color_inactive">
+            Калории,ккал
+          </p>
+          <span className="text text_type_digits-default text_color_inactive">
+            {ingridients.calories}
+          </span>
+        </li>
+        <li className={styles.item__energy}>
+          <p className="text text_type_main-default text_color_inactive">
+            Белки, г
+          </p>
+          <span className="text text_type_digits-default text_color_inactive">
+            {ingridients.proteins}
+          </span>
+        </li>
+        <li className={styles.item__energy}>
+          <p className="text text_type_main-default text_color_inactive">
+            Жиры, г
+          </p>
+          <span className="text text_type_digits-default text_color_inactive">
+            {ingridients.fat}
+          </span>
+        </li>
+        <li className={styles.item__energy}>
+          <p className="text text_type_main-default text_color_inactive">
+            Углеводы, г
+          </p>
+          <span className="text text_type_digits-default text_color_inactive">
+            {ingridients.carbohydrates}
+          </span>
+        </li>
+      </ul>
+    </div>
+  );
+}
+IngredientDetails.propTypes = {
+  ingridients: PropTypes.object,
+};
+
+export default IngredientDetails;
