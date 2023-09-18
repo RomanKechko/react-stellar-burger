@@ -10,7 +10,13 @@ function App() {
 
   useEffect(() => {
     fetch(url)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      })
       .then((list) => {
         setIngridients(list);
       })
