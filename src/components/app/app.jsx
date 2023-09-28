@@ -31,6 +31,7 @@ function App() {
       {ingridients && (
         <main className={style.main}>
           <BurgerIngredients list={ingridients.data} />
+          qppppppppp
           <BurgerConstructor list={ingridients.data} />
         </main>
       )}
