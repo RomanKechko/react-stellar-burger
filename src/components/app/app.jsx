@@ -8,30 +8,13 @@ function App() {
   const [ingridients, setIngridients] = React.useState();
   const url = "https://norma.nomoreparties.space/api/ingredients";
 
-  useEffect(() => {
-    fetch(url)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
-      .then((list) => {
-        setIngridients(list);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
   return (
     <div className={style.page}>
       <AppHeader />
       {ingridients && (
         <main className={style.main}>
           <BurgerIngredients list={ingridients.data} />
-          qppppppppp
+
           <BurgerConstructor list={ingridients.data} />
         </main>
       )}
