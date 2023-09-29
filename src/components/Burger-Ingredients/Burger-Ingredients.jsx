@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./Burger-Ingredients.module.css";
 import cn from "classnames";
 import Tabs from "../Tabs/Tabs";
@@ -6,10 +6,17 @@ import BurgerIngredientCategory from "../Burger-Ingredient-Category/Burger-Ingre
 import IngredientDetails from "../Ingredient-Details/Ingredient-Details";
 import Modal from "../Modal/Modal";
 import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
 
-function BurgerIngredients({ list }) {
+function BurgerIngredients() {
   const [ingredientModal, setIngredientModal] = useState(null);
   const [currentTab, setCurrentTab] = React.useState("buns");
+
+  const list =
+    useSelector((state) => state.ingredientsReducer.dataIngridients?.data) ||
+    [];
+
+  console.log(list);
 
   const handleCloseModalIngredient = () => {
     setIngredientModal(null);
@@ -60,8 +67,8 @@ function BurgerIngredients({ list }) {
   );
 }
 
-BurgerIngredients.propTypes = {
+/* BurgerIngredients.propTypes = {
   list: PropTypes.array.isRequired,
-};
+}; */
 
 export default BurgerIngredients;

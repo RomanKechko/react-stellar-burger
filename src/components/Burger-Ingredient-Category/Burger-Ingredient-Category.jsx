@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import cn from "classnames";
 import styles from "./Burger-Ingredient-Category.module.css";
 import {
@@ -8,6 +9,8 @@ import {
 import PropTypes from "prop-types";
 
 function BurgerIngredientCategory({ data, ingridientshandle, title, titleId }) {
+  const dispatch = useDispatch();
+
   return (
     <>
       <h2 className="text text_type_main-medium" id={titleId}>

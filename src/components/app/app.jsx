@@ -3,24 +3,32 @@ import style from "./app.module.css";
 import AppHeader from "../App-Header/App-Header";
 import BurgerIngredients from "../Burger-Ingredients/Burger-Ingredients";
 import BurgerConstructor from "../Burger-Constructor/Burger-Constructor";
-import { Provider } from "react-redux";
-
-import { store } from "../../services/store";
+import { getIngredients } from "../../services/actions/ingredients-reducer";
+import { useSelector, useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
-
+  const isLoading = useSelector(
+    (state) => state.ingredientsReducer.dataRequest
+  );
+  const error = useSelector((state) => state.ingredientsReducer.downloadError);
   return (
     <div className={style.page}>
       <AppHeader />
-      <Provider store={store}>
-       
-          <main className={style.main}>
-            <BurgerIngredients  />
-            <BurgerConstructor  />
-          </main>
-      
-      </Provider>
+
+      {isLoading && <h2 className={style.services}>Loading...</h2>}
+      {!isLoading && error && (
+        <h2 className={style.services}>Ошибка при загрузке данных</h2>
+      )}
+      {!isLoading && !error && (
+        <main className={style.main}>
+          <BurgerIngredients />{" "}
+        </main>
+      )}
     </div>
   );
 }
