@@ -3,21 +3,24 @@ import style from "./app.module.css";
 import AppHeader from "../App-Header/App-Header";
 import BurgerIngredients from "../Burger-Ingredients/Burger-Ingredients";
 import BurgerConstructor from "../Burger-Constructor/Burger-Constructor";
+import { Provider } from "react-redux";
+
+import { store } from "../../services/store";
 
 function App() {
-  const [ingridients, setIngridients] = React.useState();
-  const url = "https://norma.nomoreparties.space/api/ingredients";
+
 
   return (
     <div className={style.page}>
       <AppHeader />
-      {ingridients && (
-        <main className={style.main}>
-          <BurgerIngredients list={ingridients.data} />
-
-          <BurgerConstructor list={ingridients.data} />
-        </main>
-      )}
+      <Provider store={store}>
+       
+          <main className={style.main}>
+            <BurgerIngredients  />
+            <BurgerConstructor  />
+          </main>
+      
+      </Provider>
     </div>
   );
 }
