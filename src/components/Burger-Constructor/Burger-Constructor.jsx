@@ -10,9 +10,13 @@ import BurgerConstructorStuffing from "../Burger-Constructor-Stuffing/Burger-Con
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Order-Details/Order-Details";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-function BurgerConstructor({ list }) {
+function BurgerConstructor() {
   const [stateModalOrder, setStateModalOrder] = React.useState(false);
+
+  const list = useSelector((state) => state.constructorReducer?.data) || [];
+  console.log(list);
 
   const itemBun = list.filter((item) => item.name === "Краторная булка N-200i");
   const bun = itemBun.find((item) => item);
@@ -27,7 +31,7 @@ function BurgerConstructor({ list }) {
           height: "656px",
         }}
       >
-        <div className="pl-8" key={bun}>
+        {/*       <div className="pl-8" key={bun}>
           <ConstructorElement
             type="top"
             isLocked={true}
@@ -45,7 +49,7 @@ function BurgerConstructor({ list }) {
             price={bun.price}
             thumbnail={bun.image}
           />
-        </div>
+        </div> */}
       </div>
       <div className={cn(styles.container__order, "pt-10")}>
         <div className={styles.container__order_price}>
@@ -74,8 +78,9 @@ function BurgerConstructor({ list }) {
     </section>
   );
 }
+/*
 BurgerConstructor.propTypes = {
   list: PropTypes.array.isRequired,
-};
+} */
 
 export default BurgerConstructor;

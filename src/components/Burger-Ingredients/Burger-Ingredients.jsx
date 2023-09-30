@@ -5,22 +5,17 @@ import Tabs from "../Tabs/Tabs";
 import BurgerIngredientCategory from "../Burger-Ingredient-Category/Burger-Ingredient-Category";
 import IngredientDetails from "../Ingredient-Details/Ingredient-Details";
 import Modal from "../Modal/Modal";
-import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 
 function BurgerIngredients() {
-  const [ingredientModal, setIngredientModal] = useState(null);
   const [currentTab, setCurrentTab] = React.useState("buns");
 
   const list =
     useSelector((state) => state.ingredientsReducer.dataIngridients?.data) ||
     [];
-
-  console.log(list);
-
-  const handleCloseModalIngredient = () => {
-    setIngredientModal(null);
-  };
+  const ingredient = useSelector(
+    (state) => state.modalIngridientReducer.ingredient
+  );
 
   const onClickTab = (tab) => {
     setCurrentTab(tab);
@@ -39,36 +34,17 @@ function BurgerIngredients() {
       </h1>
       <Tabs currentTab={currentTab} onClickTab={onClickTab} />
       <div className={cn(style.container, "pt-10")}>
-        <BurgerIngredientCategory
-          data={bun}
-          ingridientshandle={setIngredientModal}
-          title="Булки"
-          titleId="buns"
-        />
-        <BurgerIngredientCategory
-          data={main}
-          ingridientshandle={setIngredientModal}
-          title="Начинка"
-          titleId="mains"
-        />
-        <BurgerIngredientCategory
-          data={sauce}
-          ingridientshandle={setIngredientModal}
-          title="Соусы"
-          titleId="sauces"
-        />
+        <BurgerIngredientCategory data={bun} title="Булки" titleId="buns" />
+        <BurgerIngredientCategory data={main} title="Начинка" titleId="mains" />
+        <BurgerIngredientCategory data={sauce} title="Соусы" titleId="sauces" />
       </div>
-      {ingredientModal && (
-        <Modal onClose={handleCloseModalIngredient}>
-          <IngredientDetails ingridients={ingredientModal} />
+      {ingredient && (
+        <Modal>
+          <IngredientDetails ingredient={ingredient} />
         </Modal>
       )}
     </section>
   );
 }
-
-/* BurgerIngredients.propTypes = {
-  list: PropTypes.array.isRequired,
-}; */
 
 export default BurgerIngredients;

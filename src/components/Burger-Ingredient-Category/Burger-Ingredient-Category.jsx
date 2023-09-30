@@ -7,10 +7,14 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { modalIngridient } from "../../services/actions/modal-ingridient";
 
-function BurgerIngredientCategory({ data, ingridientshandle, title, titleId }) {
+function BurgerIngredientCategory({ data, title, titleId }) {
   const dispatch = useDispatch();
 
+  function modal(item) {
+    dispatch(modalIngridient(item));
+  }
   return (
     <>
       <h2 className="text text_type_main-medium" id={titleId}>
@@ -24,7 +28,7 @@ function BurgerIngredientCategory({ data, ingridientshandle, title, titleId }) {
           >
             <button
               className={styles.button__ingridients}
-              onClick={() => ingridientshandle(item)}
+              onClick={() => modal(item)}
             >
               <img
                 src={item.image}
@@ -64,11 +68,11 @@ function BurgerIngredientCategory({ data, ingridientshandle, title, titleId }) {
     </>
   );
 }
-BurgerIngredientCategory.propTypes = {
+/* BurgerIngredientCategory.propTypes = {
   data: PropTypes.array.isRequired,
   ingridientshandle: PropTypes.func,
   title: PropTypes.string.isRequired,
   titleId: PropTypes.string.isRequired,
-};
+}; */
 
 export default BurgerIngredientCategory;
