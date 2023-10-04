@@ -13,6 +13,8 @@ function BurgerConstructorStuffing({ ingredients, index }) {
   const dispatch = useDispatch();
   const ref = useRef(null);
   /* console.log(ingredients); */
+
+  //перенос ингредиентов в конструкторе
   const [{ handlerId }, drop] = useDrop({
     accept: "STUFFING_INGREDIENT",
     collect(monitor) {
@@ -74,6 +76,8 @@ function BurgerConstructorStuffing({ ingredients, index }) {
       isDragging: monitor.isDragging(),
     }),
   });
+  //перенос ингредиентов в конструкторе
+
   const opacity = isDragging ? 0 : 1;
 
   drag(drop(ref));

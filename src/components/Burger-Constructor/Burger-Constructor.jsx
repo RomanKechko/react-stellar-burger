@@ -9,7 +9,7 @@ import {
 import BurgerConstructorStuffing from "../Burger-Constructor-Stuffing/Burger-Constructor-Stuffing";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Order-Details/Order-Details";
-import PropTypes from "prop-types";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { addIngrrdinentConstructor } from "../../services/actions/constructor-action.js";
@@ -19,26 +19,35 @@ function BurgerConstructor() {
   const [finalPrice, setfinalPrice] = useState(0);
   const dispatch = useDispatch();
 
+  // state конструктора
   const bun = useSelector((state) => state.constructorReducer?.bun) || [];
   const list = useSelector((state) => state.constructorReducer?.stuffing) || [];
+  // state конструктора
 
+  //загрузка при оформлении заказа
   const number =
     useSelector((state) => state.modalOrderReducer.status?.order.number) ||
     null;
   const loading = useSelector((state) => state.modalOrderReducer.loading);
+  //загрузка при оформлении заказа
 
+  //счет
   let ingredientsId = [];
   if ((bun && bun._id) || (list && list.length > 0)) {
     ingredientsId = list.map((item) => item._id).concat(bun._id, bun._id);
   }
+  //счет
 
+  //перенос ингредиетов
   const [, dropTarget] = useDrop({
     accept: "ADD_CONSTRUCTOR",
     drop: (data) => {
       dispatch(addIngrrdinentConstructor(data));
     },
   });
+  //перенос ингредиетов
 
+  //счет
   const account = useMemo(() => {
     const priceBun = bun.length !== 0 ? bun.price * 2 : 0;
     const priceList =
@@ -53,6 +62,8 @@ function BurgerConstructor() {
   useEffect(() => {
     setfinalPrice(account);
   }, [account]);
+  //счет
+
   const text = "Перетяните булочку сюда";
 
   return (
