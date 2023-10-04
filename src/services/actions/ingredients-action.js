@@ -27,7 +27,12 @@ export function getIngredients() {
 
     dispatch(ingredientLoading(true));
     fetch(url)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
       .then((list) => {
         dispatch(addIngridients(list));
       })

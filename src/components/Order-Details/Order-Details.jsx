@@ -3,10 +3,10 @@ import React from "react";
 import Done from "../../icons/done.svg";
 import PropTypes from "prop-types";
 
-function OrderDetails({ orderNumber }) {
+function OrderDetails({ number }) {
   return (
     <div>
-      <div className="text text_type_digits-large pt-30">{orderNumber}</div>
+      <div className="text text_type_digits-large pt-30">{number}</div>
       <p className="text text_type_main-medium pt-8">идентификатор заказа</p>
       <img src={Done} alt="Готово" className="pt-15" />
       <p className="text text_type_main-small pt-15">

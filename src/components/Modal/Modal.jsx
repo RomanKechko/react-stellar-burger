@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import ModalOverlay from "../Modal-Overlay/Modal-Overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
-import { modalIngridientOnClose } from "../../services/actions/close-modal";
+import { modalIngridientOnClose } from "../../services/actions/close-modal-action";
 
 function Modal({ children }) {
   const dispatch = useDispatch();
@@ -39,8 +39,7 @@ function Modal({ children }) {
   );
 }
 
-/* Modal.propTypes = {
-  onClose: PropTypes.func,
+Modal.propTypes = {
   children: PropTypes.object,
-}; */
+};
 export default Modal;

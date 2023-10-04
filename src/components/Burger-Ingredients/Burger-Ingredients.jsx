@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import style from "./Burger-Ingredients.module.css";
 import cn from "classnames";
 import Tabs from "../Tabs/Tabs";
@@ -6,7 +6,7 @@ import BurgerIngredientCategory from "../Burger-Ingredient-Category/Burger-Ingre
 import IngredientDetails from "../Ingredient-Details/Ingredient-Details";
 import Modal from "../Modal/Modal";
 import { useSelector, useDispatch } from "react-redux";
-
+import styles from "../Burger-Ingredient-Category/Burger-Ingredient-Category.module.css";
 function BurgerIngredients() {
   const [currentTab, setCurrentTab] = React.useState("buns");
 
@@ -33,10 +33,31 @@ function BurgerIngredients() {
         Соберите бургер
       </h1>
       <Tabs currentTab={currentTab} onClickTab={onClickTab} />
-      <div className={cn(style.container, "pt-10")}>
-        <BurgerIngredientCategory data={bun} title="Булки" titleId="buns" />
-        <BurgerIngredientCategory data={main} title="Начинка" titleId="mains" />
-        <BurgerIngredientCategory data={sauce} title="Соусы" titleId="sauces" />
+      <div className={cn(style.container)}>
+        <h2 className="text text_type_main-medium mt-10 mb-6" id="buns">
+          Булки
+        </h2>
+        <div className={styles.cart__ingridient}>
+          {bun.map((item) => (
+            <BurgerIngredientCategory data={item} />
+          ))}
+        </div>
+        <h2 className="text text_type_main-medium mt-10 mb-6" id="mains">
+          Начинка
+        </h2>
+        <div className={styles.cart__ingridient}>
+          {main.map((item) => (
+            <BurgerIngredientCategory data={item} />
+          ))}
+        </div>
+        <h2 className="text text_type_main-medium mt-10 mb-6" id="sauces">
+          Соусы
+        </h2>
+        <div className={styles.cart__ingridient}>
+          {sauce.map((item) => (
+            <BurgerIngredientCategory data={item} />
+          ))}
+        </div>
       </div>
       {ingredient && (
         <Modal>

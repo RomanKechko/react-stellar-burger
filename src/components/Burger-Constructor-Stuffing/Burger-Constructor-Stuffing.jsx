@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import cn from "classnames";
 import styles from "../Burger-Constructor/Burger-Constructor.module.css";
 import PropTypes from "prop-types";
@@ -6,23 +6,102 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch } from "react-redux";
+import { useDrop, useDrag } from "react-dnd";
 
-function BurgerConstructorStuffing({ ingredients }) {
-  const packetOfStuffing = ingredients.filter((item) => item.type !== "bun");
-  const stuffing = packetOfStuffing.map((item) => (
-    <li key={item._id} className={cn(styles.single__fill, "pr-2")}>
+function BurgerConstructorStuffing({ ingredients, index }) {
+  const dispatch = useDispatch();
+  const ref = useRef(null);
+  /* console.log(ingredients); */
+  const [{ handlerId }, drop] = useDrop({
+    accept: "STUFFING_INGREDIENT",
+    collect(monitor) {
+      return {
+        handlerId: monitor.getHandlerId(),
+      };
+    },
+    hover(item, monitor) {
+      if (!ref.current) {
+        return;
+      }
+      const dragIndex = item.index;
+      const hoverIndex = index;
+      // Don't replace items with themselves
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+      // Determine rectangle on screen
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      // Get vertical middle
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      // Determine mouse position
+      const clientOffset = monitor.getClientOffset();
+      // Get pixels to the top
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      // Only perform the move when the mouse has crossed half of the items height
+      // When dragging downwards, only move when the cursor is below 50%
+      // When dragging upwards, only move when the cursor is above 50%
+      // Dragging downwards
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      // Dragging upwards
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+      // Time to actually perform the action
+      dispatch({
+        type: "CONSTRUCTOR_REODER",
+        payload: {
+          to: dragIndex,
+          from: hoverIndex,
+        },
+      });
+      // Note: we're mutating the monitor item here!
+      // Generally it's better to avoid mutations,
+      // but it's good here for the sake of performance
+      // to avoid expensive index searches.
+      item.index = hoverIndex;
+    },
+  });
+  const [{ isDragging }, drag] = useDrag({
+    type: "STUFFING_INGREDIENT",
+    item: () => {
+      return { ingredients, index };
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+  const opacity = isDragging ? 0 : 1;
+
+  drag(drop(ref));
+
+  return (
+    <li
+      data-handler-id={handlerId}
+      ref={ref}
+      key={index}
+      style={{ opacity }}
+      className={cn(styles.single__fill, "pr-2")}
+    >
       <DragIcon type="primary" />
       <ConstructorElement
-        text={item.name}
-        price={item.price}
-        thumbnail={item.image}
+        text={ingredients.name}
+        price={ingredients.price}
+        thumbnail={ingredients.image}
+        handleClose={() =>
+          dispatch({
+            type: "CONSTRUCTOR_DELETE",
+            payload: index,
+          })
+        }
       />
     </li>
-  ));
-
-  return <ul className={styles.stuffing}>{stuffing}</ul>;
+  );
 }
 BurgerConstructorStuffing.propTypes = {
-  ingredients: PropTypes.array.isRequired,
+  ingredients: PropTypes.object.isRequired,
 };
 export default BurgerConstructorStuffing;

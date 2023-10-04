@@ -1,10 +1,10 @@
-import { OPEN_MODAL } from "../actions/modal-ingridient";
-import { CLOSE_MODAL } from "../actions/close-modal";
+import { OPEN_MODAL } from "../actions/modal-ingridient-action";
+import { CLOSE_MODAL } from "../actions/close-modal-action";
 
 const initialState = {
   ingredient: null,
 };
-console.log(initialState);
+
 export const modalIngridientReducer = (state = initialState, action) => {
   switch (action.type) {
     case OPEN_MODAL: {

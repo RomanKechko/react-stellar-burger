@@ -1,6 +1,6 @@
-import { GET_ITEMS_SUCCESS } from "../actions/ingredients";
-import { GET_ITEMS_REQUEST } from "../actions/ingredients";
-import { GET_ITEMS_ERROR } from "../actions/ingredients";
+import { GET_ITEMS_SUCCESS } from "../actions/ingredients-action";
+import { GET_ITEMS_REQUEST } from "../actions/ingredients-action";
+import { GET_ITEMS_ERROR } from "../actions/ingredients-action";
 
 const initialState = {
   dataIngridients: [],

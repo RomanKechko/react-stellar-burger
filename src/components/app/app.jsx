@@ -3,14 +3,14 @@ import style from "./app.module.css";
 import AppHeader from "../App-Header/App-Header";
 import BurgerIngredients from "../Burger-Ingredients/Burger-Ingredients";
 import BurgerConstructor from "../Burger-Constructor/Burger-Constructor";
-import { getIngredients } from "../../services/actions/ingredients";
+import { getIngredients } from "../../services/actions/ingredients-action";
 import { useSelector, useDispatch } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIngredients());
-  }, [dispatch]);
+  }, []);
 
   const isLoading = useSelector(
     (state) => state.ingredientsReducer.dataRequest
