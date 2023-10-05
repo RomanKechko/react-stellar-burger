@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import styles from "./Modal.module.css";
+import styles from "./modal.module.css";
 import PropTypes from "prop-types";
-import ModalOverlay from "../Modal-Overlay/Modal-Overlay";
+import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { modalIngridientOnClose } from "../../services/actions/close-modal-action";

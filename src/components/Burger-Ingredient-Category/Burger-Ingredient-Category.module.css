@@ -5,33 +5,3 @@
   padding: 0;
   gap: 8px;
 }
-.cart__ingridient_block {
-  position: relative;
-  list-style-type: none;
-}
-.button__ingridients {
-  background-color: transparent;
-  background-repeat: no-repeat;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-.amount__of_additives {
-  position: absolute;
-  right: 0;
-}
-.container__price {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 8px;
-}
-.text__color {
-  color: #f2f2f3;
-}
-.description {
-  max-width: 272px;
-  text-align: center;
-  min-height: 48px;
-  color: #f2f2f3;
-}

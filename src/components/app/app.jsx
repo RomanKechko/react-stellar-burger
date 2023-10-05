@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import style from "./app.module.css";
-import AppHeader from "../App-Header/App-Header";
-import BurgerIngredients from "../Burger-Ingredients/Burger-Ingredients";
-import BurgerConstructor from "../Burger-Constructor/Burger-Constructor";
+import AppHeader from "../app-header/app-header";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { getIngredients } from "../../services/actions/ingredients-action";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -10,7 +10,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIngredients());
-  }, []);
+  }, [dispatch]);
 
   const isLoading = useSelector(
     (state) => state.ingredientsReducer.dataRequest

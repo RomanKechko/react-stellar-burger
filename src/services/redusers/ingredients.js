@@ -7,13 +7,13 @@ const initialState = {
   dataRequest: false,
   downloadError: false,
 };
-
 export const ingredientsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {
         ...state,
         dataRequest: action.payload,
+        downloadError: false,
       };
     }
     case GET_ITEMS_SUCCESS: {
@@ -21,13 +21,14 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         dataIngridients: action.payload,
         dataRequest: false,
+        downloadError: false,
       };
     }
     case GET_ITEMS_ERROR: {
       return {
         ...state,
-        downloadError: true,
-        dataRequest: "",
+        error: action.payload,
+        dataRequest: false,
       };
     }
     default: {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import cn from "classnames";
-import styles from "./Ingredient-Details.module.css";
+import styles from "./ingredient-details.module.css";
 import PropTypes from "prop-types";
 
 function IngredientDetails({ ingredient }) {

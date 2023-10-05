@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import cn from "classnames";
-import styles from "../Burger-Constructor/Burger-Constructor.module.css";
+import styles from "../burger-constructor/burger-constructor.module.css";
 import PropTypes from "prop-types";
 import {
   ConstructorElement,
@@ -78,7 +78,7 @@ function BurgerConstructorStuffing({ ingredients, index }) {
   });
   //перенос ингредиентов в конструкторе
 
-  const opacity = isDragging ? 0 : 1;
+  const opacity = isDragging ? 0.8 : 1;
 
   drag(drop(ref));
 
@@ -86,7 +86,6 @@ function BurgerConstructorStuffing({ ingredients, index }) {
     <li
       data-handler-id={handlerId}
       ref={ref}
-      key={index}
       style={{ opacity }}
       className={cn(styles.single__fill, "pr-2")}
     >

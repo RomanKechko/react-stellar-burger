@@ -1,19 +1,20 @@
 import React, { useEffect, useMemo, useState } from "react"; // Убедитесь, что вы импортируете React
-import styles from "./Burger-Constructor.module.css";
+import styles from "./burger-constructor.module.css";
 import cn from "classnames";
 import {
   ConstructorElement,
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import BurgerConstructorStuffing from "../Burger-Constructor-Stuffing/Burger-Constructor-Stuffing";
-import Modal from "../Modal/Modal";
-import OrderDetails from "../Order-Details/Order-Details";
+import BurgerConstructorStuffing from "../burger-constructor-stuffing/burger-constructor-stuffing";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { addIngrrdinentConstructor } from "../../services/actions/constructor-action.js";
 import { setData } from "../../services/actions/modal-order-action";
+import loader from "../../icons/loader.png";
 
 function BurgerConstructor() {
   const [finalPrice, setfinalPrice] = useState(0);
@@ -39,8 +40,11 @@ function BurgerConstructor() {
   //счет
 
   //перенос ингредиетов
-  const [, dropTarget] = useDrop({
+  const [{ isHover }, dropTarget] = useDrop({
     accept: "ADD_CONSTRUCTOR",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
     drop: (data) => {
       dispatch(addIngrrdinentConstructor(data));
     },
@@ -63,9 +67,7 @@ function BurgerConstructor() {
     setfinalPrice(account);
   }, [account]);
   //счет
-
-  const text = "Перетяните булочку сюда";
-
+  const border = isHover && styles.border;
   return (
     <section
       ref={dropTarget}
@@ -76,30 +78,37 @@ function BurgerConstructor() {
           display: "flex",
           flexDirection: "column",
           gap: "10px",
-          height: "656px",
+          maxHeight: "656px",
+          outline: isHover ? "4px solid rgb(19, 33, 154)" : "none",
+          borderRadius: isHover ? "70px" : "0",
+          boxSizing: "border-box",
         }}
       >
         <div className="pl-8" key={bun._id} style={{ width: "536px" }}>
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={bun.name + " (верх)"}
+            text={bun.name ? `${bun.name} (низ)` : "Перенесите булочку "}
             price={bun.price}
-            thumbnail={bun.image}
+            thumbnail={bun.image ? `${bun.image}` : loader}
           />
         </div>
         <ul className={styles.stuffing}>
           {list.map((item, index) => (
-            <BurgerConstructorStuffing ingredients={item} index={index} />
+            <BurgerConstructorStuffing
+              ingredients={item}
+              index={index}
+              key={index}
+            />
           ))}
         </ul>
         <div className="pl-8" key={"2"}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={bun !== null ? bun.name + " (низ)" : text}
+            text={bun.name ? `${bun.name} (низ)` : "Перенесите булочку "}
             price={bun.price}
-            thumbnail={bun.image}
+            thumbnail={bun.image ? `${bun.image}` : loader}
           />
         </div>
       </div>
@@ -122,7 +131,7 @@ function BurgerConstructor() {
           Оформить заказ
         </Button>
       </div>
-      {loading && <span class={styles.loader}></span>}
+      {loading && <span className={styles.loader}></span>}
       {number && (
         <Modal>
           <OrderDetails number={number} />
