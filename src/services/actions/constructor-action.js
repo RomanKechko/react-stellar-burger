@@ -14,21 +14,24 @@ export const addStuffing = (item) => {
     },
   };
 };
-export const addbun = (payload) => {
+export const addbun = (item) => {
   return {
     type: ADD_BUN,
-    payload,
+    payload: {
+      ...item,
+      uniqueId: uuidv4(),
+    },
   };
 };
 export const deleteIngredient = (payload) => {
   return {
-    type: "CONSTRUCTOR_DELETE",
+    type: CONSTRUCTOR_DELETE,
     payload,
   };
 };
 export const reorderIngredient = (payload) => {
   return {
-    type: "CONSTRUCTOR_REODER",
+    type: CONSTRUCTOR_REODER,
     payload,
   };
 };

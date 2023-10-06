@@ -84,7 +84,7 @@ function BurgerConstructor() {
           boxSizing: "border-box",
         }}
       >
-        <div className="pl-8" key={bun._id} style={{ width: "536px" }}>
+        <div className="pl-8" key={bun.uniqueId} style={{ width: "536px" }}>
           <ConstructorElement
             type="top"
             isLocked={true}
@@ -98,11 +98,11 @@ function BurgerConstructor() {
             <BurgerConstructorStuffing
               ingredients={item}
               index={index}
-              key={index}
+              key={item.uniqueId}
             />
           ))}
         </ul>
-        <div className="pl-8" key={"2"}>
+        <div className="pl-8" key={bun.uniqueId}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
