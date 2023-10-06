@@ -1,4 +1,9 @@
-import { ADD_STUFFING, ADD_BUN } from "../actions/constructor-action";
+import {
+  ADD_STUFFING,
+  ADD_BUN,
+  CONSTRUCTOR_DELETE,
+  CONSTRUCTOR_REODER,
+} from "../actions/constructor-action";
 
 const initialState = {
   bun: null,
@@ -18,14 +23,14 @@ export const constructorReducer = (state = initialState, action) => {
         bun: action.payload,
       };
     }
-    case "CONSTRUCTOR_DELETE": {
+    case CONSTRUCTOR_DELETE: {
       return {
         ...state,
 
         stuffing: state.stuffing.filter((_, index) => index !== action.payload),
       };
     }
-    case "CONSTRUCTOR_REODER": {
+    case CONSTRUCTOR_REODER: {
       const stuffing = [...state.stuffing];
       const [movedElement] = stuffing.splice(action.payload.from, 1);
       stuffing.splice(action.payload.to, 0, movedElement);

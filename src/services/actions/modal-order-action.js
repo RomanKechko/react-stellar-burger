@@ -1,3 +1,5 @@
+import { BASE_URL } from "./ingredients-action";
+import checkResponse from "../../utils/chek-response";
 export const SEND_DATA = "SEND_DATA";
 export const LOADING = "LOADING";
 
@@ -16,8 +18,10 @@ export const loading = () => {
 };
 export function setData(data) {
   return function (dispatch) {
+    const url = `${BASE_URL}/orders`;
+
     dispatch(loading());
-    fetch("https://norma.nomoreparties.space/api/orders", {
+    fetch(url, {
       method: "POST",
       body: JSON.stringify({
         ingredients: data,
@@ -26,12 +30,7 @@ export function setData(data) {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
+      .then(checkResponse)
       .then((res) => dispatch(getBack(res)))
       .catch((error) => {
         console.error("Ошибка:", error);

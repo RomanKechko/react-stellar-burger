@@ -1,6 +1,9 @@
+import checkResponse from "../../utils/chek-response";
+
 export const GET_ITEMS_SUCCESS = "GET_ITEMS_SUCCESS";
 export const GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST";
 export const GET_ITEMS_ERROR = "GET_ITEMS_ERROR";
+export const BASE_URL = "https://norma.nomoreparties.space/api";
 
 export function addIngridients(payload) {
   return {
@@ -23,16 +26,11 @@ export function downloadError(payload) {
 
 export function getIngredients() {
   return function (dispatch) {
-    const url = "https://norma.nomoreparties.space/api/ingredients";
+    const url = `${BASE_URL}/ingredients`;
 
     dispatch(ingredientLoading(true));
     fetch(url)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
+      .then(checkResponse)
       .then((list) => {
         dispatch(addIngridients(list));
       })
