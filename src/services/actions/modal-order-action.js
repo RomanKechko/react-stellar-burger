@@ -2,6 +2,8 @@ import { BASE_URL } from "./ingredients-action";
 import checkResponse from "../../utils/chek-response";
 export const SEND_DATA = "SEND_DATA";
 export const LOADING = "LOADING";
+export const CLOSE_MODAL_ORDER = "CLOSE_MODAL_ORDER";
+export const STOP_LOADING = "STOP_LOADING";
 
 export const getBack = (payload) => {
   return {
@@ -16,7 +18,8 @@ export const loading = () => {
     payload: true,
   };
 };
-export function setData(data) {
+
+export function sendOrder(data) {
   return function (dispatch) {
     const url = `${BASE_URL}/orders`;
 
@@ -34,6 +37,21 @@ export function setData(data) {
       .then((res) => dispatch(getBack(res)))
       .catch((error) => {
         console.error("Ошибка:", error);
+      })
+      .finally(() => {
+        dispatch(stopLoading());
       });
   };
 }
+
+export const modalOrderOnClose = () => {
+  return {
+    type: CLOSE_MODAL_ORDER,
+  };
+};
+
+export const stopLoading = () => {
+  return {
+    type: STOP_LOADING,
+  };
+};

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import style from "./burger-ingredients.module.css";
 import cn from "classnames";
 import Tabs from "../tabs/tabs";
@@ -10,6 +10,7 @@ import { useInView } from "react-intersection-observer";
 
 function BurgerIngredients() {
   const [currentTab, setCurrentTab] = React.useState("buns");
+  const [isActive, setActive] = useState(null);
 
   const list =
     useSelector((state) => state.ingredientsReducer.dataIngridients?.data) ||
@@ -49,7 +50,7 @@ function BurgerIngredients() {
   const [saucesRef, inViewSauces] = useInView({
     threshold: 0,
   });
-  console.log(currentTab);
+
   useEffect(() => {
     if (inViewBuns) {
       setCurrentTab("buns");
@@ -72,23 +73,26 @@ function BurgerIngredients() {
           titleId="buns"
           data={buns}
           refs={bunsRef}
+          setActive={setActive}
         />
         <BurgerIngredientCategory
           title="Начинка"
           titleId="mains"
           data={mains}
           refs={mainsRef}
+          setActive={setActive}
         />
         <BurgerIngredientCategory
           title="Соусы"
           titleId="sauces"
           data={sauces}
           refs={saucesRef}
+          setActive={setActive}
         />
       </div>
       {ingredient && (
-        <Modal>
-          <IngredientDetails ingredient={ingredient} />
+        <Modal setActive={setActive}>
+          <IngredientDetails ingredient={ingredient} isActive={isActive} />
         </Modal>
       )}
     </section>

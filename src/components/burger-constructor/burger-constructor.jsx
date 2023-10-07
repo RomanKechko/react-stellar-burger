@@ -13,11 +13,12 @@ import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { addIngrrdinentConstructor } from "../../services/actions/constructor-action.js";
-import { setData } from "../../services/actions/modal-order-action";
+import { sendOrder } from "../../services/actions/modal-order-action";
 import loader from "../../icons/loader.png";
 
 function BurgerConstructor() {
   const [finalPrice, setfinalPrice] = useState(0);
+  const [isActive, setActive] = useState(false);
   const dispatch = useDispatch();
 
   // state конструктора
@@ -38,6 +39,11 @@ function BurgerConstructor() {
     ingredientsId = list.map((item) => item._id).concat(bun._id, bun._id);
   }
   //счет
+
+  const orderHandler = () => {
+    setActive(true);
+    dispatch(sendOrder(ingredientsId));
+  };
 
   //перенос ингредиетов
   const [{ isHover }, dropTarget] = useDrop({
@@ -67,25 +73,23 @@ function BurgerConstructor() {
     setfinalPrice(account);
   }, [account]);
   //счет
-  const border = isHover && styles.border;
+
   return (
     <section
       ref={dropTarget}
       className={cn(styles.section__constructor, "pt-25 pl-4")}
     >
       <div
+        className={styles.container}
         style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          maxHeight: "656px",
           outline: isHover ? "4px solid rgb(19, 33, 154)" : "none",
-          borderRadius: isHover ? "70px" : "0",
+          borderRadius: isHover ? "50px" : "0",
           boxSizing: "border-box",
         }}
       >
-        <div className="pl-8" key={bun.uniqueId} style={{ width: "536px" }}>
+        <div className={cn(styles.bun, "pl-8")}>
           <ConstructorElement
+            key={bun.uniqueId}
             type="top"
             isLocked={true}
             text={bun.name ? `${bun.name} (низ)` : "Перенесите булочку "}
@@ -102,8 +106,9 @@ function BurgerConstructor() {
             />
           ))}
         </ul>
-        <div className="pl-8" key={bun.uniqueId}>
+        <div className="pl-8">
           <ConstructorElement
+            key={bun.uniqueId}
             type="bottom"
             isLocked={true}
             text={bun.name ? `${bun.name} (низ)` : "Перенесите булочку "}
@@ -116,25 +121,23 @@ function BurgerConstructor() {
         <div className={styles.container__order_price}>
           <p className="text text_type_digits-default mr-2">{finalPrice}</p>
           <span className={styles.icon}>
-            <CurrencyIcon
-              type="primary"
-              style={{ width: "36px", height: "36px" }}
-            />
+            <CurrencyIcon type="primary" />
           </span>
         </div>
         <Button
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => dispatch(setData(ingredientsId))}
+          onClick={orderHandler}
+          disabled={(!bun || bun.length === 0) && (!list || list.length === 0)}
         >
           Оформить заказ
         </Button>
       </div>
       {loading && <span className={styles.loader}></span>}
       {number && (
-        <Modal>
-          <OrderDetails number={number} />
+        <Modal setActive={setActive}>
+          <OrderDetails number={number} isActive={isActive} />
         </Modal>
       )}
     </section>

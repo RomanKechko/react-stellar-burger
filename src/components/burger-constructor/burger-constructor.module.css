@@ -2,6 +2,16 @@
   max-height: 65vh;
   width: "100%";
 }
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 656px;
+}
+.bun {
+  width: 533px;
+}
+
 .stuffing {
   padding: 0;
   margin: 0;

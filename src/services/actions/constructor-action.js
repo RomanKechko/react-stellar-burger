@@ -4,6 +4,7 @@ export const ADD_STUFFING = "ADD_STUFFING";
 export const ADD_BUN = "ADD_BUN";
 export const CONSTRUCTOR_DELETE = "CONSTRUCTOR_DELETE";
 export const CONSTRUCTOR_REODER = "CONSTRUCTOR_REODER";
+export const CONSTRUCTOR_RESET = "CONSTRUCTOR_RESET";
 
 export const addStuffing = (item) => {
   return {
@@ -33,6 +34,11 @@ export const reorderIngredient = (payload) => {
   return {
     type: CONSTRUCTOR_REODER,
     payload,
+  };
+};
+export const resetConstructor = () => {
+  return {
+    type: CONSTRUCTOR_RESET,
   };
 };
 

@@ -2,8 +2,15 @@ import React, { useEffect } from "react";
 import cn from "classnames";
 import styles from "./ingredient-details.module.css";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { modalIngridientOnClose } from "../../services/actions/close-modal-action";
 
-function IngredientDetails({ ingredient }) {
+function IngredientDetails({ ingredient, isActive }) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    return () => dispatch(modalIngridientOnClose());
+  }, [isActive]);
+
   return (
     <div>
       <span className={cn(styles.modal__title, "pt-10 pr-10 pl-10")}>

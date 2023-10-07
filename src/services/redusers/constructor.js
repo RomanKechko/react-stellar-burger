@@ -3,6 +3,7 @@ import {
   ADD_BUN,
   CONSTRUCTOR_DELETE,
   CONSTRUCTOR_REODER,
+  CONSTRUCTOR_RESET,
 } from "../actions/constructor-action";
 
 const initialState = {
@@ -45,6 +46,11 @@ export const constructorReducer = (state = initialState, action) => {
         stuffing,
       };
     }
+    case CONSTRUCTOR_RESET:
+      return {
+        bun: null,
+        stuffing: [],
+      };
 
     default:
       return state;

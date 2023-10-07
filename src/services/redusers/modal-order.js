@@ -1,6 +1,9 @@
-import { SEND_DATA } from "../actions/modal-order-action";
-import { CLOSE_MODAL } from "../actions/close-modal-action";
-import { LOADING } from "../actions/modal-order-action";
+import {
+  SEND_DATA,
+  LOADING,
+  CLOSE_MODAL_ORDER,
+  STOP_LOADING,
+} from "../actions/modal-order-action";
 
 const initialState = {
   status: null,
@@ -21,10 +24,16 @@ export const modalOrderReducer = (state = initialState, action) => {
         loading: false,
       };
     }
-    case CLOSE_MODAL: {
+    case CLOSE_MODAL_ORDER: {
       return {
         ...state,
-        status: action.payload,
+        status: null,
+      };
+    }
+    case STOP_LOADING: {
+      return {
+        ...state,
+        loading: false,
       };
     }
     default:

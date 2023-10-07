@@ -4,11 +4,12 @@ import styles from "./burger-ingredient-category.module.css";
 import PropTypes from "prop-types";
 import { modalIngridient } from "../../services/actions/modal-ingridient-action";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-function BurgerIngredientCategory({ title, titleId, data, refs }) {
+function BurgerIngredientCategory({ title, titleId, data, refs, setActive }) {
   const dispatch = useDispatch();
 
   function modal(item) {
     dispatch(modalIngridient(item));
+    setActive(true);
   }
 
   return (
@@ -26,6 +27,10 @@ function BurgerIngredientCategory({ title, titleId, data, refs }) {
 }
 BurgerIngredientCategory.propTypes = {
   data: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  titleId: PropTypes.string.isRequired,
+  refs: PropTypes.func.isRequired,
+  setActive: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredientCategory;

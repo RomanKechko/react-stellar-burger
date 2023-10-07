@@ -5,14 +5,12 @@ import PropTypes from "prop-types";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
-import { modalIngridientOnClose } from "../../services/actions/close-modal-action";
 
-function Modal({ children }) {
-  const dispatch = useDispatch();
-
-  function onClose(item) {
-    dispatch(modalIngridientOnClose(item));
+function Modal({ children, setActive }) {
+  function onClose() {
+    setActive(false);
   }
+
   useEffect(() => {
     const handleEsc = (e) => {
       e.key === "Escape" && onClose();
