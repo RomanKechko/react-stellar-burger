@@ -1,35 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+
 import style from "./app.module.css";
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { getIngredients } from "../../services/actions/ingredients-action";
-import { useSelector, useDispatch } from "react-redux";
+import MainPage from "../../pages/main-page/main-page";
+import LoginPage from "../../pages/login-page/login-page";
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
-  const isLoading = useSelector(
-    (state) => state.ingredientsReducer.dataRequest
-  );
-  const error = useSelector((state) => state.ingredientsReducer.downloadError);
   return (
     <div className={style.page}>
-      <AppHeader />
-
-      {isLoading && <h2 className={style.services}>Loading...</h2>}
-      {!isLoading && error && (
-        <h2 className={style.services}>Ошибка при загрузке данных</h2>
-      )}
-      {!isLoading && !error && (
-        <main className={style.main}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </main>
-      )}
+      <Routes>
+        <Route path="/" element={<AppHeader />}>
+          <Route index element={<MainPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register " element={<MainPage />} />
+          <Route path="/forgot-password" element={<MainPage />} />
+          <Route path="/reset-password" element={<MainPage />} />
+          <Route path="/profile " element={<MainPage />} />
+          <Route path="/ingredients/:id" element={<MainPage />} />
+          <Route path="*" element={<MainPage />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
