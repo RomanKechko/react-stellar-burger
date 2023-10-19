@@ -6,11 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import style from "../../components/app/app.module.css";
 
 const MainPage = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
   const isLoading = useSelector(
     (state) => state.ingredientsReducer.dataRequest
   );

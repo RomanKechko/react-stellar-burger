@@ -11,9 +11,17 @@
 .link {
   display: flex;
   text-decoration: none;
-  color: #f2f2f3;
+  color: #8585ad;
   gap: 8px;
 }
+.active_link {
+  display: flex;
+  text-decoration: none;
+  color: #f2f2f3;
+
+  gap: 8px;
+}
+
 .link__column_left {
   display: flex;
   gap: 8px;

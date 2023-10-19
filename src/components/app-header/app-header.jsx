@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import {
   BurgerIcon,
   ListIcon,
@@ -10,26 +10,33 @@ import styles from "./app-header.module.css";
 import cn from "classnames";
 
 function AppHeader() {
+  const setNavStyle = ({ isActive }) => {
+    return isActive
+      ? cn(styles.active_link, "pb-4 pt-4 pl-5 pr-5")
+      : cn(styles.link, "pb-4 pt-4 pl-5 pr-5");
+  };
+
   return (
     <>
       <header className={cn(styles.header, "pb-4 pt-4")}>
         <nav className={styles.nav}>
           <div className={styles.link__column_left}>
-            <a href="#" className={cn(styles.link, "pb-4 pt-4 pl-5 pr-5")}>
+            <NavLink to="/" className={setNavStyle}>
               <BurgerIcon type="primary" />
               <p className="text text_type_main-default">Конструктор</p>
-            </a>
-            <a href="#" className={cn(styles.link, "pb-4 pt-4 pl-5 pr-5")}>
+            </NavLink>
+
+            <NavLink to="/lenta" className={setNavStyle}>
               <ListIcon type="primary" />
               <p className="text text_type_main-default">Лента заказов</p>
-            </a>
+            </NavLink>
           </div>
           <Logo />
           <div className={styles.link__column_right}>
-            <a href="#" className={cn(styles.link, "pb-4 pt-4 pl-5 pr-5")}>
+            <NavLink to="/profile" className={setNavStyle}>
               <ProfileIcon type="primary" />
               <p className="text text_type_main-default">Личный кабинет</p>
-            </a>
+            </NavLink>
           </div>
         </nav>
       </header>

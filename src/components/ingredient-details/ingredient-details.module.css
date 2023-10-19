@@ -1,3 +1,9 @@
+.container {
+  width: 480px;
+  height: 240px;
+  margin: 0 auto;
+  text-align: center;
+}
 .modal__title {
   display: flex;
   height: 64px;
@@ -14,7 +20,7 @@
   padding-left: 0;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 16px;
 }
 
 .item__energy {
@@ -23,6 +29,6 @@
   list-style-type: none;
   width: 120px;
   height: 56px;
-  gap: 8px;
+  gap: 7px;
   text-align: center;
 }

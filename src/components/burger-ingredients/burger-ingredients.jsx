@@ -90,11 +90,6 @@ function BurgerIngredients() {
           setActive={setActive}
         />
       </div>
-      {ingredient && (
-        <Modal setActive={setActive}>
-          <IngredientDetails ingredient={ingredient} isActive={isActive} />
-        </Modal>
-      )}
     </section>
   );
 }

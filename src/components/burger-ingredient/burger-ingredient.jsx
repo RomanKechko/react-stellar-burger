@@ -8,6 +8,7 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 function BurgerIngredient({ ingredients, modal }) {
   const quantityBun =
@@ -39,14 +40,19 @@ function BurgerIngredient({ ingredients, modal }) {
   });
   drag(ref);
 
+  const location = useLocation();
+
   return (
     <li ref={ref} className={cn(styles.cart__ingridient_block, "mt-6  ml-4")}>
-      <button className={styles.button__ingridients}>
+      <Link
+        to={`/ingredients/${ingredients._id}`}
+        state={{ backgroundLocation: location }}
+        replace
+      >
         <img
           src={ingredients.image}
           alt="булочка"
           className={cn(styles.image__bun, "ml-4 mr-4")}
-          onClick={() => modal(ingredients)}
         />
         <Counter
           count={quantity}
@@ -66,7 +72,7 @@ function BurgerIngredient({ ingredients, modal }) {
         <p className={cn(styles.description, "text text_type_main-small pt-1")}>
           {ingredients.name}
         </p>
-      </button>
+      </Link>
     </li>
   );
 }

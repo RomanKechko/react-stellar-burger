@@ -1,0 +1,39 @@
+.page {
+  display: flex;
+
+  width: 1240px;
+  text-align: center;
+  margin: 180px auto 0;
+  gap: 60px;
+}
+.navigate {
+  max-width: 320px;
+  text-align: left;
+}
+.links {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  height: 64px;
+  align-items: center;
+  text-decoration: none;
+
+  color: #8585ad;
+}
+.activelink {
+  height: 64px;
+  align-items: center;
+  text-decoration: none;
+  color: #f2f2f3;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.text {
+  color: #8585ad;
+}
