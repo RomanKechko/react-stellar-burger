@@ -1,17 +1,8 @@
-import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import styles from "./burger-ingredient-category.module.css";
 import PropTypes from "prop-types";
-import { modalIngridient } from "../../services/actions/modal-ingridient-action";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-function BurgerIngredientCategory({ title, titleId, data, refs, setActive }) {
-  const dispatch = useDispatch();
-
-  function modal(item) {
-    dispatch(modalIngridient(item));
-    setActive(true);
-  }
-
+function BurgerIngredientCategory({ title, titleId, data, refs }) {
   return (
     <>
       <h2 id={titleId} className="text text_type_main-medium" ref={refs}>
@@ -19,7 +10,7 @@ function BurgerIngredientCategory({ title, titleId, data, refs, setActive }) {
       </h2>
       <ul className={styles.cart__ingridient}>
         {data.map((item) => (
-          <BurgerIngredient ingredients={item} modal={modal} key={item._id} />
+          <BurgerIngredient ingredients={item} key={item._id} />
         ))}
       </ul>
     </>
@@ -30,7 +21,6 @@ BurgerIngredientCategory.propTypes = {
   title: PropTypes.string.isRequired,
   titleId: PropTypes.string.isRequired,
   refs: PropTypes.func.isRequired,
-  setActive: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredientCategory;

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { ingredientsReducer } from "./redusers/ingredients";
 import { constructorReducer } from "./redusers/constructor";
-import { modalIngridientReducer } from "./redusers/modal-ingridient";
+
 import { modalOrderReducer } from "./redusers/modal-order";
 
 import { createStore, applyMiddleware } from "redux";
@@ -11,7 +11,6 @@ import thunk from "redux-thunk";
 const rootReducer = combineReducers({
   ingredientsReducer,
   constructorReducer,
-  modalIngridientReducer,
   modalOrderReducer,
 });
 

@@ -1,16 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import style from "./burger-ingredients.module.css";
 import cn from "classnames";
 import Tabs from "../tabs/tabs";
 import BurgerIngredientCategory from "../burger-ingredient-category/burger-ingredient-category";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
+
 import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
 
 function BurgerIngredients() {
   const [currentTab, setCurrentTab] = React.useState("buns");
-  const [isActive, setActive] = useState(null);
 
   const list =
     useSelector((state) => state.ingredientsReducer.dataIngridients?.data) ||
@@ -29,17 +27,11 @@ function BurgerIngredients() {
     [list]
   );
 
-  const ingredient = useSelector(
-    (state) => state.modalIngridientReducer.ingredient
-  );
-
   const onClickTab = (tab) => {
     setCurrentTab(tab);
     const element = document.getElementById(tab);
     if (element) element.scrollIntoView({ behavior: "smooth" });
   };
-
-  /* console.log(bun); */
 
   const [bunsRef, inViewBuns] = useInView({
     threshold: 0,
@@ -73,21 +65,18 @@ function BurgerIngredients() {
           titleId="buns"
           data={buns}
           refs={bunsRef}
-          setActive={setActive}
         />
         <BurgerIngredientCategory
           title="Начинка"
           titleId="mains"
           data={mains}
           refs={mainsRef}
-          setActive={setActive}
         />
         <BurgerIngredientCategory
           title="Соусы"
           titleId="sauces"
           data={sauces}
           refs={saucesRef}
-          setActive={setActive}
         />
       </div>
     </section>

@@ -1,18 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import cn from "classnames";
 import styles from "./ingredient-details.module.css";
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { modalIngridientOnClose } from "../../services/actions/close-modal-action";
-import Modal from "../modal/modal";
+
+import { useSelector } from "react-redux";
+
 import { useParams } from "react-router-dom";
 
-function IngredientDetails({ isActive }) {
-  /*   const dispatch = useDispatch();
-  useEffect(() => {
-    return () => dispatch(modalIngridientOnClose());
-  }, [isActive]);
- */
+function IngredientDetails() {
   const list =
     useSelector((state) => state.ingredientsReducer.dataIngridients?.data) ||
     [];
@@ -73,9 +67,5 @@ function IngredientDetails({ isActive }) {
     )
   );
 }
-
-/* IngredientDetails.propTypes = {
-  ingridients: PropTypes.object,
-}; */
 
 export default IngredientDetails;
