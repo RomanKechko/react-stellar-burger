@@ -136,7 +136,7 @@ function BurgerConstructor() {
       </div>
       {loading && <span className={styles.loader}></span>}
       {number && (
-        <Modal setActive={setActive}>
+        <Modal setActive={setActive} isActive={isActive}>
           <OrderDetails number={number} isActive={isActive} />
         </Modal>
       )}

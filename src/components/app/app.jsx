@@ -26,8 +26,8 @@ function App() {
   const location = useLocation();
   const backgroundLocation = location.state?.backgroundLocation;
 
-  const onClick = () => {
-    navigate("/", { replace: true });
+  const onCloseModal = () => {
+    navigate(backgroundLocation.pathname || "/", { replace: true });
   };
 
   return (
@@ -49,7 +49,7 @@ function App() {
           <Route
             path="/ingredients/:id"
             element={
-              <Modal onClick={onClick}>
+              <Modal onCloseModal={onCloseModal}>
                 <IngredientDetails />
               </Modal>
             }

@@ -48,6 +48,7 @@ function BurgerIngredient({ ingredients, modal }) {
         to={`/ingredients/${ingredients._id}`}
         state={{ backgroundLocation: location }}
         replace
+        className={styles.cart__ingridient_link}
       >
         <img
           src={ingredients.image}

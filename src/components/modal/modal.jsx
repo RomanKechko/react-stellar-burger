@@ -6,32 +6,31 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-function Modal({ children, setActive, onClick }) {
+function Modal({ children, isActive, setActive, onCloseModal }) {
   function onClose() {
-    setActive(false);
+    if (isActive) {
+      setActive(false);
+    } else {
+      onCloseModal();
+    }
   }
 
   useEffect(() => {
     const handleEsc = (e) => {
       e.key === "Escape" && onClose();
     };
-    const handleEs = (e) => {
-      e.key === "Escape" && onClick();
-    };
-    document.addEventListener("keydown", handleEsc);
 
-    document.addEventListener("keydown", handleEs);
+    document.addEventListener("keydown", handleEsc);
 
     return () => {
       document.removeEventListener("keydown", handleEsc);
-      document.removeEventListener("keydown", handleEs);
     };
   });
 
   return ReactDOM.createPortal(
     <>
       <article className={styles.modal}>
-        <button className={styles.modal__cross} onClick={(onClose, onClick)}>
+        <button className={styles.modal__cross} onClick={onClose}>
           <CloseIcon type="primary" />
         </button>
         <div className={styles.container__modal_center}>{children}</div>

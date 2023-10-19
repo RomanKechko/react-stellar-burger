@@ -1,6 +1,10 @@
 .cart__ingridient_block {
   position: relative;
   list-style-type: none;
+  text-decoration: none;
+}
+.cart__ingridient_link {
+  text-decoration: none;
 }
 .button__ingridients {
   background-color: transparent;
