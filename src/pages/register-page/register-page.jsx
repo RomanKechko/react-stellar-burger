@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Input,
   EmailInput,
@@ -9,53 +9,61 @@ import { Link } from "react-router-dom";
 import styles from "./register-page.module.css";
 import cn from "classnames";
 
-const RegisterPage = () => {
-  const [email, setEmail] = React.useState("bob@example.com");
-  const [password, setPassword] = React.useState("123456789");
-  const [name, setName] = React.useState("Рома");
-  const inputRef = React.useRef(null);
+const RegisterPage = ({ onRegister }) => {
+  const [userData, setUserData] = useState({});
+  console.log(userData);
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+    console.log("Form submitted!");
+    const { name, password, email } = userData;
+    if (!name || !password || !email) {
+      return;
+    }
+    onRegister({ name, password, email });
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
   };
+
   return (
     <div className={styles.page}>
       <h2 className="text text_type_main-medium">Регистрация</h2>
-      <div className={cn(styles.container, "mt-6 mb-6")}>
-        <Input
-          type={"text"}
-          placeholder={"Ваше имя "}
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-          name={"name"}
-          error={false}
-          ref={inputRef}
-          errorText={"Ошибка"}
-          size={"default"}
-          extraClass="ml-1"
-        />
-        <EmailInput
-          onChange={handleEmailChange}
-          value={email}
-          name={"email"}
-          isIcon={false}
-        />
+      <form onSubmit={handleSubmit}>
+        <div className={cn(styles.container, "mt-6 mb-6")}>
+          <Input
+            type={"text"}
+            placeholder={"Ваше имя"}
+            onChange={handleChange}
+            defaultValue={""}
+            value={userData.userName}
+            name={"name"}
+          />
 
-        <PasswordInput
-          onChange={handlePasswordChange}
-          value={password}
-          name={"password"}
-          extraClass="mb-2"
-        />
-      </div>
-      <Button htmlType="button" type="primary" size="large">
-        Зарегистрироваться
-      </Button>
-
+          <EmailInput
+            onChange={handleChange}
+            defaultValue={""}
+            value={userData.email}
+            name={"email"}
+          />
+          <PasswordInput
+            onChange={handleChange}
+            defaultValue={""}
+            value={userData.password}
+            name={"password"}
+            extraClass="mb-2"
+          />
+        </div>
+        <Button htmlType="submit" type="primary" size="large">
+          Зарегистрироваться
+        </Button>
+      </form>
       <p className={cn(styles.text, "text text_type_main-default pt-20")}>
         Уже зарегестрированы?{" "}
         <Link

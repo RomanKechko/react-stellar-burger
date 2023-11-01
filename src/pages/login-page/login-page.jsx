@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   EmailInput,
   Button,
@@ -8,39 +8,51 @@ import { Link } from "react-router-dom";
 import styles from "./login-page.module.css";
 import cn from "classnames";
 
-const LoginPage = () => {
-  const [email, setEmail] = React.useState("bob@example.com");
-  const [password, setPassword] = React.useState("123456789");
+const LoginPage = ({ onLogin }) => {
+  const [userData, setUserData] = useState({});
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log("Form submitted!");
+    const { email, password } = userData;
+    if (!email || !password) {
+      return;
+    }
+    onLogin(userData);
+  }
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  }
   return (
     <div className={styles.page}>
       <h2 className="text text_type_main-medium">Вход</h2>
-      <div className={cn(styles.container, "mt-6 mb-6")}>
-        <EmailInput
-          onChange={handleEmailChange}
-          value={email}
-          name={"email"}
-          isIcon={false}
-        />
+      <form onSubmit={handleSubmit}>
+        <div className={cn(styles.container, "mt-6 mb-6")}>
+          <EmailInput
+            onChange={handleChange}
+            defaultValue={""}
+            value={userData.email}
+            name={"email"}
+            isIcon={false}
+          />
 
-        <PasswordInput
-          onChange={handlePasswordChange}
-          value={password}
-          name={"password"}
-          extraClass="mb-2"
-        />
-      </div>
-      <Button htmlType="button" type="primary" size="large">
-        Войти
-      </Button>
-
+          <PasswordInput
+            onChange={handleChange}
+            defaultValue={""}
+            value={userData.password}
+            name={"password"}
+            extraClass="mb-2"
+          />
+        </div>
+        <Button htmlType="submit" type="primary" size="large">
+          Войти
+        </Button>
+      </form>
       <p className={cn(styles.text, "text text_type_main-default pt-20")}>
         Вы — новый пользователь?{" "}
         <Link

@@ -45,6 +45,10 @@ function BurgerConstructor() {
     dispatch(sendOrder(ingredientsId));
   };
 
+  const onCloseModal = () => {
+    setActive(false);
+  };
+
   //перенос ингредиетов
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ADD_CONSTRUCTOR",
@@ -135,8 +139,8 @@ function BurgerConstructor() {
         </Button>
       </div>
       {loading && <span className={styles.loader}></span>}
-      {number && (
-        <Modal setActive={setActive} isActive={isActive}>
+      {number && isActive && (
+        <Modal onCloseModal={onCloseModal}>
           <OrderDetails number={number} isActive={isActive} />
         </Modal>
       )}

@@ -10,9 +10,9 @@ import cn from "classnames";
 import { isAction } from "@reduxjs/toolkit";
 
 const ProfilePage = () => {
-  const [email, setEmail] = React.useState("bob@example.com");
-  const [password, setPassword] = React.useState("123456789");
-  const [name, setName] = React.useState("Рома");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [name, setName] = React.useState("");
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

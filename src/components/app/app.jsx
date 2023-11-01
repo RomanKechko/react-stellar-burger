@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 import style from "./app.module.css";
@@ -14,8 +14,14 @@ import Modal from "../modal/modal";
 import ErrorPage from "../../pages/error-page/error-page";
 import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/actions/ingredients-action";
+import * as apiAuth from "../../utils/ApiAuth";
+import ProtectedRoute from "../protected-route/protected-route";
+import { getToken } from "../../utils/token";
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(null);
+  console.log(currentUser);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIngredients());
@@ -29,17 +35,69 @@ function App() {
   const onCloseModal = () => {
     navigate(backgroundLocation.pathname || "/", { replace: true });
   };
+  const token = getToken();
+
+  useEffect(() => {
+    apiAuth
+      .getContent(token)
+      .then((dataUser) => {
+        if (dataUser.user.email) {
+          setCurrentUser({ ...dataUser, isAuthCheck: true });
+        }
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setCurrentUser((prevState) => ({ ...prevState, isAuthCheck: true }));
+      });
+  }, [token]);
+
+  const cbLogin = (dataLogin) => {
+    apiAuth.authorize(dataLogin).then((dataUser) => {
+      setCurrentUser(dataUser.email);
+      console.log("login", dataUser);
+    });
+  };
+  const cbRegister = (dataRegister) => {
+    apiAuth.register(dataRegister).then((dataUser) => {
+      setCurrentUser(dataUser.user);
+      console.log("register", dataUser);
+    });
+  };
 
   return (
     <div className={style.page}>
       <Routes location={backgroundLocation || location}>
         <Route path="/" element={<AppHeader />}>
           <Route index element={<MainPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+
+          <Route
+            path="/login"
+            element={
+              <ProtectedRoute user={currentUser} onlyUnAuth loading>
+                <LoginPage onLogin={cbLogin} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <ProtectedRoute user={currentUser} onlyUnAuth loading>
+                <RegisterPage onRegister={cbRegister} />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassworPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute user={currentUser}>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>

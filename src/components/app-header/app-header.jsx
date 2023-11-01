@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useMatch } from "react-router-dom";
 import {
   BurgerIcon,
   ListIcon,
@@ -15,6 +15,9 @@ function AppHeader() {
       ? cn(styles.active_link, "pb-4 pt-4 pl-5 pr-5")
       : cn(styles.link, "pb-4 pt-4 pl-5 pr-5");
   };
+  const isConstructor = !!useMatch({ path: "/", exact: true });
+  const isFeed = !!useMatch("/lenta");
+  const isProfile = !!useMatch("/profile");
 
   return (
     <>
@@ -22,19 +25,19 @@ function AppHeader() {
         <nav className={styles.nav}>
           <div className={styles.link__column_left}>
             <NavLink to="/" className={setNavStyle}>
-              <BurgerIcon type="primary" />
+              <BurgerIcon type={isConstructor ? "primary" : "secondary"} />
               <p className="text text_type_main-default">Конструктор</p>
             </NavLink>
 
             <NavLink to="/lenta" className={setNavStyle}>
-              <ListIcon type="primary" />
+              <ListIcon type={isFeed ? "primary" : "secondary"} />
               <p className="text text_type_main-default">Лента заказов</p>
             </NavLink>
           </div>
           <Logo />
           <div className={styles.link__column_right}>
             <NavLink to="/profile" className={setNavStyle}>
-              <ProfileIcon type="primary" />
+              <ProfileIcon type={isProfile ? "primary" : "secondary"} />
               <p className="text text_type_main-default">Личный кабинет</p>
             </NavLink>
           </div>
