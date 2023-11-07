@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Done from "../../icons/done.svg";
 import PropTypes from "prop-types";
-import { modalOrderOnClose } from "../../services/actions/modal-order-action";
-import { resetConstructor } from "../../services/actions/constructor-action";
+import { resetConstructor } from "../../services/constructor/constructor-slice";
+import { closeModal } from "../../services/modal-order/modal-order-slice";
 
 function OrderDetails({ number, isActive }) {
   const dispatch = useDispatch();
   useEffect(() => {
     return () => {
-      dispatch(modalOrderOnClose());
+      dispatch(closeModal());
       dispatch(resetConstructor());
     };
   }, [isActive]);

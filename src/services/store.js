@@ -1,20 +1,12 @@
-import { combineReducers } from "redux";
-import { ingredientsReducer } from "./redusers/ingredients";
-import { constructorReducer } from "./redusers/constructor";
+import { configureStore } from "@reduxjs/toolkit";
+import ingredientsSlice from "./ingredints/ingredients-slice";
+import constructorSlice from "./constructor/constructor-slice";
+import modalOrderSlice from "./modal-order/modal-order-slice";
 
-import { modalOrderReducer } from "./redusers/modal-order";
-
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from "redux-thunk";
-
-const rootReducer = combineReducers({
-  ingredientsReducer,
-  constructorReducer,
-  modalOrderReducer,
+export const store = configureStore({
+  reducer: {
+    ingredients: ingredientsSlice,
+    constructorIngredient: constructorSlice,
+    modalOrder: modalOrderSlice,
+  },
 });
-
-export const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);

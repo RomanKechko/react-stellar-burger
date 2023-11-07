@@ -9,14 +9,14 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useParams } from "react-router-dom";
+import {
+  bunId,
+  stuffingId,
+} from "../../services/constructor/constructor-selector";
 
 function BurgerIngredient({ ingredients, modal }) {
-  const quantityBun =
-    useSelector((state) => state.constructorReducer.bun?._id) || [];
-  const quantityStuffing =
-    useSelector((state) =>
-      state.constructorReducer.stuffing.map((item) => item?._id)
-    ) || [];
+  const quantityBun = useSelector(bunId);
+  const quantityStuffing = useSelector(stuffingId);
 
   const quantity = useMemo(() => {
     let count = 0;

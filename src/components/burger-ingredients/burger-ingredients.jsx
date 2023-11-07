@@ -6,14 +6,12 @@ import BurgerIngredientCategory from "../burger-ingredient-category/burger-ingre
 
 import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
+import { successfulResponse } from "../../services/ingredints/ingredients-selector";
 
 function BurgerIngredients() {
   const [currentTab, setCurrentTab] = React.useState("buns");
 
-  const list =
-    useSelector((state) => state.ingredientsReducer.dataIngridients?.data) ||
-    [];
-
+  const list = useSelector(successfulResponse);
   const buns = useMemo(
     () => list.filter((item) => item.type === "bun"),
     [list]

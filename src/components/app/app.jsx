@@ -13,7 +13,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import ErrorPage from "../../pages/error-page/error-page";
 import { useDispatch } from "react-redux";
-import { getIngredients } from "../../services/actions/ingredients-action";
+import { getIngredients } from "../../services/ingredints/ingredients-slice";
 import * as apiAuth from "../../utils/ApiAuth";
 import ProtectedRoute from "../protected-route/protected-route";
 import { getToken } from "../../utils/token";

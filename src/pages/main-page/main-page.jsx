@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
-import { getIngredients } from "../../services/actions/ingredients-action";
 import { useSelector, useDispatch } from "react-redux";
 import style from "../../components/app/app.module.css";
+import {
+  ingredientRequest,
+  ingredientRequestError,
+} from "../../services/ingredints/ingredients-selector";
 
 const MainPage = () => {
-  const isLoading = useSelector(
-    (state) => state.ingredientsReducer.dataRequest
-  );
-  const error = useSelector((state) => state.ingredientsReducer.downloadError);
+  const isLoading = useSelector(ingredientRequest);
+  const error = useSelector(ingredientRequestError);
   return (
     <>
       {isLoading && <h2 className={style.services}>Loading...</h2>}

@@ -12,9 +12,18 @@ import OrderDetails from "../order-details/order-details";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
-import { addIngrrdinentConstructor } from "../../services/actions/constructor-action.js";
-import { sendOrder } from "../../services/actions/modal-order-action";
+import { addIngredinentConstructor } from "../../services/constructor/constructor-slice";
+
 import loader from "../../icons/loader.png";
+import {
+  buns,
+  stuffing,
+} from "../../services/constructor/constructor-selector";
+import {
+  download,
+  nubers,
+} from "../../services/modal-order/modal-order-selector";
+import { setData } from "../../services/modal-order/modal-order-slice";
 
 function BurgerConstructor() {
   const [finalPrice, setfinalPrice] = useState(0);
@@ -22,15 +31,13 @@ function BurgerConstructor() {
   const dispatch = useDispatch();
 
   // state конструктора
-  const bun = useSelector((state) => state.constructorReducer?.bun) || [];
-  const list = useSelector((state) => state.constructorReducer?.stuffing) || [];
+  const bun = useSelector(buns);
+  const list = useSelector(stuffing);
   // state конструктора
 
   //загрузка при оформлении заказа
-  const number =
-    useSelector((state) => state.modalOrderReducer.status?.order.number) ||
-    null;
-  const loading = useSelector((state) => state.modalOrderReducer.loading);
+  const number = useSelector(nubers);
+  const loading = useSelector(download);
   //загрузка при оформлении заказа
 
   //счет
@@ -42,7 +49,7 @@ function BurgerConstructor() {
 
   const orderHandler = () => {
     setActive(true);
-    dispatch(sendOrder(ingredientsId));
+    dispatch(setData(ingredientsId));
   };
 
   const onCloseModal = () => {
@@ -56,7 +63,7 @@ function BurgerConstructor() {
       isHover: monitor.isOver(),
     }),
     drop: (data) => {
-      dispatch(addIngrrdinentConstructor(data));
+      dispatch(addIngredinentConstructor(data));
     },
   });
   //перенос ингредиетов

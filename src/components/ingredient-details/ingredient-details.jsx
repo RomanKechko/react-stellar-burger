@@ -5,11 +5,10 @@ import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
 
 import { useParams } from "react-router-dom";
+import { successfulResponse } from "../../services/ingredints/ingredients-selector";
 
 function IngredientDetails() {
-  const list =
-    useSelector((state) => state.ingredientsReducer.dataIngridients?.data) ||
-    [];
+  const list = useSelector(successfulResponse);
 
   const { id } = useParams();
 

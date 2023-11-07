@@ -8,8 +8,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { useDrop, useDrag } from "react-dnd";
-import { deleteIngredient } from "../../services/actions/constructor-action";
-import { reorderIngredient } from "../../services/actions/constructor-action";
+
+import {
+  deleteStuffing,
+  reorderStuffing,
+} from "../../services/constructor/constructor-slice";
 
 function BurgerConstructorStuffing({ ingredients, index }) {
   const dispatch = useDispatch();
@@ -55,12 +58,7 @@ function BurgerConstructorStuffing({ ingredients, index }) {
         return;
       }
       // Time to actually perform the action
-      dispatch(
-        reorderIngredient({
-          to: dragIndex,
-          from: hoverIndex,
-        })
-      );
+      dispatch(reorderStuffing({ from: dragIndex, to: hoverIndex }));
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
       // but it's good here for the sake of performance
@@ -95,7 +93,7 @@ function BurgerConstructorStuffing({ ingredients, index }) {
         text={ingredients.name}
         price={ingredients.price}
         thumbnail={ingredients.image}
-        handleClose={() => dispatch(deleteIngredient(index))}
+        handleClose={() => dispatch(deleteStuffing(index))}
       />
     </li>
   );
