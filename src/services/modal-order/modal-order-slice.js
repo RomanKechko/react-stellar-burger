@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { url } from "../../utils/chek-response";
 
 const initialState = {
   status: null,
@@ -9,7 +10,7 @@ export const setData = createAsyncThunk(
   "modalOrder/setData",
   async (data, thunkAPI) => {
     try {
-      const res = await fetch("https://norma.nomoreparties.space/api/orders", {
+      const res = await fetch(`${url}/orders`, {
         method: "POST",
         body: JSON.stringify({
           ingredients: data,

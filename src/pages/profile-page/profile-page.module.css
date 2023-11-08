@@ -29,11 +29,6 @@
   color: #f2f2f3;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
 .text {
   color: #8585ad;
 }

@@ -7,9 +7,12 @@ import {
 import { Link } from "react-router-dom";
 import styles from "./login-page.module.css";
 import cn from "classnames";
+import { authUserRequest } from "../../services/user/user-slice";
+import { useDispatch } from "react-redux";
 
 const LoginPage = ({ onLogin }) => {
   const [userData, setUserData] = useState({});
+  const dispatch = useDispatch();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -18,7 +21,7 @@ const LoginPage = ({ onLogin }) => {
     if (!email || !password) {
       return;
     }
-    onLogin(userData);
+    dispatch(authUserRequest({ email, password }));
   }
 
   function handleChange(e) {
@@ -28,6 +31,7 @@ const LoginPage = ({ onLogin }) => {
       [name]: value,
     });
   }
+
   return (
     <div className={styles.page}>
       <h2 className="text text_type_main-medium">Вход</h2>

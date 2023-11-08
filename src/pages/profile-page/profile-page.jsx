@@ -1,26 +1,10 @@
 import React from "react";
-import {
-  Input,
-  EmailInput,
-  PasswordInput,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import styles from "./profile-page.module.css";
 import cn from "classnames";
 import { isAction } from "@reduxjs/toolkit";
 
 const ProfilePage = () => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [name, setName] = React.useState("");
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
   const setNavStyle = ({ isActive }) => {
     return isActive
       ? cn(styles.activelink, "text text_type_main-medium")
@@ -47,31 +31,7 @@ const ProfilePage = () => {
         </p>
       </div>
       <div>
-        <div className={cn(styles.container)}>
-          <Input
-            type={"text"}
-            placeholder={"Имя"}
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            name={"name"}
-            icon="EditIcon"
-          />
-          <EmailInput
-            onChange={handleEmailChange}
-            value={email}
-            name={"email"}
-            placeholder="Логин"
-            isIcon={true}
-            extraClass="mb-2"
-          />
-
-          <PasswordInput
-            onChange={handlePasswordChange}
-            value={password}
-            name={"password"}
-            icon="EditIcon"
-          />
-        </div>
+        <Outlet />
       </div>
     </div>
   );

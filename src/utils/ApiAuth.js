@@ -1,4 +1,4 @@
-import { setToken } from "./token";
+/* import { setAccessToken } from "./token";
 import checkResponse from "./chek-response";
 
 const BASE_URL = "https://norma.nomoreparties.space/api/auth";
@@ -33,7 +33,7 @@ export const authorize = ({ email, password }) => {
     })
     .then((data) => {
       if (data.accessToken) {
-        setToken(data.accessToken);
+        setAccessToken(data.accessToken);
         return data;
       } else {
         return null;
@@ -53,3 +53,4 @@ export const getContent = (token) => {
     .then((res) => res.json())
     .catch((err) => console.log(err));
 };
+ */

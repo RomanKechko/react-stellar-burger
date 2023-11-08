@@ -1,11 +1,9 @@
-const TOKEN_KEY = "jwt";
-
-export const setToken = (token) => {
-  localStorage.setItem(TOKEN_KEY, token);
-};
-
-export const getToken = () => localStorage.getItem(TOKEN_KEY);
-
-export const removeToken = () => {
-  localStorage.removeItem(TOKEN_KEY);
-};
+const ACCESS_TOKEN_KEY = "accessToken";
+const REFRESH_TOKEN_KEY = "refreshToken";
+export const setAccessToken = (value) =>
+  localStorage.setItem(ACCESS_TOKEN_KEY, value);
+export const setRefreshToken = (value) =>
+  localStorage.setItem(REFRESH_TOKEN_KEY, value);
+export const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN_KEY);
+export const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN_KEY);
+export const removeToken = () => localStorage.removeItem(ACCESS_TOKEN_KEY);

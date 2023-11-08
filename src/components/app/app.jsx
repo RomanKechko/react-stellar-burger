@@ -12,56 +12,32 @@ import ProfilePage from "../../pages/profile-page/profile-page";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import ErrorPage from "../../pages/error-page/error-page";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/ingredints/ingredients-slice";
 import * as apiAuth from "../../utils/ApiAuth";
 import ProtectedRoute from "../protected-route/protected-route";
-import { getToken } from "../../utils/token";
+import { getAccessToken, getToken } from "../../utils/token";
+import { currentUserRequest } from "../../services/user/user-slice";
+import ProfileDataPage from "../../pages/profile-data-page/profile-data-page";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
-  console.log(currentUser);
+  /*  const currentUser = useSelector((state) => state.getCurrentUser); */
+  const userData = useSelector((state) => state.registerReducer);
 
+  const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(currentUserRequest());
+  }, []);
 
-  const navigate = useNavigate();
-
-  const location = useLocation();
   const backgroundLocation = location.state?.backgroundLocation;
-
   const onCloseModal = () => {
     navigate(backgroundLocation.pathname || "/", { replace: true });
-  };
-  const token = getToken();
-
-  useEffect(() => {
-    apiAuth
-      .getContent(token)
-      .then((dataUser) => {
-        if (dataUser.user.email) {
-          setCurrentUser({ ...dataUser, isAuthCheck: true });
-        }
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setCurrentUser((prevState) => ({ ...prevState, isAuthCheck: true }));
-      });
-  }, [token]);
-
-  const cbLogin = (dataLogin) => {
-    apiAuth.authorize(dataLogin).then((dataUser) => {
-      setCurrentUser(dataUser.email);
-      console.log("login", dataUser);
-    });
-  };
-  const cbRegister = (dataRegister) => {
-    apiAuth.register(dataRegister).then((dataUser) => {
-      setCurrentUser(dataUser.user);
-      console.log("register", dataUser);
-    });
   };
 
   return (
@@ -73,30 +49,46 @@ function App() {
           <Route
             path="/login"
             element={
-              <ProtectedRoute user={currentUser} onlyUnAuth loading>
-                <LoginPage onLogin={cbLogin} />
+              <ProtectedRoute onlyUnAuth>
+                <LoginPage />
               </ProtectedRoute>
             }
           />
           <Route
             path="/register"
             element={
-              <ProtectedRoute user={currentUser} onlyUnAuth loading>
-                <RegisterPage onRegister={cbRegister} />
+              <ProtectedRoute onlyUnAuth>
+                <RegisterPage />
               </ProtectedRoute>
             }
           />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassworPage />} />
+          <Route
+            path="/forgot-password"
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <ForgotPassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <ResetPassworPage />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="/profile"
             element={
-              <ProtectedRoute user={currentUser}>
+              <ProtectedRoute>
                 <ProfilePage />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route index element={<ProfileDataPage />} />
+          </Route>
 
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
           <Route path="*" element={<ErrorPage />} />

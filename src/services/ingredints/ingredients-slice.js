@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { url } from "../../utils/chek-response";
 const initialState = {
   dataIngridients: [],
   dataRequest: false,
@@ -8,21 +8,19 @@ const initialState = {
 
 export const getIngredients = createAsyncThunk(
   "ingredients/getIngredients",
-  async (_, thunkAPI) => {
+  async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const res = await fetch(
-        "https://norma.nomoreparties.space/api/ingredients"
-      );
+      const res = await fetch(`${url}/ingredients`);
 
       if (res.ok) {
         const responseData = await res.json();
-        return thunkAPI.fulfillWithValue(responseData);
+        return fulfillWithValue(responseData);
       } else {
         const errorData = await res.json();
-        return thunkAPI.rejectWithValue(errorData);
+        return rejectWithValue(errorData);
       }
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return rejectWithValue(error);
     }
   }
 );
