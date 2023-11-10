@@ -100,5 +100,6 @@ function BurgerConstructorStuffing({ ingredients, index }) {
 }
 BurgerConstructorStuffing.propTypes = {
   ingredients: PropTypes.object.isRequired,
+  index: PropTypes.number,
 };
 export default BurgerConstructorStuffing;

@@ -23,7 +23,11 @@ import {
   download,
   nubers,
 } from "../../services/modal-order/modal-order-selector";
-import { setData } from "../../services/modal-order/modal-order-slice";
+import {
+  openTheAuthorizationWindow,
+  setData,
+} from "../../services/modal-order/modal-order-slice";
+import { Navigate } from "react-router-dom";
 
 function BurgerConstructor() {
   const [finalPrice, setfinalPrice] = useState(0);
@@ -85,6 +89,15 @@ function BurgerConstructor() {
   }, [account]);
   //счет
 
+  //Открываю страницу авторизации, если при оформлении заказа не авторизован
+  const authorization = useSelector(
+    (state) => state.modalOrder.authorizationPage
+  );
+  if (authorization) {
+    return <Navigate to={{ pathname: "/login", state: { from: "/" } }} />;
+  }
+  //Открываю страницу авторизации, если при оформлении заказа не авторизован
+
   return (
     <section
       ref={dropTarget}
@@ -103,7 +116,7 @@ function BurgerConstructor() {
             key={bun.uniqueId}
             type="top"
             isLocked={true}
-            text={bun.name ? `${bun.name} (низ)` : "Перенесите булочку "}
+            text={bun.name ? `${bun.name} (верх)` : "Перенесите булочку "}
             price={bun.price}
             thumbnail={bun.image ? `${bun.image}` : loader}
           />

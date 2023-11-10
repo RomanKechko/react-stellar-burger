@@ -14,7 +14,7 @@ import {
   stuffingId,
 } from "../../services/constructor/constructor-selector";
 
-function BurgerIngredient({ ingredients, modal }) {
+function BurgerIngredient({ ingredients }) {
   const quantityBun = useSelector(bunId);
   const quantityStuffing = useSelector(stuffingId);
 
@@ -80,6 +80,5 @@ function BurgerIngredient({ ingredients, modal }) {
 
 BurgerIngredient.propTypes = {
   ingredients: PropTypes.object.isRequired,
-  modal: PropTypes.func,
 };
 export default BurgerIngredient;

@@ -8,19 +8,17 @@ import {
 import { Link } from "react-router-dom";
 import styles from "./register-page.module.css";
 import cn from "classnames";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { registerUserRequest } from "../../services/user/user-slice";
 
-const RegisterPage = ({ onRegister }) => {
+const RegisterPage = () => {
   const [user, setUserData] = useState({});
   console.log(user);
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Form submitted!");
     const { name, password, email } = user;
     if (!name || !password || !email) {
       return;

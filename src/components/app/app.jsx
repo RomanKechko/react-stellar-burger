@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 import style from "./app.module.css";
@@ -12,18 +12,15 @@ import ProfilePage from "../../pages/profile-page/profile-page";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import ErrorPage from "../../pages/error-page/error-page";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/ingredints/ingredients-slice";
-import * as apiAuth from "../../utils/ApiAuth";
+
 import ProtectedRoute from "../protected-route/protected-route";
-import { getAccessToken, getToken } from "../../utils/token";
+
 import { currentUserRequest } from "../../services/user/user-slice";
 import ProfileDataPage from "../../pages/profile-data-page/profile-data-page";
 
 function App() {
-  /*  const currentUser = useSelector((state) => state.getCurrentUser); */
-  const userData = useSelector((state) => state.registerReducer);
-
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();

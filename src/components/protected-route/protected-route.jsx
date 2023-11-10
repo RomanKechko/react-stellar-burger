@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import styles from "./protected-route.module.css";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
 const ProtectedRoute = ({ onlyUnAuth, children }) => {
   const location = useLocation();
@@ -24,5 +25,8 @@ const ProtectedRoute = ({ onlyUnAuth, children }) => {
 
   return children;
 };
-
+ProtectedRoute.propTypes = {
+  children: PropTypes.object,
+  onlyUnAuth: PropTypes.bool,
+};
 export default ProtectedRoute;

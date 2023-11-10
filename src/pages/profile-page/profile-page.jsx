@@ -2,9 +2,15 @@ import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import styles from "./profile-page.module.css";
 import cn from "classnames";
-import { isAction } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { logoutUserRequest } from "../../services/user/user-slice";
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+  const logoutUser = () => {
+    console.log("Form submitted!");
+    dispatch(logoutUserRequest());
+  };
   const setNavStyle = ({ isActive }) => {
     return isActive
       ? cn(styles.activelink, "text text_type_main-medium")
@@ -22,9 +28,12 @@ const ProfilePage = () => {
           <NavLink to="/profile/orders" className={setNavStyle}>
             История заказов
           </NavLink>
-          <NavLink to="/exit" className={setNavStyle}>
+          <p
+            onClick={logoutUser}
+            className={cn(styles.link, "text text_type_main-medium")}
+          >
             Выход
-          </NavLink>
+          </p>
         </nav>
         <p className={cn(styles.text, "text text_type_main-default mt-20")}>
           В этом разделе вы можете изменить свои персональные данные

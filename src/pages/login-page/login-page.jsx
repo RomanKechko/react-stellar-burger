@@ -10,7 +10,7 @@ import cn from "classnames";
 import { authUserRequest } from "../../services/user/user-slice";
 import { useDispatch } from "react-redux";
 
-const LoginPage = ({ onLogin }) => {
+const LoginPage = () => {
   const [userData, setUserData] = useState({});
   const dispatch = useDispatch();
 

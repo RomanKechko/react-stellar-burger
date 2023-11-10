@@ -19,7 +19,7 @@
   height: 64px;
   align-items: center;
   text-decoration: none;
-
+  cursor: pointer;
   color: #8585ad;
 }
 .activelink {

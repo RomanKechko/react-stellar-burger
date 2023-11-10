@@ -6,7 +6,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./profile-data-page.module.css";
-import cn from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { dataСhangeRequest } from "../../services/user/user-slice";
 
@@ -29,6 +28,7 @@ const ProfileDataPage = () => {
     }
     dispatch(dataСhangeRequest({ email, name }));
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewData({
@@ -58,12 +58,12 @@ const ProfileDataPage = () => {
         />
         <PasswordInput
           onChange={handleChange}
-          value={"Введите новый пароль"}
+          defaultValue={"Введите новый пароль"}
           name={"password"}
           icon="EditIcon"
         />
         <div className={style.buttons}>
-          <Button htmlType="button" type="secondary" size="large">
+          <Button htmlType="reset" type="secondary" size="large">
             Отмена
           </Button>
           <Button htmlType="submit" type="primary" size="large">

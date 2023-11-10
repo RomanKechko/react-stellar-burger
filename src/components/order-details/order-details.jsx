@@ -29,6 +29,7 @@ function OrderDetails({ number, isActive }) {
   );
 }
 OrderDetails.propTypes = {
-  orderNumber: PropTypes.number,
+  number: PropTypes.number,
+  isActive: PropTypes.bool,
 };
 export default OrderDetails;

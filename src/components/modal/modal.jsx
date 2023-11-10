@@ -4,8 +4,7 @@ import styles from "./modal.module.css";
 import PropTypes from "prop-types";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+
 function Modal({ children, isActive, setActive, onCloseModal }) {
   function onClose() {
     if (isActive) {
@@ -43,5 +42,8 @@ function Modal({ children, isActive, setActive, onCloseModal }) {
 
 Modal.propTypes = {
   children: PropTypes.object,
+  isActive: PropTypes.bool,
+  setActive: PropTypes.func,
+  onCloseModal: PropTypes.func,
 };
 export default Modal;

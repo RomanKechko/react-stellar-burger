@@ -2,7 +2,7 @@ import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
 import style from "../burger-ingredients/burger-ingredients.module.css";
-
+import PropTypes from "prop-types";
 export default function Tabs({ currentTab, onClickTab }) {
   return (
     <div className={cn(style.ingredient_category, "pt-5")}>
@@ -18,3 +18,7 @@ export default function Tabs({ currentTab, onClickTab }) {
     </div>
   );
 }
+Tabs.propTypes = {
+  currentTab: PropTypes.string.isRequired,
+  onClickTab: PropTypes.func,
+};
