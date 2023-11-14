@@ -25,11 +25,13 @@ export const currentUserRequest = createAsyncThunk(
   async (_, { fulfillWithValue, rejectWithValue, dispatch }) => {
     try {
       if (getAccessToken()) {
+        /*       debugger; */
         const data = await fetchWithRefresh(`${url}/auth/user`, {
           method: "GET",
           headers: { Authorization: getAccessToken() },
         });
         if (data.success) {
+          /*  const responseData = await data.json(); */
           dispatch(chekUserAuth());
           return fulfillWithValue(data);
         }
@@ -243,6 +245,9 @@ export const userSlice = createSlice({
     chekUserAuth: (state) => {
       state.isAuthCheck = true;
     },
+    passwordForgot: (state) => {
+      state.passwordForgot = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -333,5 +338,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { chekUserAuth, logoutUser } = userSlice.actions;
+export const { chekUserAuth, logoutUser, passwordForgot } = userSlice.actions;
 export default userSlice.reducer;
