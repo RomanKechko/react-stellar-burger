@@ -1,21 +1,24 @@
-import { Link, NavLink, Outlet, useMatch } from "react-router-dom";
+import { NavLink, Outlet, PathPattern, useMatch } from "react-router-dom";
 import {
   BurgerIcon,
   ListIcon,
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
+import React, { FC } from "react";
 import styles from "./app-header.module.css";
 import cn from "classnames";
 
-function AppHeader() {
-  const setNavStyle = ({ isActive }) => {
+const AppHeader: FC = () => {
+  const setNavStyle = ({ isActive }: { isActive: boolean }) => {
     return isActive
       ? cn(styles.active_link, "pb-4 pt-4 pl-5 pr-5")
       : cn(styles.link, "pb-4 pt-4 pl-5 pr-5");
   };
-  const isConstructor = !!useMatch({ path: "/", exact: true });
+  const isConstructor = !!useMatch({
+    path: "/",
+    exact: true,
+  } as PathPattern<"/">);
   const isFeed = !!useMatch("/lenta");
   const isProfile = !!useMatch("/profile");
 
@@ -46,5 +49,5 @@ function AppHeader() {
       <Outlet />
     </>
   );
-}
+};
 export default AppHeader;

@@ -1,11 +1,16 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Done from "../../icons/done.svg";
 import PropTypes from "prop-types";
 import { resetConstructor } from "../../services/constructor/constructor-slice";
-import { closeModal } from "../../services/modal-order/modal-order-slice";
+import { closeModal } from "../../services/modal-order/modal-order-slice.js";
 
-function OrderDetails({ number, isActive }) {
+interface OrderDetailsProps {
+  number: number;
+  isActive: boolean;
+}
+
+const OrderDetails: FC<OrderDetailsProps> = ({ number, isActive }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     return () => {
@@ -27,9 +32,6 @@ function OrderDetails({ number, isActive }) {
       </p>
     </div>
   );
-}
-OrderDetails.propTypes = {
-  number: PropTypes.number,
-  isActive: PropTypes.bool,
 };
+
 export default OrderDetails;

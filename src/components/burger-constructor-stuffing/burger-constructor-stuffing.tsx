@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { FC, useRef } from "react";
 import cn from "classnames";
 import styles from "../burger-constructor/burger-constructor.module.css";
 import PropTypes from "prop-types";
@@ -13,18 +13,36 @@ import {
   deleteStuffing,
   reorderStuffing,
 } from "../../services/constructor/constructor-slice";
+import {
+  IIngredient,
+  IDragItemConstructor,
+  IColletedPropsDrag,
+  IColletedPropsDrop,
+} from "../../types/interface";
 
-function BurgerConstructorStuffing({ ingredients, index }) {
+interface BurgerConstructorStuffingProps {
+  ingredients: IIngredient;
+  index: number;
+}
+
+const BurgerConstructorStuffing: FC<BurgerConstructorStuffingProps> = ({
+  ingredients,
+  index,
+}) => {
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
   /* console.log(ingredients); */
 
   //перенос ингредиентов в конструкторе
-  const [{ handlerId }, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop<
+    IDragItemConstructor,
+    unknown,
+    IColletedPropsDrop
+  >({
     accept: "STUFFING_INGREDIENT",
     collect(monitor) {
       return {
-        handlerId: monitor.getHandlerId(),
+        handlerId: monitor.getHandlerId() as string,
       };
     },
     hover(item, monitor) {
@@ -45,7 +63,9 @@ function BurgerConstructorStuffing({ ingredients, index }) {
       // Determine mouse position
       const clientOffset = monitor.getClientOffset();
       // Get pixels to the top
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY: number = clientOffset
+        ? clientOffset.y - hoverBoundingRect.top
+        : 0;
       // Only perform the move when the mouse has crossed half of the items height
       // When dragging downwards, only move when the cursor is below 50%
       // When dragging upwards, only move when the cursor is above 50%
@@ -66,9 +86,13 @@ function BurgerConstructorStuffing({ ingredients, index }) {
       item.index = hoverIndex;
     },
   });
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag<
+    IDragItemConstructor,
+    unknown,
+    IColletedPropsDrag
+  >({
     type: "STUFFING_INGREDIENT",
-    item: () => {
+    item: (): IDragItemConstructor => {
       return { ingredients, index };
     },
     collect: (monitor) => ({
@@ -97,9 +121,6 @@ function BurgerConstructorStuffing({ ingredients, index }) {
       />
     </li>
   );
-}
-BurgerConstructorStuffing.propTypes = {
-  ingredients: PropTypes.object.isRequired,
-  index: PropTypes.number,
 };
+
 export default BurgerConstructorStuffing;

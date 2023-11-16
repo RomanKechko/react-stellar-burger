@@ -1,8 +1,22 @@
-import React from "react";
+import React, { FC, RefObject } from "react";
 import styles from "./burger-ingredient-category.module.css";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-function BurgerIngredientCategory({ title, titleId, data, refs }) {
+import { IIngredient } from "../../types/interface";
+
+type BurgerIngredientCategoryProps = {
+  title: string;
+  titleId: string;
+  data: IIngredient[];
+  refs: (node?: Element | null) => void;
+};
+
+const BurgerIngredientCategory: FC<BurgerIngredientCategoryProps> = ({
+  title,
+  titleId,
+  data,
+  refs,
+}) => {
   return (
     <>
       <h2 id={titleId} className="text text_type_main-medium" ref={refs}>
@@ -15,12 +29,6 @@ function BurgerIngredientCategory({ title, titleId, data, refs }) {
       </ul>
     </>
   );
-}
-BurgerIngredientCategory.propTypes = {
-  data: PropTypes.array.isRequired,
-  title: PropTypes.string.isRequired,
-  titleId: PropTypes.string.isRequired,
-  refs: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredientCategory;

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react"; // Убедитесь, что вы импортируете React
+import React, { useEffect, useMemo, useState, FC } from "react"; // Убедитесь, что вы импортируете React
 import styles from "./burger-constructor.module.css";
 import cn from "classnames";
 import {
@@ -20,18 +20,25 @@ import {
   stuffing,
 } from "../../services/constructor/constructor-selector";
 import {
+  authorizationUser,
   download,
   nubers,
 } from "../../services/modal-order/modal-order-selector";
-import {
-  openTheAuthorizationWindow,
-  setData,
-} from "../../services/modal-order/modal-order-slice";
+import { setData } from "../../services/modal-order/modal-order-slice.js";
 import { Navigate } from "react-router-dom";
 
-function BurgerConstructor() {
-  const [finalPrice, setfinalPrice] = useState(0);
-  const [isActive, setActive] = useState(false);
+import { IIngredient, IIngredientAndUniqueId } from "../../types/interface";
+
+interface StateObject {
+  pathname: string;
+  state: {
+    from: string;
+  };
+}
+
+const BurgerConstructor: FC = () => {
+  const [finalPrice, setfinalPrice] = useState<number>(0);
+  const [isActive, setActive] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   // state конструктора
@@ -45,14 +52,17 @@ function BurgerConstructor() {
   //загрузка при оформлении заказа
 
   //счет
-  let ingredientsId = [];
-  if ((bun && bun._id) || (list && list.length > 0)) {
-    ingredientsId = list.map((item) => item._id).concat(bun._id, bun._id);
+  let ingredientsId: string[] = [];
+  if ((bun && "_id" in bun) || (list && list.length > 0)) {
+    ingredientsId = list
+      .map((item: IIngredient) => item._id)
+      .concat(bun._id, bun._id);
   }
   //счет
 
   const orderHandler = () => {
     setActive(true);
+    //@ts-ignore
     dispatch(setData(ingredientsId));
   };
 
@@ -67,6 +77,7 @@ function BurgerConstructor() {
       isHover: monitor.isOver(),
     }),
     drop: (data) => {
+      //@ts-ignore
       dispatch(addIngredinentConstructor(data));
     },
   });
@@ -74,10 +85,10 @@ function BurgerConstructor() {
 
   //счет
   const account = useMemo(() => {
-    const priceBun = bun.length !== 0 ? bun.price * 2 : 0;
+    const priceBun = bun.price ? bun.price * 2 : 0;
     const priceList =
-      list.lenght !== 0
-        ? list.reduce((accumulator, ingredient) => {
+      list.length !== 0
+        ? list.reduce((accumulator: number, ingredient: IIngredient) => {
             return accumulator + ingredient.price;
           }, 0)
         : 0;
@@ -90,11 +101,13 @@ function BurgerConstructor() {
   //счет
 
   //Открываю страницу авторизации, если при оформлении заказа не авторизован
-  const authorization = useSelector(
-    (state) => state.modalOrder.authorizationPage
-  );
+  const authorization = useSelector(authorizationUser);
   if (authorization) {
-    return <Navigate to={{ pathname: "/login", state: { from: "/" } }} />;
+    return (
+      <Navigate
+        to={{ pathname: "/login", state: { from: "/" } } as StateObject}
+      />
+    );
   }
   //Открываю страницу авторизации, если при оформлении заказа не авторизован
 
@@ -122,7 +135,7 @@ function BurgerConstructor() {
           />
         </div>
         <ul className={styles.stuffing}>
-          {list.map((item, index) => (
+          {list.map((item: IIngredientAndUniqueId, index: number) => (
             <BurgerConstructorStuffing
               ingredients={item}
               index={index}
@@ -153,7 +166,7 @@ function BurgerConstructor() {
           type="primary"
           size="large"
           onClick={orderHandler}
-          disabled={(!bun || bun.length === 0) && (!list || list.length === 0)}
+          disabled={!bun && (!list || list.length === 0)}
         >
           Оформить заказ
         </Button>
@@ -166,6 +179,6 @@ function BurgerConstructor() {
       )}
     </section>
   );
-}
+};
 
 export default BurgerConstructor;

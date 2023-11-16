@@ -1,13 +1,17 @@
-import React from "react";
+import React, { FC, ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import styles from "./protected-route.module.css";
 import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
+import { check, user } from "../../services/user/user-selector";
 
-const ProtectedRoute = ({ onlyUnAuth, children }) => {
+interface ProtectedRouteProps {
+  onlyUnAuth?: boolean;
+}
+
+const ProtectedRoute: FC<ProtectedRouteProps> = ({ onlyUnAuth, children }) => {
   const location = useLocation();
-  const currentUser = useSelector((state) => state.user.data);
-  const isAuthCheck = useSelector((state) => state.user.isAuthCheck);
+  const currentUser = useSelector(user);
+  const isAuthCheck = useSelector(check);
 
   if (!isAuthCheck) {
     return <span className={styles.loader}></span>;
@@ -23,10 +27,7 @@ const ProtectedRoute = ({ onlyUnAuth, children }) => {
     return <Navigate to={{ pathname: "/login" }} state={{ from: location }} />;
   }
 
-  return children;
+  return children as React.ReactElement | null;
 };
-ProtectedRoute.propTypes = {
-  children: PropTypes.object,
-  onlyUnAuth: PropTypes.bool,
-};
+
 export default ProtectedRoute;

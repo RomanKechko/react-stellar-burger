@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 import style from "./app.module.css";
@@ -20,7 +20,7 @@ import ProtectedRoute from "../protected-route/protected-route";
 import { currentUserRequest } from "../../services/user/user-slice";
 import ProfileDataPage from "../../pages/profile-data-page/profile-data-page";
 
-function App() {
+const App: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ function App() {
   }, []);
 
   const backgroundLocation = location.state?.backgroundLocation;
-  const onCloseModal = () => {
+  const onCloseModal = (): void => {
     navigate(backgroundLocation.pathname || "/", { replace: true });
   };
 
@@ -105,7 +105,7 @@ function App() {
       )}
     </div>
   );
-}
+};
 
 export default App;
 //accessToken Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGI5NmY0YzJjYzYxMDAxYjNkNjY2ZCIsImlhdCI6MTY5OTU5NzY5MCwiZXhwIjoxNjk5NTk4ODkwfQ.iDCObfJ8udQRyyINGP-BS9aTap-8yo211fZsspXHDCc

@@ -1,17 +1,17 @@
-import React from "react";
+import React, { FC } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import styles from "./profile-page.module.css";
 import cn from "classnames";
 import { useDispatch } from "react-redux";
 import { logoutUserRequest } from "../../services/user/user-slice";
 
-const ProfilePage = () => {
+const ProfilePage: FC = () => {
   const dispatch = useDispatch();
   const logoutUser = () => {
     console.log("Form submitted!");
     dispatch(logoutUserRequest());
   };
-  const setNavStyle = ({ isActive }) => {
+  const setNavStyle = ({ isActive }: { isActive: boolean }) => {
     return isActive
       ? cn(styles.activelink, "text text_type_main-medium")
       : cn(styles.link, "text text_type_main-medium");

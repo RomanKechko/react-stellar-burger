@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, FC } from "react";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import cn from "classnames";
@@ -13,10 +13,16 @@ import {
   bunId,
   stuffingId,
 } from "../../services/constructor/constructor-selector";
+import { IIngredient } from "../../types/interface";
 
-function BurgerIngredient({ ingredients }) {
+interface IBurgerIngredientProps {
+  ingredients: IIngredient;
+}
+
+const BurgerIngredient: FC<IBurgerIngredientProps> = ({ ingredients }) => {
   const quantityBun = useSelector(bunId);
   const quantityStuffing = useSelector(stuffingId);
+  const ref = useRef<HTMLLIElement>(null);
 
   const quantity = useMemo(() => {
     let count = 0;
@@ -25,16 +31,14 @@ function BurgerIngredient({ ingredients }) {
         count += 2;
       }
       const matchingIds = quantityStuffing.filter(
-        (id) => id === ingredients._id
+        (id: string) => id === ingredients._id
       );
       count += matchingIds.length;
     }
     return count;
   }, [ingredients, quantityBun, quantityStuffing]);
 
-  const ref = useRef();
-
-  const [, drag] = useDrag({
+  const [, drag] = useDrag<IIngredient, unknown, unknown>({
     type: "ADD_CONSTRUCTOR",
     item: ingredients,
   });
@@ -55,12 +59,7 @@ function BurgerIngredient({ ingredients }) {
           alt="булочка"
           className={cn(styles.image__bun, "ml-4 mr-4")}
         />
-        <Counter
-          count={quantity}
-          size="default"
-          extraClass="m-1"
-          className={styles.amount__of_additives}
-        />
+        <Counter count={quantity} size="default" extraClass="m-1" />
         <div className={cn(styles.container__price, "mt-1")}>
           <p
             className={cn(styles.text__color, "text text_type_digits-default")}
@@ -76,9 +75,6 @@ function BurgerIngredient({ ingredients }) {
       </Link>
     </li>
   );
-}
-
-BurgerIngredient.propTypes = {
-  ingredients: PropTypes.object.isRequired,
 };
+
 export default BurgerIngredient;

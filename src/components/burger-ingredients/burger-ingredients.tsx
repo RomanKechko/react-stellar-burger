@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, FC } from "react";
 import style from "./burger-ingredients.module.css";
 import cn from "classnames";
 import Tabs from "../tabs/tabs";
@@ -8,24 +8,26 @@ import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
 import { successfulResponse } from "../../services/ingredints/ingredients-selector";
 
-function BurgerIngredients() {
+import { IIngredient } from "../../types/interface";
+
+const BurgerIngredients: FC = () => {
   const [currentTab, setCurrentTab] = React.useState("buns");
 
   const list = useSelector(successfulResponse);
   const buns = useMemo(
-    () => list.filter((item) => item.type === "bun"),
+    () => list.filter((item: IIngredient) => item.type === "bun"),
     [list]
   );
   const mains = useMemo(
-    () => list.filter((item) => item.type === "main"),
+    () => list.filter((item: IIngredient) => item.type === "main"),
     [list]
   );
   const sauces = useMemo(
-    () => list.filter((item) => item.type === "sauce"),
+    () => list.filter((item: IIngredient) => item.type === "sauce"),
     [list]
   );
 
-  const onClickTab = (tab) => {
+  const onClickTab = (tab: string) => {
     setCurrentTab(tab);
     const element = document.getElementById(tab);
     if (element) element.scrollIntoView({ behavior: "smooth" });
@@ -79,6 +81,6 @@ function BurgerIngredients() {
       </div>
     </section>
   );
-}
+};
 
 export default BurgerIngredients;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import {
   Input,
   EmailInput,
@@ -8,28 +8,34 @@ import {
 import style from "./profile-data-page.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { dataСhangeRequest } from "../../services/user/user-slice";
+import { profileEmail, profileName } from "../../services/user/user-selector";
+import { IUserLogging } from "../../types/interface";
 
-const ProfileDataPage = () => {
-  const [newData, setNewData] = useState({});
-  console.log(newData);
+const ProfileDataPage: FC = () => {
+  const [newData, setNewData] = useState<IUserLogging>({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const dispatch = useDispatch();
 
-  const existingName = useSelector((state) => state.user.data.name);
-  const existingEmail = useSelector((state) => state.user.data.email);
+  const existingName = useSelector(profileName);
+  const existingEmail = useSelector(profileEmail);
 
-  const handleDataChange = (e) => {
+  const handleDataChange = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     console.log("Form submitted!");
     const { name, email } = newData;
-    if (name === existingName || email === existingEmail) {
+    if (name === existingName.name || email === existingEmail.email) {
       return;
     }
+    //@ts-ignore
     dispatch(dataСhangeRequest({ email, name }));
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewData({
       ...newData,
@@ -44,13 +50,15 @@ const ProfileDataPage = () => {
           onChange={handleChange}
           type={"text"}
           placeholder={"Имя"}
-          defaultValue={existingName}
+          defaultValue={existingName.name}
+          value=""
           name={"name"}
           icon="EditIcon"
         />
         <EmailInput
           onChange={handleChange}
-          defaultValue={existingEmail}
+          defaultValue={existingEmail.email}
+          value=""
           name={"email"}
           placeholder="Логин"
           isIcon={true}
@@ -59,6 +67,7 @@ const ProfileDataPage = () => {
         <PasswordInput
           onChange={handleChange}
           defaultValue={"Введите новый пароль"}
+          value=""
           name={"password"}
           icon="EditIcon"
         />

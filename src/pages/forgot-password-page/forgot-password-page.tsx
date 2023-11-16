@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, FC, FormEvent } from "react";
 import {
   EmailInput,
   Button,
@@ -8,22 +8,27 @@ import styles from "./forgot-password-page.module.css";
 import cn from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { forgotPassword } from "../../services/user/user-slice";
+import { passcodeForgot } from "../../services/user/user-selector";
+import { IUserLogging } from "../../types/interface";
 
-const ForgotPasswordPage = () => {
-  const [emailUser, setEmail] = React.useState({});
-  const passwordForgot = useSelector((state) => state.user.passwordForgot);
+const ForgotPasswordPage: FC = () => {
+  const [emailUser, setEmail] = React.useState<IUserLogging>({
+    email: "",
+  });
+  const passwordForgot = useSelector(passcodeForgot);
 
   const dispatch = useDispatch();
-  function handleSubmit(e) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log("Form submitted!");
     const { email } = emailUser;
     if (!email) {
       return;
     }
+    //@ts-ignore
     dispatch(forgotPassword({ email }));
   }
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEmail({
       [name]: value,

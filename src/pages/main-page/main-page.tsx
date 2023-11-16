@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import { useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import {
   ingredientRequestError,
 } from "../../services/ingredints/ingredients-selector";
 
-const MainPage = () => {
+const MainPage: FC = () => {
   const isLoading = useSelector(ingredientRequest);
   const error = useSelector(ingredientRequestError);
   return (

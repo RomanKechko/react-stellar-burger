@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import {
   EmailInput,
   Button,
@@ -9,22 +9,27 @@ import styles from "./login-page.module.css";
 import cn from "classnames";
 import { authUserRequest } from "../../services/user/user-slice";
 import { useDispatch } from "react-redux";
+import { IUserLogging } from "../../types/interface";
 
-const LoginPage = () => {
-  const [userData, setUserData] = useState({});
+const LoginPage: FC = () => {
+  const [userData, setUserData] = useState<IUserLogging>({
+    email: "",
+    password: "",
+  });
   const dispatch = useDispatch();
 
-  function handleSubmit(e) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log("Form submitted!");
     const { email, password } = userData;
     if (!email || !password) {
       return;
     }
+    //@ts-ignore
     dispatch(authUserRequest({ email, password }));
   }
 
-  function handleChange(e) {
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setUserData({
       ...userData,
@@ -39,7 +44,6 @@ const LoginPage = () => {
         <div className={cn(styles.container, "mt-6 mb-6")}>
           <EmailInput
             onChange={handleChange}
-            defaultValue={""}
             value={userData.email}
             name={"email"}
             isIcon={false}
@@ -47,7 +51,6 @@ const LoginPage = () => {
 
           <PasswordInput
             onChange={handleChange}
-            defaultValue={""}
             value={userData.password}
             name={"password"}
             extraClass="mb-2"

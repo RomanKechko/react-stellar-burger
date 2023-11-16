@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, FC, FormEvent } from "react";
 import {
   Input,
   PasswordInput,
@@ -9,22 +9,30 @@ import styles from "./reset-password-page.module.css";
 import cn from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../../services/user/user-slice";
+import { IUserLogging } from "../../types/interface";
+import { passcodeForgot } from "../../services/user/user-selector";
 
-const ResetPassworPage = () => {
-  const [changePassword, setChangePassword] = React.useState({});
+const ResetPassworPage: FC = () => {
+  const [changePassword, setChangePassword] = React.useState<IUserLogging>({
+    password: "",
+    token: "",
+  });
   console.log(changePassword);
   const dispatch = useDispatch();
 
-  function handleSubmit(e) {
+  const passwordForgot = useSelector(passcodeForgot);
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log("Form submitted!");
     const { password, token } = changePassword;
     if (!password && !token) {
       return;
     }
+    //@ts-ignore
     dispatch(resetPassword({ password, token }));
   }
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setChangePassword({
@@ -32,8 +40,6 @@ const ResetPassworPage = () => {
       [name]: value,
     });
   };
-
-  const passwordForgot = useSelector((state) => state.user.passwordForgot);
 
   return passwordForgot ? (
     <div className={styles.page}>

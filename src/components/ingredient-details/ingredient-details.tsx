@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import cn from "classnames";
 import styles from "./ingredient-details.module.css";
 
@@ -6,14 +6,16 @@ import { useSelector } from "react-redux";
 
 import { useParams } from "react-router-dom";
 import { successfulResponse } from "../../services/ingredints/ingredients-selector";
+import { IIngredient } from "../../types/interface";
 
-function IngredientDetails() {
+const IngredientDetails: FC = () => {
   const list = useSelector(successfulResponse);
 
   const { id } = useParams();
 
-  const ingredient = list.find((item) => item._id === id) || {};
-  console.log(list);
+  const ingredient =
+    (list.find((item: IIngredient) => item._id === id) as IIngredient) || {};
+
   return (
     <div className={styles.container}>
       <span className={cn(styles.modal__title, "pt-10 pr-10 pl-10")}>
@@ -61,6 +63,6 @@ function IngredientDetails() {
       </ul>
     </div>
   );
-}
+};
 
 export default IngredientDetails;

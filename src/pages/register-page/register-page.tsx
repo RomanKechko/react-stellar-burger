@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import {
   Input,
   EmailInput,
@@ -10,23 +10,29 @@ import styles from "./register-page.module.css";
 import cn from "classnames";
 import { useDispatch } from "react-redux";
 import { registerUserRequest } from "../../services/user/user-slice";
+import { IUserLogging } from "../../types/interface";
 
-const RegisterPage = () => {
-  const [user, setUserData] = useState({});
-  console.log(user);
+const RegisterPage: FC = () => {
+  const [user, setUserData] = useState<IUserLogging>({
+    name: "",
+    email: "",
+    password: "",
+  });
+
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { name, password, email } = user;
     if (!name || !password || !email) {
       return;
     }
+    //@ts-ignore
     dispatch(registerUserRequest({ name, password, email }));
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setUserData({

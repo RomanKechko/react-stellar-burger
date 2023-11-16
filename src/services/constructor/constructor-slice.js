@@ -11,6 +11,7 @@ export const addIngredinentConstructor = createAsyncThunk(
     return ingredient;
   }
 );
+
 export const constructorSlice = createSlice({
   name: "constructorIngredient",
   initialState,
