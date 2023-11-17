@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { v4 as uuidv4 } from "uuid";
 const initialState = {
   bun: null,
   stuffing: [],
@@ -35,9 +35,9 @@ export const constructorSlice = createSlice({
     builder.addCase(addIngredinentConstructor.fulfilled, (state, action) => {
       const ingredient = action.payload;
       if (ingredient.type === "bun") {
-        state.bun = ingredient;
+        state.bun = { ...ingredient, uniqueId: uuidv4() };
       } else {
-        state.stuffing.push(ingredient);
+        state.stuffing.push({ ...ingredient, uniqueId: uuidv4() });
       }
     });
   },

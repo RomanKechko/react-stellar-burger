@@ -22,33 +22,26 @@ const initialState = {
 
 export const currentUserRequest = createAsyncThunk(
   `user/currentUserRequest`,
-  async (_, { fulfillWithValue, rejectWithValue, dispatch }) => {
-    try {
-      if (getAccessToken()) {
-        /*       debugger; */
-        const data = await fetchWithRefresh(`${url}/auth/user`, {
-          method: "GET",
-          headers: { Authorization: getAccessToken() },
-        });
-        if (data.success) {
-          /*  const responseData = await data.json(); */
-          dispatch(chekUserAuth());
-          return fulfillWithValue(data);
-        }
-        throw new Error("Network response was not ok");
-      } else {
+  async (_, { fulfillWithValue, dispatch }) => {
+    if (getAccessToken()) {
+      const data = await fetchWithRefresh(`${url}/auth/user`, {
+        method: "GET",
+        headers: { Authorization: getAccessToken() },
+      });
+      if (data.success) {
         dispatch(chekUserAuth());
-        return fulfillWithValue(null);
+        return fulfillWithValue(data);
       }
-    } catch (error) {
+      throw new Error("Network response was not ok");
+    } else {
       dispatch(chekUserAuth());
-      return rejectWithValue(error.stringify());
+      return fulfillWithValue(null);
     }
   }
 );
 
 const refreshToken = () => {
-  return fetch("https://norma.nomoreparties.space/api/auth/token", {
+  return fetch(`${url}/auth/token`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -84,157 +77,98 @@ export const fetchWithRefresh = async (url, options) => {
 
 export const authUserRequest = createAsyncThunk(
   `user/authUserRequest`,
-  async (dataLogin, { fulfillWithValue, rejectWithValue }) => {
-    try {
-      const data = await fetch(`${url}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dataLogin),
-      });
-      if (data.ok) {
-        const responseData = await data.json();
-        setAccessToken(responseData.accessToken);
-        setRefreshToken(responseData.refreshToken);
-        console.log(responseData);
-        return fulfillWithValue(responseData);
-      } else {
-        const errorData = await data.json();
-        return rejectWithValue(errorData);
-      }
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+  async (dataLogin, { fulfillWithValue }) => {
+    const data = await fetch(`${url}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dataLogin),
+    });
+    const responseData = await checkResponse(data);
+    setAccessToken(responseData.accessToken);
+    setRefreshToken(responseData.refreshToken);
+    return fulfillWithValue(responseData);
   }
 );
 
 export const registerUserRequest = createAsyncThunk(
   `user/registerUserRequest`,
-  async (dataRegister, { fulfillWithValue, rejectWithValue }) => {
-    try {
-      const data = await fetch(`${url}/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataRegister),
-      });
-
-      if (data.ok) {
-        const responseData = await data.json();
-        setAccessToken(responseData.accessToken);
-        setRefreshToken(responseData.refreshToken);
-        console.log(responseData);
-        return fulfillWithValue(responseData);
-      } else {
-        const errorData = await data.json();
-        return rejectWithValue(errorData);
-      }
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+  async (dataRegister, { fulfillWithValue }) => {
+    const data = await fetch(`${url}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataRegister),
+    });
+    const responseData = await checkResponse(data);
+    setAccessToken(responseData.accessToken);
+    setRefreshToken(responseData.refreshToken);
+    return fulfillWithValue(responseData);
   }
 );
 
 export const dataСhangeRequest = createAsyncThunk(
   `user/dataСhangeRequest`,
-  async (newData, { fulfillWithValue, rejectWithValue }) => {
-    try {
-      if (getAccessToken()) {
-        const data = await fetchWithRefresh(
-          "https://norma.nomoreparties.space/api/auth/user",
-          {
-            method: "PATCH",
-            headers: {
-              Authorization: getAccessToken(),
-              "Content-Type": "application/json;charset=utf-8",
-            },
-            body: JSON.stringify(newData),
-          }
-        );
+  async (newData, { fulfillWithValue }) => {
+    if (getAccessToken()) {
+      const data = await fetchWithRefresh(`${url}/auth/user`, {
+        method: "PATCH",
+        headers: {
+          Authorization: getAccessToken(),
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(newData),
+      });
 
-        if (!data.ok) {
-          throw new Error(console.log(`HTTP error! status: ${data.status}`));
-        }
-        const responseData = await data.json();
-        return fulfillWithValue(responseData);
-      } else {
-        return fulfillWithValue(null);
-      }
-    } catch (error) {
-      return rejectWithValue(error);
+      const responseData = await checkResponse(data);
+      return fulfillWithValue(responseData);
     }
   }
 );
 
 export const logoutUserRequest = createAsyncThunk(
   `user/logoutUserRequest `,
-  async (_, { fulfillWithValue, rejectWithValue, dispatch }) => {
-    try {
-      const refreshToken = getRefreshToken();
-      const data = await fetch(`${url}/auth/logout`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({ token: refreshToken }),
-      });
+  async (_, { fulfillWithValue }) => {
+    const refreshToken = getRefreshToken();
+    const data = await fetch(`${url}/auth/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({ token: refreshToken }),
+    });
 
-      if (data.ok) {
-        const responseData = await data.json();
-        removeAccessToken();
-        removeRefreshToken();
+    const responseData = await checkResponse(data);
+    removeAccessToken();
+    removeRefreshToken();
 
-        return fulfillWithValue(responseData);
-      } else {
-        const errorData = await data.json();
-        return rejectWithValue(errorData);
-      }
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+    return fulfillWithValue(responseData);
   }
 );
 
 export const forgotPassword = createAsyncThunk(
   `user/forgotPassword `,
-  async (dataEmail, { fulfillWithValue, rejectWithValue, dispatch }) => {
-    try {
-      const data = await fetch(`${url}/password-reset`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json;charset=utf-8" },
-        body: JSON.stringify(dataEmail),
-      });
-      if (data.ok) {
-        const responseData = await data.json();
-
-        return fulfillWithValue(responseData);
-      }
-      const errorData = await data.json();
-      return rejectWithValue(errorData);
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+  async (dataEmail, { fulfillWithValue }) => {
+    const data = await fetch(`${url}/password-reset`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json;charset=utf-8" },
+      body: JSON.stringify(dataEmail),
+    });
+    const responseData = await checkResponse(data);
+    return fulfillWithValue(responseData);
   }
 );
 export const resetPassword = createAsyncThunk(
   `user/resetPassword `,
   async (dataPassword, { fulfillWithValue, rejectWithValue, dispatch }) => {
-    try {
-      const data = await fetch(`${url}/password-reset/reset`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json;charset=utf-8" },
-        body: JSON.stringify(dataPassword),
-      });
+    const data = await fetch(`${url}/password-reset/reset`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json;charset=utf-8" },
+      body: JSON.stringify(dataPassword),
+    });
 
-      if (data.ok) {
-        const responseData = await data.json();
-        return fulfillWithValue(responseData);
-      }
-      const errorData = await data.json();
-      return rejectWithValue(errorData);
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+    const responseData = await checkResponse(data);
+    return fulfillWithValue(responseData);
   }
 );
 
@@ -251,24 +185,7 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(currentUserRequest.pending, (state) => {
-        state.isPending = true;
-      })
-      .addCase(authUserRequest.pending, (state) => {
-        state.isPending = true;
-      })
-      .addCase(registerUserRequest.pending, (state) => {
-        state.isPending = true;
-      })
-      .addCase(dataСhangeRequest.pending, (state) => {
-        state.isPending = true;
-      })
-      .addCase(logoutUserRequest.pending, (state) => {
-        state.isPending = true;
-      })
-      .addCase(forgotPassword.pending, (state) => {
-        state.isPending = true;
-      })
+
       .addCase(resetPassword.pending, (state) => {
         state.isPending = true;
       })
@@ -307,34 +224,20 @@ export const userSlice = createSlice({
         state.isPending = false;
         state.passwordForgot = false;
       })
-      .addCase(currentUserRequest.rejected, (state) => {
-        state.isPending = false;
-        state.success = false;
-      })
-      .addCase(authUserRequest.rejected, (state) => {
-        state.success = false;
-        state.isPending = false;
-      })
-      .addCase(registerUserRequest.rejected, (state) => {
-        state.success = false;
-        state.isPending = false;
-      })
-      .addCase(dataСhangeRequest.rejected, (state) => {
-        state.success = false;
-        state.isPending = false;
-      })
-      .addCase(logoutUserRequest.rejected, (state) => {
-        state.success = false;
-        state.isPending = false;
-      })
-      .addCase(forgotPassword.rejected, (state) => {
-        state.success = false;
-        state.isPending = false;
-      })
-      .addCase(resetPassword.rejected, (state) => {
-        state.success = false;
-        state.isPending = false;
-      });
+
+      .addMatcher(
+        (action) => action.type.endsWith("/pending"),
+        (state) => {
+          state.isPending = true;
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith("/rejected"),
+        (state) => {
+          state.success = false;
+          state.isPending = false;
+        }
+      );
   },
 });
 

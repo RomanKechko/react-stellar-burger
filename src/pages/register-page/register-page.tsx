@@ -50,20 +50,17 @@ const RegisterPage: FC = () => {
             type={"text"}
             placeholder={"Ваше имя"}
             onChange={handleChange}
-            defaultValue={""}
-            value={user.userName}
+            value={user.name}
             name={"name"}
           />
 
           <EmailInput
             onChange={handleChange}
-            defaultValue={""}
             value={user.email}
             name={"email"}
           />
           <PasswordInput
             onChange={handleChange}
-            defaultValue={""}
             value={user.password}
             name={"password"}
             extraClass="mb-2"

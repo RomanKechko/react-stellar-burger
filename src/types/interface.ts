@@ -12,12 +12,13 @@ export interface IIngredient {
   image_large: string;
   image_mobile: string;
 }
-export interface IUserLogging {
-  [name: string]: string;
-}
 
 export interface IIngredientAndUniqueId extends IIngredient {
   uniqueId?: string;
+}
+
+export interface IUserLogging {
+  [name: string]: string;
 }
 export interface IIngredientAndNumber extends IIngredient {
   index?: string | number;

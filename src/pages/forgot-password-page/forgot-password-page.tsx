@@ -20,7 +20,7 @@ const ForgotPasswordPage: FC = () => {
   const dispatch = useDispatch();
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("Form submitted!");
+    /*  console.log("Form submitted!"); */
     const { email } = emailUser;
     if (!email) {
       return;

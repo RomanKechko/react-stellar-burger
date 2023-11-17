@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { url } from "../../utils/chek-response";
 import { fetchWithRefresh } from "../user/user-slice";
 import { getAccessToken } from "../../utils/token";
+import { IIngredient } from "../../types/interface";
 
 const initialState = {
   status: null,
@@ -12,30 +13,26 @@ const initialState = {
 export const setData = createAsyncThunk(
   "modalOrder/setData",
   async (data, { fulfillWithValue, rejectWithValue, dispatch }) => {
-    try {
-      if (getAccessToken()) {
-        const res = await fetchWithRefresh(`${url}/orders`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-            Authorization: getAccessToken(),
-          },
-          body: JSON.stringify({
-            ingredients: data,
-          }),
-        });
+    if (getAccessToken()) {
+      const res = await fetchWithRefresh(`${url}/orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Authorization: getAccessToken(),
+        },
+        body: JSON.stringify({
+          ingredients: data,
+        }),
+      });
 
-        if (res.success) {
-          return fulfillWithValue(res);
-        } else {
-          return rejectWithValue(res);
-        }
+      if (res.success) {
+        return fulfillWithValue(res);
       } else {
-        dispatch(openTheAuthorizationWindow());
-        return fulfillWithValue(null);
+        return rejectWithValue(res);
       }
-    } catch (error) {
-      return rejectWithValue(error);
+    } else {
+      dispatch(openTheAuthorizationWindow());
+      return fulfillWithValue(null);
     }
   }
 );

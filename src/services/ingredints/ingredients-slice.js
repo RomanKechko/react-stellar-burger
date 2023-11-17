@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { url } from "../../utils/chek-response";
+import checkResponse, { url } from "../../utils/chek-response";
 const initialState = {
   dataIngridients: [],
   dataRequest: false,
@@ -8,20 +8,11 @@ const initialState = {
 
 export const getIngredients = createAsyncThunk(
   "ingredients/getIngredients",
-  async (_, { fulfillWithValue, rejectWithValue }) => {
-    try {
-      const res = await fetch(`${url}/ingredients`);
-
-      if (res.ok) {
-        const responseData = await res.json();
-        return fulfillWithValue(responseData);
-      } else {
-        const errorData = await res.json();
-        return rejectWithValue(errorData);
-      }
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+  async (_, { fulfillWithValue }) => {
+    const res = await fetch(`${url}/ingredients
+    `);
+    const responseData = await checkResponse(res);
+    return fulfillWithValue(responseData);
   }
 );
 
@@ -41,7 +32,7 @@ export const ingredientsSlice = createSlice({
     });
 
     builder.addCase(getIngredients.rejected, (state, action) => {
-      state.downloadError = action.payload;
+      state.downloadError = true;
       state.dataRequest = false;
     });
   },

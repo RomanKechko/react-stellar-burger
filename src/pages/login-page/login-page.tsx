@@ -20,7 +20,7 @@ const LoginPage: FC = () => {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("Form submitted!");
+    /*  console.log("Form submitted!"); */
     const { email, password } = userData;
     if (!email || !password) {
       return;

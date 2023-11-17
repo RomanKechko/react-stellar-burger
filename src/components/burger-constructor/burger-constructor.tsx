@@ -42,7 +42,7 @@ const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
 
   // state конструктора
-  const bun = useSelector(buns);
+  const bun = useSelector(buns) as IIngredientAndUniqueId;
   const list = useSelector(stuffing);
   // state конструктора
 
@@ -166,7 +166,12 @@ const BurgerConstructor: FC = () => {
           type="primary"
           size="large"
           onClick={orderHandler}
-          disabled={!bun && (!list || list.length === 0)}
+          disabled={
+            !bun ||
+            (Array.isArray(bun) &&
+              bun.length === 0 &&
+              (!list || list.length === 0))
+          }
         >
           Оформить заказ
         </Button>

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import {
   Input,
   EmailInput,
@@ -18,17 +18,18 @@ const ProfileDataPage: FC = () => {
     password: "",
   });
 
+  console.log(newData);
   const dispatch = useDispatch();
 
   const existingName = useSelector(profileName);
   const existingEmail = useSelector(profileEmail);
-
+  /*  */
   const handleDataChange = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     console.log("Form submitted!");
     const { name, email } = newData;
-    if (name === existingName.name || email === existingEmail.email) {
+    if (name === existingName.name && email === existingEmail.email) {
       return;
     }
     //@ts-ignore
@@ -43,6 +44,15 @@ const ProfileDataPage: FC = () => {
     });
   };
 
+  useEffect(() => {
+    setNewData({
+      ...newData,
+      name: existingName.name,
+      email: existingEmail.email,
+      password: "",
+    });
+  }, [existingName, existingEmail]);
+
   return (
     <div>
       <form onSubmit={handleDataChange} className={style.container}>
@@ -50,15 +60,13 @@ const ProfileDataPage: FC = () => {
           onChange={handleChange}
           type={"text"}
           placeholder={"Имя"}
-          defaultValue={existingName.name}
-          value=""
+          value={newData.name}
           name={"name"}
           icon="EditIcon"
         />
         <EmailInput
           onChange={handleChange}
-          defaultValue={existingEmail.email}
-          value=""
+          value={newData.email}
           name={"email"}
           placeholder="Логин"
           isIcon={true}
@@ -66,8 +74,7 @@ const ProfileDataPage: FC = () => {
         />
         <PasswordInput
           onChange={handleChange}
-          defaultValue={"Введите новый пароль"}
-          value=""
+          value={"Введите новый пароль"}
           name={"password"}
           icon="EditIcon"
         />
