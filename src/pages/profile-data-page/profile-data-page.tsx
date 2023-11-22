@@ -18,7 +18,7 @@ const ProfileDataPage: FC = () => {
     password: "",
   });
 
-  console.log(newData);
+  /* console.log(newData); */
   const dispatch = useDispatch();
 
   const existingName = useSelector(profileName);
@@ -27,7 +27,7 @@ const ProfileDataPage: FC = () => {
   const handleDataChange = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log("Form submitted!");
+    /* console.log("Form submitted!"); */
     const { name, email } = newData;
     if (name === existingName.name && email === existingEmail.email) {
       return;

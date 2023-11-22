@@ -8,7 +8,7 @@ import { logoutUserRequest } from "../../services/user/user-slice";
 const ProfilePage: FC = () => {
   const dispatch = useDispatch();
   const logoutUser = () => {
-    console.log("Form submitted!");
+   /*  console.log("Form submitted!"); */
     dispatch(logoutUserRequest());
   };
   const setNavStyle = ({ isActive }: { isActive: boolean }) => {

@@ -17,14 +17,14 @@ const ResetPassworPage: FC = () => {
     password: "",
     token: "",
   });
-  console.log(changePassword);
+  /*  console.log(changePassword); */
   const dispatch = useDispatch();
 
   const passwordForgot = useSelector(passcodeForgot);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("Form submitted!");
+    /* console.log("Form submitted!"); */
     const { password, token } = changePassword;
     if (!password && !token) {
       return;
