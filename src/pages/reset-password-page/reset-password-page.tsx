@@ -18,7 +18,7 @@ const ResetPassworPage: FC = () => {
     password: "",
     token: "",
   });
-  /*  console.log(changePassword); */
+
   const dispatch = useAppDispatch();
 
   const passwordForgot = useAppSelector(passcodeForgot);
