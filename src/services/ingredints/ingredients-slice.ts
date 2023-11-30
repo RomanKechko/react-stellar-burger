@@ -1,6 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import checkResponse, { url } from "../../utils/chek-response";
-const initialState = {
+import { IdataIngredient } from "../../types/interface";
+
+interface IListState {
+  dataIngridients: [] | IdataIngredient;
+  dataRequest: boolean;
+  downloadError: boolean;
+}
+
+const initialState: IListState = {
   dataIngridients: [],
   dataRequest: false,
   downloadError: false,
@@ -11,7 +19,7 @@ export const getIngredients = createAsyncThunk(
   async (_, { fulfillWithValue }) => {
     const res = await fetch(`${url}/ingredients
     `);
-    const responseData = await checkResponse(res);
+    const responseData = (await checkResponse(res)) as IdataIngredient;
     return fulfillWithValue(responseData);
   }
 );
@@ -19,6 +27,7 @@ export const getIngredients = createAsyncThunk(
 export const ingredientsSlice = createSlice({
   name: "ingredients",
   initialState,
+
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getIngredients.pending, (state) => {
@@ -31,7 +40,7 @@ export const ingredientsSlice = createSlice({
       state.downloadError = false;
     });
 
-    builder.addCase(getIngredients.rejected, (state, action) => {
+    builder.addCase(getIngredients.rejected, (state) => {
       state.downloadError = true;
       state.dataRequest = false;
     });

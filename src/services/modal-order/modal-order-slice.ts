@@ -2,9 +2,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { url } from "../../utils/chek-response";
 import { fetchWithRefresh } from "../user/user-slice";
 import { getAccessToken } from "../../utils/token";
-import { IIngredient } from "../../types/interface";
+import { IStatusModalOrder } from "../../types/interface";
 
-const initialState = {
+interface IListState {
+  status: null | IStatusModalOrder;
+  loading: boolean;
+  authorizationPage: boolean;
+}
+
+const initialState: IListState = {
   status: null,
   loading: false,
   authorizationPage: false,
@@ -12,13 +18,13 @@ const initialState = {
 
 export const setData = createAsyncThunk(
   "modalOrder/setData",
-  async (data, { fulfillWithValue, rejectWithValue, dispatch }) => {
+  async (data: string[], { fulfillWithValue, rejectWithValue, dispatch }) => {
     if (getAccessToken()) {
-      const res = await fetchWithRefresh(`${url}/orders`, {
+      const res: IStatusModalOrder = await fetchWithRefresh(`${url}/orders`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json;charset=utf-8",
           Authorization: getAccessToken(),
+          "Content-Type": "application/json;charset=utf-8",
         },
         body: JSON.stringify({
           ingredients: data,

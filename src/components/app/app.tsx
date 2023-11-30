@@ -12,18 +12,22 @@ import ProfilePage from "../../pages/profile-page/profile-page";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import ErrorPage from "../../pages/error-page/error-page";
-import { useDispatch } from "react-redux";
+
 import { getIngredients } from "../../services/ingredints/ingredients-slice";
 
 import ProtectedRoute from "../protected-route/protected-route";
 
 import { currentUserRequest } from "../../services/user/user-slice";
 import ProfileDataPage from "../../pages/profile-data-page/profile-data-page";
+import { useAppDispatch } from "../../utils/hooks";
+import FeedPage from "../../pages/feed/feed-page";
+import FeedDetails from "../feed-details/feed-details";
+import ProfileOrders from "../../pages/profile-orders/profile-orders";
 
 const App: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -42,6 +46,7 @@ const App: FC = () => {
       <Routes location={backgroundLocation || location}>
         <Route path="/" element={<AppHeader />}>
           <Route index element={<MainPage />} />
+          <Route path="/feed" element={<FeedPage status />} />
 
           <Route
             path="/login"
@@ -84,10 +89,34 @@ const App: FC = () => {
               </ProtectedRoute>
             }
           >
-            <Route index element={<ProfileDataPage />} />
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <ProfileDataPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile/orders"
+              element={
+                <ProtectedRoute>
+                  <ProfileOrders />
+                </ProtectedRoute>
+              }
+            />
           </Route>
 
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
+          <Route path="/feed/:id" element={<FeedDetails feed />} />
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <ProtectedRoute>
+                <FeedDetails orders />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
@@ -98,6 +127,23 @@ const App: FC = () => {
             element={
               <Modal onCloseModal={onCloseModal}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+
+          <Route
+            path="/feed/:id"
+            element={
+              <Modal onCloseModal={onCloseModal}>
+                <FeedDetails feed />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <Modal onCloseModal={onCloseModal}>
+                <FeedDetails orders />
               </Modal>
             }
           />

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 import style from "../../components/app/app.module.css";
 import {
   ingredientRequest,
@@ -9,8 +9,8 @@ import {
 } from "../../services/ingredints/ingredients-selector";
 
 const MainPage: FC = () => {
-  const isLoading = useSelector(ingredientRequest);
-  const error = useSelector(ingredientRequestError);
+  const isLoading = useAppSelector(ingredientRequest);
+  const error = useAppSelector(ingredientRequestError);
   return (
     <>
       {isLoading && <h2 className={style.services}>Loading...</h2>}

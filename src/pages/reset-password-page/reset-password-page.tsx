@@ -7,10 +7,11 @@ import {
 import { Link, Navigate } from "react-router-dom";
 import styles from "./reset-password-page.module.css";
 import cn from "classnames";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 import { resetPassword } from "../../services/user/user-slice";
 import { IUserLogging } from "../../types/interface";
 import { passcodeForgot } from "../../services/user/user-selector";
+import { useAppDispatch } from "../../utils/hooks";
 
 const ResetPassworPage: FC = () => {
   const [changePassword, setChangePassword] = React.useState<IUserLogging>({
@@ -18,9 +19,9 @@ const ResetPassworPage: FC = () => {
     token: "",
   });
   /*  console.log(changePassword); */
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const passwordForgot = useSelector(passcodeForgot);
+  const passwordForgot = useAppSelector(passcodeForgot);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();

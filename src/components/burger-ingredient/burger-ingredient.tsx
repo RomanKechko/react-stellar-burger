@@ -1,14 +1,14 @@
 import React, { useRef, useMemo, FC } from "react";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 import cn from "classnames";
-import PropTypes from "prop-types";
+
 import styles from "./burger-ingredient.module.css";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   bunId,
   stuffingId,
@@ -20,8 +20,8 @@ interface IBurgerIngredientProps {
 }
 
 const BurgerIngredient: FC<IBurgerIngredientProps> = ({ ingredients }) => {
-  const quantityBun = useSelector(bunId);
-  const quantityStuffing = useSelector(stuffingId);
+  const quantityBun = useAppSelector(bunId);
+  const quantityStuffing = useAppSelector(stuffingId);
   const ref = useRef<HTMLLIElement>(null);
 
   const quantity = useMemo(() => {

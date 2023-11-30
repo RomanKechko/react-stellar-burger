@@ -10,13 +10,14 @@ import cn from "classnames";
 import { authUserRequest } from "../../services/user/user-slice";
 import { useDispatch } from "react-redux";
 import { IUserLogging } from "../../types/interface";
+import { useAppDispatch } from "../../utils/hooks";
 
 const LoginPage: FC = () => {
   const [userData, setUserData] = useState<IUserLogging>({
     email: "",
     password: "",
   });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();

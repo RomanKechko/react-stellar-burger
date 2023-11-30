@@ -1,17 +1,22 @@
 import React, { FC } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useMatch } from "react-router-dom";
 import styles from "./profile-page.module.css";
 import cn from "classnames";
 import { useDispatch } from "react-redux";
 import { logoutUserRequest } from "../../services/user/user-slice";
+import { useAppDispatch } from "../../utils/hooks";
 
 const ProfilePage: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const logoutUser = () => {
-   /*  console.log("Form submitted!"); */
     dispatch(logoutUserRequest());
   };
-  const setNavStyle = ({ isActive }: { isActive: boolean }) => {
+
+  const location = useLocation();
+  const isProfileActive = location.pathname === "/profile";
+  const isOrdersActive = location.pathname === "/profile/orders";
+
+  const setNavStyle = (isActive: boolean) => {
     return isActive
       ? cn(styles.activelink, "text text_type_main-medium")
       : cn(styles.link, "text text_type_main-medium");
@@ -21,11 +26,11 @@ const ProfilePage: FC = () => {
     <div className={styles.page}>
       <div className={styles.navigate}>
         <nav className={styles.links}>
-          <NavLink to="/profile" className={setNavStyle}>
+          <NavLink to="/profile" className={setNavStyle(isProfileActive)}>
             Профиль
           </NavLink>
 
-          <NavLink to="/profile/orders" className={setNavStyle}>
+          <NavLink to="/profile/orders" className={setNavStyle(isOrdersActive)}>
             История заказов
           </NavLink>
           <p
