@@ -10,7 +10,7 @@ import BurgerConstructorStuffing from "../burger-constructor-stuffing/burger-con
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 import { useDrop } from "react-dnd";
 import { addIngredinentConstructor } from "../../services/constructor/constructor-slice";
 
@@ -24,10 +24,11 @@ import {
   download,
   nubers,
 } from "../../services/modal-order/modal-order-selector";
-import { setData } from "../../services/modal-order/modal-order-slice.js";
+import { setData } from "../../services/modal-order/modal-order-slice";
 import { Navigate } from "react-router-dom";
 
 import { IIngredient, IIngredientAndUniqueId } from "../../types/interface";
+import { useAppDispatch } from "../../utils/hooks";
 
 interface StateObject {
   pathname: string;
@@ -39,16 +40,16 @@ interface StateObject {
 const BurgerConstructor: FC = () => {
   const [finalPrice, setfinalPrice] = useState<number>(0);
   const [isActive, setActive] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // state конструктора
-  const bun = useSelector(buns) as IIngredientAndUniqueId;
-  const list = useSelector(stuffing);
+  const bun = useAppSelector(buns) as IIngredientAndUniqueId;
+  const list = useAppSelector(stuffing);
   // state конструктора
 
   //загрузка при оформлении заказа
-  const number = useSelector(nubers);
-  const loading = useSelector(download);
+  const number = useAppSelector(nubers);
+  const loading = useAppSelector(download);
   //загрузка при оформлении заказа
 
   //счет
@@ -101,7 +102,7 @@ const BurgerConstructor: FC = () => {
   //счет
 
   //Открываю страницу авторизации, если при оформлении заказа не авторизован
-  const authorization = useSelector(authorizationUser);
+  const authorization = useAppSelector(authorizationUser);
   if (authorization) {
     return (
       <Navigate

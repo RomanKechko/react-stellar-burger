@@ -6,18 +6,19 @@ import {
 import { Link, Navigate } from "react-router-dom";
 import styles from "./forgot-password-page.module.css";
 import cn from "classnames";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 import { forgotPassword } from "../../services/user/user-slice";
 import { passcodeForgot } from "../../services/user/user-selector";
 import { IUserLogging } from "../../types/interface";
+import { useAppDispatch } from "../../utils/hooks";
 
 const ForgotPasswordPage: FC = () => {
   const [emailUser, setEmail] = React.useState<IUserLogging>({
     email: "",
   });
-  const passwordForgot = useSelector(passcodeForgot);
+  const passwordForgot = useAppSelector(passcodeForgot);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     /*  console.log("Form submitted!"); */

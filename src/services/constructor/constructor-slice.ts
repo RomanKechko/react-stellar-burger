@@ -1,13 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-const initialState = {
+import { IIngredientAndUniqueId } from "../../types/interface";
+
+interface IListState {
+  bun: null | IIngredientAndUniqueId;
+  stuffing: IIngredientAndUniqueId[];
+}
+
+const initialState: IListState = {
   bun: null,
   stuffing: [],
 };
 
 export const addIngredinentConstructor = createAsyncThunk(
   "constructor/addIngrrdinent",
-  async (ingredient) => {
+  async (ingredient: IIngredientAndUniqueId) => {
     return ingredient;
   }
 );
@@ -33,7 +40,7 @@ export const constructorSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(addIngredinentConstructor.fulfilled, (state, action) => {
-      const ingredient = action.payload;
+      const ingredient = action.payload as IIngredientAndUniqueId;
       if (ingredient.type === "bun") {
         state.bun = { ...ingredient, uniqueId: uuidv4() };
       } else {

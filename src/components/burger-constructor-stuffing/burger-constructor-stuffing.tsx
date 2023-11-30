@@ -19,6 +19,7 @@ import {
   IColletedPropsDrag,
   IColletedPropsDrop,
 } from "../../types/interface";
+import { useAppDispatch } from "../../utils/hooks";
 
 interface BurgerConstructorStuffingProps {
   ingredients: IIngredient;
@@ -29,7 +30,7 @@ const BurgerConstructorStuffing: FC<BurgerConstructorStuffingProps> = ({
   ingredients,
   index,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const ref = useRef<HTMLLIElement>(null);
   /* console.log(ingredients); */
 

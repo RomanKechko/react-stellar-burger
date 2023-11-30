@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux";
 import Done from "../../icons/done.svg";
 import PropTypes from "prop-types";
 import { resetConstructor } from "../../services/constructor/constructor-slice";
-import { closeModal } from "../../services/modal-order/modal-order-slice.js";
+import { closeModal } from "../../services/modal-order/modal-order-slice";
+import { useAppDispatch } from "../../utils/hooks";
 
 interface OrderDetailsProps {
   number: number;
@@ -11,7 +12,7 @@ interface OrderDetailsProps {
 }
 
 const OrderDetails: FC<OrderDetailsProps> = ({ number, isActive }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     return () => {
       dispatch(closeModal());

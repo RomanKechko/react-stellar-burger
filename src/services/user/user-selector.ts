@@ -5,7 +5,7 @@ import {
   IUserName,
 } from "../../types/interface";
 
-export const user = (state: any) => state.user?.data as IUser;
+export const user = (state: any) => state.user?.data;
 export const check = (state: any) => state.user.isAuthCheck as boolean;
 export const passcodeForgot = (state: any) =>
   state.user.passwordForgot as boolean;

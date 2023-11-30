@@ -13,6 +13,10 @@ export interface IIngredient {
   image_mobile: string;
 }
 
+export interface IdataIngredient {
+  success: boolean;
+  data: IIngredient;
+}
 export interface IIngredientAndUniqueId extends IIngredient {
   uniqueId?: string;
 }
@@ -47,3 +51,68 @@ export interface IUserName {
 export interface IUserEmail {
   email: string;
 }
+
+export interface IStatusModalOrder {
+  success: boolean;
+  name: string;
+  order: {
+    ingredient: IIngredient[];
+    _id: string;
+    owner: {
+      name: string;
+      email: string;
+      createdAt: string;
+      updateAt: string;
+    };
+    status: string;
+    name: string;
+    createdAt: string;
+    updateAt: string;
+    number: number;
+    price: number;
+  };
+}
+export interface IdataRegister {
+  dataRegister: string;
+}
+interface RefreshTokenPayload {
+  token: string | null;
+}
+export interface IOptions {
+  method: string;
+  headers?:
+    | {
+        [name: string]: string;
+      }
+    | {
+        Authorization: string | null;
+        "Content-Type": "application/json;charset=utf-8";
+      }
+    | {
+        Authorization: string | null;
+      };
+
+  body?: string | RefreshTokenPayload;
+}
+
+export interface IErr {
+  success: boolean;
+  message: string;
+}
+
+export type IRes = IdataIngredient | IUser;
+export type TOrderFeedOptions = {
+  _id: string;
+  ingredients: string[];
+  name: string;
+  status: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+};
+export type TFeed = {
+  success: boolean;
+  orders: TOrderFeedOptions[];
+  total: number;
+  totalToday: number;
+};

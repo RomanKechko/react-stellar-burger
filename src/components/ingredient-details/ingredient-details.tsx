@@ -2,14 +2,14 @@ import React, { FC } from "react";
 import cn from "classnames";
 import styles from "./ingredient-details.module.css";
 
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 
 import { useParams } from "react-router-dom";
 import { successfulResponse } from "../../services/ingredints/ingredients-selector";
 import { IIngredient } from "../../types/interface";
 
 const IngredientDetails: FC = () => {
-  const list = useSelector(successfulResponse);
+  const list = useAppSelector(successfulResponse);
 
   const { id } = useParams();
 

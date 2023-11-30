@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+// accessToken Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGI5NmY0YzJjYzYxMDAxYjNkNjY2ZCIsImlhdCI6MTcwMDcxODcxOCwiZXhwIjoxNzAwNzE5OTE4fQ.j19qj4iKkv8WU_G2_h-mVyVj5Rp9OuAUUYXlTrMSWhA
 import {
   getAccessToken,
   getRefreshToken,
@@ -8,9 +8,20 @@ import {
   setAccessToken,
   setRefreshToken,
 } from "../../utils/token";
-import checkResponse, { url } from "../../utils/chek-response";
+import checkResponse, { getUrlOrders, url } from "../../utils/chek-response";
+import { IOptions, IUser } from "../../types/interface";
 
-const initialState = {
+interface IListState {
+  userLoaded: boolean;
+  isPending: boolean;
+  isAuthCheck: boolean;
+  data: null | IUser;
+  passwordReset: boolean;
+  passwordForgot: boolean;
+  success: boolean;
+}
+
+const initialState: IListState = {
   userLoaded: false,
   isPending: false,
   isAuthCheck: false,
@@ -53,11 +64,12 @@ const refreshToken = () => {
   }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options: IOptions) => {
   try {
-    const res = await fetch(url, options);
+    const res = await fetch(url, options as RequestInit);
+
     return await checkResponse(res);
-  } catch (err) {
+  } catch (err: any) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken();
       if (!refreshData.success) {
@@ -66,8 +78,14 @@ export const fetchWithRefresh = async (url, options) => {
 
       setAccessToken(refreshData.accessToken);
       setRefreshToken(refreshData.refreshToken);
-      options.headers.Authorization = refreshData.accessToken;
-      const res = await fetch(url, options);
+      getUrlOrders();
+      if (options.headers) {
+        if ("Authorization" in options.headers) {
+          options.headers.Authorization = refreshData.accessToken;
+        }
+      }
+
+      const res = await fetch(url, options as RequestInit);
       return await checkResponse(res);
     } else {
       return Promise.reject(err);
@@ -160,7 +178,7 @@ export const forgotPassword = createAsyncThunk(
 );
 export const resetPassword = createAsyncThunk(
   `user/resetPassword `,
-  async (dataPassword, { fulfillWithValue, rejectWithValue, dispatch }) => {
+  async (dataPassword, { fulfillWithValue }) => {
     const data = await fetch(`${url}/password-reset/reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json;charset=utf-8" },
@@ -241,5 +259,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { chekUserAuth, logoutUser, passwordForgot } = userSlice.actions;
+export const { chekUserAuth, passwordForgot } = userSlice.actions;
 export default userSlice.reducer;

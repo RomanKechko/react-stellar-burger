@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import styles from "./protected-route.module.css";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 import { check, user } from "../../services/user/user-selector";
 
 interface ProtectedRouteProps {
@@ -10,8 +10,8 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ onlyUnAuth, children }) => {
   const location = useLocation();
-  const currentUser = useSelector(user);
-  const isAuthCheck = useSelector(check);
+  const currentUser = useAppSelector(user);
+  const isAuthCheck = useAppSelector(check);
 
   if (!isAuthCheck) {
     return <span className={styles.loader}></span>;

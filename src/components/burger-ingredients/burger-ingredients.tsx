@@ -4,7 +4,7 @@ import cn from "classnames";
 import Tabs from "../tabs/tabs";
 import BurgerIngredientCategory from "../burger-ingredient-category/burger-ingredient-category";
 
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 import { useInView } from "react-intersection-observer";
 import { successfulResponse } from "../../services/ingredints/ingredients-selector";
 
@@ -13,7 +13,7 @@ import { IIngredient } from "../../types/interface";
 const BurgerIngredients: FC = () => {
   const [currentTab, setCurrentTab] = React.useState("buns");
 
-  const list = useSelector(successfulResponse);
+  const list = useAppSelector(successfulResponse);
   const buns = useMemo(
     () => list.filter((item: IIngredient) => item.type === "bun"),
     [list]

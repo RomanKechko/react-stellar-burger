@@ -32,12 +32,14 @@ const AppHeader: FC = () => {
               <p className="text text_type_main-default">Конструктор</p>
             </NavLink>
 
-            <NavLink to="/lenta" className={setNavStyle}>
+            <NavLink to="/feed" className={setNavStyle}>
               <ListIcon type={isFeed ? "primary" : "secondary"} />
               <p className="text text_type_main-default">Лента заказов</p>
             </NavLink>
           </div>
-          <Logo />
+          <NavLink to="/">
+            <Logo />
+          </NavLink>
           <div className={styles.link__column_right}>
             <NavLink to="/profile" className={setNavStyle}>
               <ProfileIcon type={isProfile ? "primary" : "secondary"} />

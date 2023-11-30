@@ -11,6 +11,7 @@ import cn from "classnames";
 import { useDispatch } from "react-redux";
 import { registerUserRequest } from "../../services/user/user-slice";
 import { IUserLogging } from "../../types/interface";
+import { useAppDispatch } from "../../utils/hooks";
 
 const RegisterPage: FC = () => {
   const [user, setUserData] = useState<IUserLogging>({
@@ -19,7 +20,7 @@ const RegisterPage: FC = () => {
     password: "",
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

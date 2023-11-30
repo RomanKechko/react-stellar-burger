@@ -6,10 +6,11 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./profile-data-page.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 import { dataСhangeRequest } from "../../services/user/user-slice";
 import { profileEmail, profileName } from "../../services/user/user-selector";
 import { IUserLogging } from "../../types/interface";
+import { useAppDispatch } from "../../utils/hooks";
 
 const ProfileDataPage: FC = () => {
   const [newData, setNewData] = useState<IUserLogging>({
@@ -19,10 +20,10 @@ const ProfileDataPage: FC = () => {
   });
 
   /* console.log(newData); */
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const existingName = useSelector(profileName);
-  const existingEmail = useSelector(profileEmail);
+  const existingName = useAppSelector(profileName);
+  const existingEmail = useAppSelector(profileEmail);
   /*  */
   const handleDataChange = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
