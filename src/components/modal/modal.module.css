@@ -9,7 +9,7 @@
   border-radius: 40px;
   border: 1px solid var(--interface-modal-edge, rgba(76, 76, 255, 0.2));
   background: var(--interface-modal-bg, #1c1c21);
-  z-index: 2;
+  z-index: 20;
 }
 .modal__cross {
   position: absolute;
