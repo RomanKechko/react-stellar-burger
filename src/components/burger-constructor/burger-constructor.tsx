@@ -55,15 +55,12 @@ const BurgerConstructor: FC = () => {
   //счет
   let ingredientsId: string[] = [];
   if ((bun && "_id" in bun) || (list && list.length > 0)) {
-    ingredientsId = list
-      .map((item: IIngredient) => item._id)
-      .concat(bun._id, bun._id);
+    ingredientsId = list.map((item) => item._id).concat(bun._id, bun._id);
   }
   //счет
 
   const orderHandler = () => {
     setActive(true);
-    //@ts-ignore
     dispatch(setData(ingredientsId));
   };
 
@@ -78,8 +75,7 @@ const BurgerConstructor: FC = () => {
       isHover: monitor.isOver(),
     }),
     drop: (data) => {
-      //@ts-ignore
-      dispatch(addIngredinentConstructor(data));
+      dispatch(addIngredinentConstructor(data as IIngredientAndUniqueId));
     },
   });
   //перенос ингредиетов
@@ -89,7 +85,7 @@ const BurgerConstructor: FC = () => {
     const priceBun = bun.price ? bun.price * 2 : 0;
     const priceList =
       list.length !== 0
-        ? list.reduce((accumulator: number, ingredient: IIngredient) => {
+        ? list.reduce((accumulator, ingredient) => {
             return accumulator + ingredient.price;
           }, 0)
         : 0;

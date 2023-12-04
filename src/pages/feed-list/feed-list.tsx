@@ -99,6 +99,7 @@ const FeedList: FC<IFeedList> = ({ pathPrefix }) => {
     return images;
   };
   const data = useAppSelector((state) => state.ws.messages?.orders) || [];
+
   return (
     <>
       {data?.map((item) => (

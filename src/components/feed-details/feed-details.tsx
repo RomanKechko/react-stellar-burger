@@ -10,22 +10,17 @@ import FeedDetail from "../feed-detail/feed-detail";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { useParams } from "react-router-dom";
 import { successfulResponse } from "../../services/ingredints/ingredients-selector";
-import { TOrderFeedOptions } from "../../types/interface";
-import { useSelector } from "react-redux";
 import {
   WS_CONNECTION_CLOSED,
   WsConnectionStart,
 } from "../../services/action/actions";
 import { urlFeed, urlOrders } from "../../utils/chek-response";
-import ErrorPage from "../../pages/error-page/error-page";
 
 interface IFeedDetails {
   feed?: boolean;
   orders?: boolean;
 }
 const FeedDetails: FC<IFeedDetails> = ({ feed, orders }) => {
-  console.log(feed);
-  console.log(orders);
   const data = useAppSelector((state) => state.ws.messages?.orders) || [];
 
   const { id } = useParams();

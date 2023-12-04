@@ -19,12 +19,15 @@ import ProtectedRoute from "../protected-route/protected-route";
 
 import { currentUserRequest } from "../../services/user/user-slice";
 import ProfileDataPage from "../../pages/profile-data-page/profile-data-page";
-import { useAppDispatch } from "../../utils/hooks";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import FeedPage from "../../pages/feed/feed-page";
 import FeedDetails from "../feed-details/feed-details";
 import ProfileOrders from "../../pages/profile-orders/profile-orders";
 
 const App: FC = () => {
+  const state = useAppSelector((store) => {
+    return store;
+  });
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -108,7 +111,14 @@ const App: FC = () => {
           </Route>
 
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
-          <Route path="/feed/:id" element={<FeedDetails feed />} />
+          <Route
+            path="/feed/:id"
+            element={
+              <ProtectedRoute>
+                <FeedDetails feed />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/profile/orders/:id"
             element={
@@ -142,9 +152,11 @@ const App: FC = () => {
           <Route
             path="/profile/orders/:id"
             element={
-              <Modal onCloseModal={onCloseModal}>
-                <FeedDetails orders />
-              </Modal>
+              <ProtectedRoute>
+                <Modal onCloseModal={onCloseModal}>
+                  <FeedDetails orders />
+                </Modal>
+              </ProtectedRoute>
             }
           />
         </Routes>

@@ -3,13 +3,13 @@ import checkResponse, { url } from "../../utils/chek-response";
 import { IdataIngredient } from "../../types/interface";
 
 interface IListState {
-  dataIngridients: [] | IdataIngredient;
+  dataIngridients: IdataIngredient | null;
   dataRequest: boolean;
   downloadError: boolean;
 }
 
 const initialState: IListState = {
-  dataIngridients: [],
+  dataIngridients: null,
   dataRequest: false,
   downloadError: false,
 };

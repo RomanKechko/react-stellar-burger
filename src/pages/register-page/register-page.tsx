@@ -8,7 +8,6 @@ import {
 import { Link } from "react-router-dom";
 import styles from "./register-page.module.css";
 import cn from "classnames";
-import { useDispatch } from "react-redux";
 import { registerUserRequest } from "../../services/user/user-slice";
 import { IUserLogging } from "../../types/interface";
 import { useAppDispatch } from "../../utils/hooks";
@@ -29,7 +28,7 @@ const RegisterPage: FC = () => {
     if (!name || !password || !email) {
       return;
     }
-    //@ts-ignore
+
     dispatch(registerUserRequest({ name, password, email }));
   };
 

@@ -1,18 +1,18 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TFeed } from "../../types/interface";
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
-  IAction,
-  TActions,
+  IWsConnectionMessage,
+  IWsConnectionError,
 } from "../action/actions";
 
 type TWSState = {
   wsConnected: boolean;
   messages: TFeed | null;
-
-  error?: Event | any;
+  error?: Event | string;
 };
 
 const initialState: TWSState = {
@@ -20,46 +20,34 @@ const initialState: TWSState = {
   messages: null,
 };
 
-// Создадим редьюсер для WebSocket
-export const wsReducer = (state = initialState, action: any): TWSState => {
-  switch (action.type) {
-    // Опишем обработку экшена с типом WS_CONNECTION_SUCCESS
-    // Установим флаг wsConnected в состояние true
-    case WS_CONNECTION_SUCCESS:
-      return {
-        ...state,
-        error: undefined,
-        wsConnected: true,
-      };
+// Создадим срез (slice) для WebSocket
+export const wsReducer = createSlice({
+  name: "ws",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(WS_CONNECTION_SUCCESS, (state) => {
+        state.error = undefined;
+        state.wsConnected = true;
+      })
+      .addCase(WS_CONNECTION_ERROR, (state, action: IWsConnectionError) => {
+        state.error = action.payload;
+        state.wsConnected = false;
+      })
+      .addCase(WS_CONNECTION_CLOSED, (state) => {
+        state.error = undefined;
+        state.wsConnected = false;
+      })
+      .addCase(WS_GET_MESSAGE, (state, action: IWsConnectionMessage) => {
+        if (action.payload) {
+          state.error = undefined;
+          state.messages = action.payload;
+        }
+      });
+  },
+});
 
-    // Опишем обработку экшена с типом WS_CONNECTION_ERROR
-    // Установим флаг wsConnected в состояние false и передадим ошибку из action.payload
-    case WS_CONNECTION_ERROR:
-      return {
-        ...state,
-        error: action.payload,
-        wsConnected: false,
-      };
+export const {} = wsReducer.actions;
 
-    // Опишем обработку экшена с типом WS_CONNECTION_CLOSED, когда соединение закрывается
-    // Установим флаг wsConnected в состояние false
-    case WS_CONNECTION_CLOSED:
-      return {
-        ...state,
-        error: undefined,
-        wsConnected: false,
-      };
-
-    // Опишем обработку экшена с типом WS_GET_MESSAGE
-    // Обработка происходит, когда с сервера возвращаются данные
-    // В messages передадим данные, которые пришли с сервера
-    case WS_GET_MESSAGE:
-      return {
-        ...state,
-        error: undefined,
-        messages: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+export default wsReducer.reducer;

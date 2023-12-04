@@ -64,7 +64,6 @@ export const WsConnectionClossed = (message: string) => {
 
 export const wsActions = {
   wsInit: WS_CONNECTION_START_FEED,
-  /*   wsSendMessage: WS_SEND_MESSAGE, */
   wsSuccess: WS_CONNECTION_SUCCESS,
   wsClose: WS_CONNECTION_CLOSED,
   wsError: WS_CONNECTION_ERROR,

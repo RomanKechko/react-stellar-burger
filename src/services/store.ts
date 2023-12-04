@@ -17,7 +17,7 @@ export const store = configureStore({
     constructorIngredient: constructorSlice,
     modalOrder: modalOrderSlice,
     user: userSlice,
-    ws: wsReducer,
+    ws: wsReducer.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(liveTableMiddleware);

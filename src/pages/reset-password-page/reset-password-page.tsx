@@ -30,7 +30,7 @@ const ResetPassworPage: FC = () => {
     if (!password && !token) {
       return;
     }
-    //@ts-ignore
+
     dispatch(resetPassword({ password, token }));
   }
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {

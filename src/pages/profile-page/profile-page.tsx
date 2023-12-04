@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { NavLink, Outlet, useLocation, useMatch } from "react-router-dom";
 import styles from "./profile-page.module.css";
 import cn from "classnames";
-import { useDispatch } from "react-redux";
 import { logoutUserRequest } from "../../services/user/user-slice";
 import { useAppDispatch } from "../../utils/hooks";
 

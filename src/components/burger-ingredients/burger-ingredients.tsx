@@ -14,16 +14,17 @@ const BurgerIngredients: FC = () => {
   const [currentTab, setCurrentTab] = React.useState("buns");
 
   const list = useAppSelector(successfulResponse);
+  console.log(list);
   const buns = useMemo(
-    () => list.filter((item: IIngredient) => item.type === "bun"),
+    () => list.filter((item) => item.type === "bun"),
     [list]
   );
   const mains = useMemo(
-    () => list.filter((item: IIngredient) => item.type === "main"),
+    () => list.filter((item) => item.type === "main"),
     [list]
   );
   const sauces = useMemo(
-    () => list.filter((item: IIngredient) => item.type === "sauce"),
+    () => list.filter((item) => item.type === "sauce"),
     [list]
   );
 

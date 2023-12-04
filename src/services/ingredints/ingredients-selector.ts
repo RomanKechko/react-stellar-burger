@@ -1,8 +1,8 @@
-import { IIngredient } from "../../types/interface";
+import { RootState } from "../store";
 
-export const ingredientRequest = (state: any) =>
+export const ingredientRequest = (state: RootState) =>
   state.ingredients.dataRequest as boolean;
-export const successfulResponse = (state: any) =>
-  (state.ingredients.dataIngridients?.data as IIngredient[]) || [];
-export const ingredientRequestError = (state: any) =>
+export const successfulResponse = (state: RootState) =>
+  state.ingredients.dataIngridients?.data || [];
+export const ingredientRequestError = (state: RootState) =>
   state.ingredients.downloadError as boolean;

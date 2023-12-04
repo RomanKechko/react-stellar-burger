@@ -8,7 +8,7 @@ import {
   setAccessToken,
   setRefreshToken,
 } from "../../utils/token";
-import checkResponse, { getUrlOrders, url } from "../../utils/chek-response";
+import checkResponse, { url } from "../../utils/chek-response";
 import { IOptions, IUser } from "../../types/interface";
 
 interface IListState {
@@ -78,7 +78,7 @@ export const fetchWithRefresh = async (url: string, options: IOptions) => {
 
       setAccessToken(refreshData.accessToken);
       setRefreshToken(refreshData.refreshToken);
-      getUrlOrders();
+
       if (options.headers) {
         if ("Authorization" in options.headers) {
           options.headers.Authorization = refreshData.accessToken;
@@ -95,7 +95,10 @@ export const fetchWithRefresh = async (url: string, options: IOptions) => {
 
 export const authUserRequest = createAsyncThunk(
   `user/authUserRequest`,
-  async (dataLogin, { fulfillWithValue }) => {
+  async (
+    dataLogin: { email: string; password: string },
+    { fulfillWithValue }
+  ) => {
     const data = await fetch(`${url}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -110,7 +113,10 @@ export const authUserRequest = createAsyncThunk(
 
 export const registerUserRequest = createAsyncThunk(
   `user/registerUserRequest`,
-  async (dataRegister, { fulfillWithValue }) => {
+  async (
+    dataRegister: { name: string; password: string; email: string },
+    { fulfillWithValue }
+  ) => {
     const data = await fetch(`${url}/auth/register`, {
       method: "POST",
       headers: {
@@ -127,7 +133,7 @@ export const registerUserRequest = createAsyncThunk(
 
 export const dataСhangeRequest = createAsyncThunk(
   `user/dataСhangeRequest`,
-  async (newData, { fulfillWithValue }) => {
+  async (newData: { email: string; name: string }, { fulfillWithValue }) => {
     if (getAccessToken()) {
       const data = await fetchWithRefresh(`${url}/auth/user`, {
         method: "PATCH",
@@ -166,7 +172,7 @@ export const logoutUserRequest = createAsyncThunk(
 
 export const forgotPassword = createAsyncThunk(
   `user/forgotPassword `,
-  async (dataEmail, { fulfillWithValue }) => {
+  async (dataEmail: { email: string }, { fulfillWithValue }) => {
     const data = await fetch(`${url}/password-reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json;charset=utf-8" },
@@ -178,7 +184,10 @@ export const forgotPassword = createAsyncThunk(
 );
 export const resetPassword = createAsyncThunk(
   `user/resetPassword `,
-  async (dataPassword, { fulfillWithValue }) => {
+  async (
+    dataPassword: { password: string; token: string },
+    { fulfillWithValue }
+  ) => {
     const data = await fetch(`${url}/password-reset/reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json;charset=utf-8" },

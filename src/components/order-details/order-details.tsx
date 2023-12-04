@@ -1,7 +1,6 @@
 import React, { FC, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import Done from "../../icons/done.svg";
-import PropTypes from "prop-types";
+
 import { resetConstructor } from "../../services/constructor/constructor-slice";
 import { closeModal } from "../../services/modal-order/modal-order-slice";
 import { useAppDispatch } from "../../utils/hooks";

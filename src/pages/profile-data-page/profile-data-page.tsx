@@ -30,10 +30,15 @@ const ProfileDataPage: FC = () => {
 
     /* console.log("Form submitted!"); */
     const { name, email } = newData;
-    if (name === existingName.name && email === existingEmail.email) {
+    if (
+      existingName &&
+      name === existingName.name &&
+      existingEmail &&
+      email === existingEmail.email
+    ) {
       return;
     }
-    //@ts-ignore
+
     dispatch(dataСhangeRequest({ email, name }));
   };
 
@@ -46,12 +51,14 @@ const ProfileDataPage: FC = () => {
   };
 
   useEffect(() => {
-    setNewData({
-      ...newData,
-      name: existingName.name,
-      email: existingEmail.email,
-      password: "",
-    });
+    if (existingName && existingEmail) {
+      setNewData({
+        ...newData,
+        name: existingName.name,
+        email: existingEmail.email,
+        password: "",
+      });
+    }
   }, [existingName, existingEmail]);
 
   return (

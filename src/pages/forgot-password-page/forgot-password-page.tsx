@@ -26,7 +26,7 @@ const ForgotPasswordPage: FC = () => {
     if (!email) {
       return;
     }
-    //@ts-ignore
+
     dispatch(forgotPassword({ email }));
   }
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {

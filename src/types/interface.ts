@@ -15,7 +15,7 @@ export interface IIngredient {
 
 export interface IdataIngredient {
   success: boolean;
-  data: IIngredient;
+  data: IIngredient[];
 }
 export interface IIngredientAndUniqueId extends IIngredient {
   uniqueId?: string;
