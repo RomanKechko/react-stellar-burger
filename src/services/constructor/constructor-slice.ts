@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
+import uuidv4 from "react-uuid";
 import { IIngredientAndUniqueId } from "../../types/interface";
 
 interface IListState {
