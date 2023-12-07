@@ -1,7 +1,6 @@
 import {
   chekUserAuth,
   logoutUserRequest,
-  passwordForgot,
   dataСhangeRequest,
   userSlice,
   currentUserRequest,
@@ -28,14 +27,7 @@ const StateForgot = {
   passwordForgot: false,
   success: true,
 };
-const StateReset = {
-  userLoaded: false,
-  isPending: true,
-  isAuthCheck: true,
-  passwordReset: false,
-  passwordForgot: false,
-  success: true,
-};
+
 const StateWidthData = {
   userLoaded: false,
   isPending: true,

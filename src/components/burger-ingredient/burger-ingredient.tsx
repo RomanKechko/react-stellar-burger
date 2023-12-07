@@ -53,23 +53,33 @@ const BurgerIngredient: FC<IBurgerIngredientProps> = ({ ingredients }) => {
         state={{ backgroundLocation: location }}
         replace
         className={styles.cart__ingridient_link}
+        data-testid="link"
       >
         <img
           src={ingredients.image}
           alt="булочка"
           className={cn(styles.image__bun, "ml-4 mr-4")}
+          data-testid="ingredients-image"
         />
-        <Counter count={quantity} size="default" extraClass="m-1" />
+        <Counter
+          count={quantity}
+          size="default"
+          extraClass="m-1 ingredients-counter"
+        />
         <div className={cn(styles.container__price, "mt-1")}>
           <p
             className={cn(styles.text__color, "text text_type_digits-default")}
+            data-testid="ingredients-price"
           >
             {ingredients.price}
           </p>
           <CurrencyIcon type="primary" />
         </div>
 
-        <p className={cn(styles.description, "text text_type_main-small pt-1")}>
+        <p
+          data-testid="ingredients-name"
+          className={cn(styles.description, "text text_type_main-small pt-1")}
+        >
           {ingredients.name}
         </p>
       </Link>

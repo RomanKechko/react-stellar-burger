@@ -21,7 +21,12 @@ const OrderDetails: FC<OrderDetailsProps> = ({ number, isActive }) => {
 
   return (
     <div>
-      <div className="text text_type_digits-large pt-30">{number}</div>
+      <div
+        className="text text_type_digits-large pt-30"
+        data-testid="order-number"
+      >
+        {number}
+      </div>
       <p className="text text_type_main-medium pt-8">идентификатор заказа</p>
       <img src={Done} alt="Готово" className="pt-15" />
       <p className="text text_type_main-small pt-15">

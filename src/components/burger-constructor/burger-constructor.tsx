@@ -153,7 +153,12 @@ const BurgerConstructor: FC = () => {
       </div>
       <div className={cn(styles.container__order, "pt-10")}>
         <div className={styles.container__order_price}>
-          <p className="text text_type_digits-default mr-2">{finalPrice}</p>
+          <p
+            data-testid="final-price"
+            className="text text_type_digits-default mr-2"
+          >
+            {finalPrice}
+          </p>
           <span className={styles.icon}>
             <CurrencyIcon type="primary" />
           </span>
