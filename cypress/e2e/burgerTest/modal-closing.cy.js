@@ -29,7 +29,6 @@ describe("Колонка ингредиентов ", () => {
     cy.get("a[data-testid='link']").contains("Краторная булка N-200i").click();
     cy.get("div[data-testid='modal-overlay']").should("exist");
     cy.get("body").type("{esc}");
-    cy.get("body").type("{esc}");
     cy.get("div[data-testid='modal-overlay']").should("not.exist");
   });
 });

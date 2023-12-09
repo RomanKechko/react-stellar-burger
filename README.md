@@ -1,2 +1,5 @@
-# Каноническая работа проекта Stellar Burger 
-# Этап "Промежуточный проект. CRA-заготовка и структура папок под компоненты"
+# Проект stellar-burger
+
+# Ссылка на сайт
+
+http://roman.burgers.nomoredomainsmonster.ru/feed

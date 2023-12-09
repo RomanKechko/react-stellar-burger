@@ -118,7 +118,7 @@ describe("Колонка ингредиентов ", () => {
 
     // В задании не было указано через что проходить автотест, но новый пользователь проходит через регистрацию
     cy.get("[type=text]").type("roma"); //Эти данные уже прошли автотест, соответственно регистрация не будет пройдена
-    cy.get("[type=email]").type("roma9@yandex.ru"); //Для проверки теста нужно изменить данные
+    cy.get("[type=email]").type("romanka9@yandex.ru"); //Для проверки теста нужно изменить данные
     cy.get("[type=password]").type("123456789"); //И также в cypress/fixtures/user.json
     cy.get(".button").contains("Зарегистрироваться").click(); //После изменения данных автотест вернется на нлавную страницу
     cy.intercept("GET", "/api/auth/register", { fixture: "user.json" });

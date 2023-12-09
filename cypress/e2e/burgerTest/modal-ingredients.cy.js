@@ -26,5 +26,8 @@ describe("Колонка ингредиентов ", () => {
     ).should("exist");
     cy.get(":nth-child(4) > .text_type_digits-default").should("exist");
     cy.get("div[data-testid='modal-overlay']").should("exist");
+    cy.get("[class^=modal_modal__cross__]").should("exist");
+    cy.get("[class^=modal_modal__cross__]").click();
+    cy.get("div[data-testid='modal-overlay']").should("not.exist");
   });
 });

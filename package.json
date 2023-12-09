@@ -48,6 +48,7 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
+    "deploy-script": "npm run build && scp -r ./build/* web-burger@158.160.121.199:/home/web-burger/stellar-frontend",
     "homepage": "./"
   },
   "eslintConfig": {
