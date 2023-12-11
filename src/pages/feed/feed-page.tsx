@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { connect } from "http2";
 import {
   WS_CONNECTION_CLOSED,
-  WS_CONNECTION_START_FEED,
   WsConnectionStart,
 } from "../../services/action/actions";
 import { urlFeed } from "../../utils/chek-response";

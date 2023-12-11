@@ -2,12 +2,12 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { FC, useEffect, useMemo } from "react";
-import bun from "../../images/bun-01.png";
+import React, { FC } from "react";
+
 import styles from "./feed-list.module.css";
 import cn from "classnames";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import { Link, useLocation } from "react-router-dom";
+import { useAppSelector } from "../../utils/hooks";
 import { successfulResponse } from "../../services/ingredints/ingredients-selector";
 
 interface IFeedList {

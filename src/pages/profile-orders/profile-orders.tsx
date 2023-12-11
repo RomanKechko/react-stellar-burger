@@ -4,13 +4,15 @@ import {
   WS_CONNECTION_CLOSED,
   WsConnectionStart,
 } from "../../services/action/actions";
-import { urlOrders } from "../../utils/chek-response";
-import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+
+import { useAppDispatch } from "../../utils/hooks";
 import styles from "./profile-orders.module.css";
+import { getUrlOrders } from "../../utils/chek-response";
 
 const ProfileOrders: FC = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
+    const urlOrders = getUrlOrders();
     dispatch(WsConnectionStart(urlOrders));
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });

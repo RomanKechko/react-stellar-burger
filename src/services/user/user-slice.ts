@@ -8,7 +8,7 @@ import {
   setAccessToken,
   setRefreshToken,
 } from "../../utils/token";
-import checkResponse, { url } from "../../utils/chek-response";
+import checkResponse, { getUrlOrders, url } from "../../utils/chek-response";
 import { IOptions, IUser } from "../../types/interface";
 
 interface IListState {
@@ -109,6 +109,7 @@ export const authUserRequest = createAsyncThunk(
     /* console.log(responseData); */
     setAccessToken(responseData.accessToken);
     setRefreshToken(responseData.refreshToken);
+
     return fulfillWithValue(responseData);
   }
 );

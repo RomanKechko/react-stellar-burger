@@ -14,7 +14,7 @@ import {
   WS_CONNECTION_CLOSED,
   WsConnectionStart,
 } from "../../services/action/actions";
-import { urlFeed, urlOrders } from "../../utils/chek-response";
+import { getUrlOrders, urlFeed } from "../../utils/chek-response";
 
 interface IFeedDetails {
   feed?: boolean;
@@ -28,6 +28,7 @@ const FeedDetails: FC<IFeedDetails> = ({ feed, orders }) => {
 
   useEffect(() => {
     if (orders === true) {
+      const urlOrders = getUrlOrders();
       dispatch(WsConnectionStart(urlOrders));
       return () => {
         dispatch({ type: WS_CONNECTION_CLOSED });
