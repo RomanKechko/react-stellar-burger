@@ -10,7 +10,7 @@ interface IListState {
   authorizationPage: boolean;
 }
 
-const initialState: IListState = {
+export const initialState: IListState = {
   status: null,
   loading: false,
   authorizationPage: false,

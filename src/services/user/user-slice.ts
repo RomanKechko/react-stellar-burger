@@ -21,7 +21,7 @@ interface IListState {
   success: boolean;
 }
 
-const initialState: IListState = {
+export const initialState: IListState = {
   userLoaded: false,
   isPending: false,
   isAuthCheck: false,
@@ -39,6 +39,7 @@ export const currentUserRequest = createAsyncThunk(
         method: "GET",
         headers: { Authorization: getAccessToken() },
       });
+
       if (data.success) {
         dispatch(chekUserAuth());
         return fulfillWithValue(data);
@@ -105,6 +106,7 @@ export const authUserRequest = createAsyncThunk(
       body: JSON.stringify(dataLogin),
     });
     const responseData = await checkResponse(data);
+    /* console.log(responseData); */
     setAccessToken(responseData.accessToken);
     setRefreshToken(responseData.refreshToken);
     return fulfillWithValue(responseData);
@@ -127,6 +129,7 @@ export const registerUserRequest = createAsyncThunk(
     const responseData = await checkResponse(data);
     setAccessToken(responseData.accessToken);
     setRefreshToken(responseData.refreshToken);
+
     return fulfillWithValue(responseData);
   }
 );
@@ -225,6 +228,7 @@ export const userSlice = createSlice({
         state.success = true;
         state.isPending = false;
         state.data = action.payload.user;
+        console.log(action);
       })
       .addCase(registerUserRequest.fulfilled, (state, action) => {
         state.success = true;

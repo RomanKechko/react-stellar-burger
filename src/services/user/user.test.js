@@ -9,16 +9,8 @@ import {
   resetPassword,
   forgotPassword,
 } from "./user-slice";
+import { initialState } from "./user-slice";
 
-const initialState = {
-  userLoaded: false,
-  isPending: false,
-  isAuthCheck: false,
-  data: null,
-  passwordReset: false,
-  passwordForgot: false,
-  success: false,
-};
 const StateForgot = {
   userLoaded: false,
   isPending: true,

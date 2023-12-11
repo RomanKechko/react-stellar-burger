@@ -1,6 +1,6 @@
 describe("Модальное окно ", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit("dashboard");
     cy.viewport(1920, 1080);
   });
   it("Колонка ингредиентов", () => {

@@ -7,7 +7,7 @@ interface IListState {
   stuffing: IIngredientAndUniqueId[];
 }
 
-const initialState: IListState = {
+export const initialState: IListState = {
   bun: null,
   stuffing: [],
 };

@@ -4,6 +4,7 @@ import {
   openTheAuthorizationWindow,
   setData,
 } from "./modal-order-slice";
+import { initialState } from "./modal-order-slice";
 
 const orderData = {
   name: "Флюоресцентный бургер",
@@ -45,11 +46,6 @@ const orderData = {
   },
 };
 
-const initialState = {
-  status: null,
-  loading: false,
-  authorizationPage: false,
-};
 const StateWidthorderData = {
   status: orderData,
   loading: false,

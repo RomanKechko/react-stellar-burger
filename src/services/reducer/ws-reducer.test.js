@@ -6,11 +6,8 @@ import {
   WsConnectionSuccess,
 } from "../action/actions";
 import { wsReducer } from "./reducer";
+import { initialState } from "./reducer";
 
-const initialState = {
-  wsConnected: false,
-  messages: null,
-};
 const state = {
   wsConnected: false,
   messages: [

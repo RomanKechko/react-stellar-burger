@@ -111,14 +111,7 @@ const App: FC = () => {
           </Route>
 
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
-          <Route
-            path="/feed/:id"
-            element={
-              <ProtectedRoute>
-                <FeedDetails feed />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/feed/:id" element={<FeedDetails feed />} />
           <Route
             path="/profile/orders/:id"
             element={

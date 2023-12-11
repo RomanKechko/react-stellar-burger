@@ -2,15 +2,17 @@ import "cypress-wait-until";
 
 describe("Колонка ингредиентов ", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit("dashboard");
     cy.viewport(1920, 1080);
+    cy.get("[class^=burger-constructor_bun__] > .constructor-element").as(
+      "bun"
+    );
+    cy.get("p[data-testid='final-price']").as("finalPrice");
   });
   it("Наличие пространства для броска ингридиентов + кнопка", () => {
     //Наличие пространства для броска ингридиентов
 
-    cy.get("[class^=burger-constructor_bun__] > .constructor-element").should(
-      "exist"
-    );
+    cy.get("@bun").should("exist");
     cy.get(
       ".burger-constructor_single__fill__8MBli > .constructor-element"
     ).should("not.exist");
@@ -18,7 +20,7 @@ describe("Колонка ингредиентов ", () => {
     //Наличие пространства для броска ингридиентов
 
     //Конечная цена и кнопка оформления
-    cy.get("p[data-testid='final-price']").should("have.text", "0");
+    cy.get("@finalPrice").should("have.text", "0");
     cy.get("button").contains("Оформить заказ").should("exist");
     cy.get("button").contains("Оформить заказ").should("have.attr", "disabled");
     //Конечная цена и кнопка оформления
@@ -33,15 +35,13 @@ describe("Колонка ингредиентов ", () => {
     cy.get(
       "[class^=burger-ingredients_container__] > :nth-child(2) > :nth-child(1)"
     ).trigger("dragstart");
-    cy.get("[class^=burger-constructor_bun__] > .constructor-element").trigger(
-      "drop"
-    );
+    cy.get("@bun").trigger("drop");
 
     cy.get(
       ":nth-child(2) > :nth-child(1) > .burger-ingredient_cart__ingridient_link__XDbIH > .counter"
     ).should("have.text", "2"); //новое количество добавленных булок
 
-    cy.get("p[data-testid='final-price']").should("have.text", "2510"); // новая цена
+    cy.get("@finalPrice").should("have.text", "2510"); // новая цена
     cy.get("button")
       .contains("Оформить заказ")
       .should("not.have.attr", "disabled");
@@ -53,15 +53,13 @@ describe("Колонка ингредиентов ", () => {
     ).should("have.text", "0"); //количество добавленной начинки
 
     cy.get(":nth-child(4) > :nth-child(5)").trigger("dragstart");
-    cy.get("[class^=burger-constructor_bun__] > .constructor-element").trigger(
-      "drop"
-    );
+    cy.get("@bun").trigger("drop");
 
     cy.get(
       ":nth-child(5) > .burger-ingredient_cart__ingridient_link__XDbIH > .counter"
     ).should("have.text", "1"); //новое количество добавленной начинки
 
-    cy.get("p[data-testid='final-price']").should("have.text", "2810"); // новая цена
+    cy.get("@finalPrice").should("have.text", "2810"); // новая цена
     //переместил начинку
 
     //переместил соус
@@ -71,19 +69,15 @@ describe("Колонка ингредиентов ", () => {
     cy.get(
       ".burger-ingredients_container__RgOA0 > :nth-child(6) > :nth-child(3)"
     ).trigger("dragstart");
-    cy.get("[class^=burger-constructor_bun__] > .constructor-element").trigger(
-      "drop"
-    );
+    cy.get("@bun").trigger("drop");
     cy.get(
       ".burger-ingredients_container__RgOA0 > :nth-child(6) > :nth-child(3)"
     ).trigger("dragstart");
-    cy.get("[class^=burger-constructor_bun__] > .constructor-element").trigger(
-      "drop"
-    );
+    cy.get("@bun").trigger("drop");
     cy.get(
       ":nth-child(6) > :nth-child(3) > [class^=burger-ingredient_cart__ingridient_link__] > .counter"
     ).should("have.text", "2"); //новое количество добавленных соусов
-    cy.get("p[data-testid='final-price']").should("have.text", "2840"); // новая цена
+    cy.get("@finalPrice").should("have.text", "2840"); // новая цена
     //переместил соус
 
     //работа со строницей /login
@@ -118,7 +112,7 @@ describe("Колонка ингредиентов ", () => {
 
     // В задании не было указано через что проходить автотест, но новый пользователь проходит через регистрацию
     cy.get("[type=text]").type("roma"); //Эти данные уже прошли автотест, соответственно регистрация не будет пройдена
-    cy.get("[type=email]").type("romanka9@yandex.ru"); //Для проверки теста нужно изменить данные
+    cy.get("[type=email]").type("romanka6@yandex.ru"); //Для проверки теста нужно изменить данные
     cy.get("[type=password]").type("123456789"); //И также в cypress/fixtures/user.json
     cy.get(".button").contains("Зарегистрироваться").click(); //После изменения данных автотест вернется на нлавную страницу
     cy.intercept("GET", "/api/auth/register", { fixture: "user.json" });
@@ -129,7 +123,7 @@ describe("Колонка ингредиентов ", () => {
     cy.get(".burger-constructor_loader__EB3Cp").should("exist");
     cy.intercept("/api/orders").as("orderRequest");
     cy.wait("@orderRequest", { timeout: 18000 });
-    cy.get(".modal_container__modal_center__XfEoo > :nth-child(1)").should(
+    cy.get("[class^=modal_container__modal_center__]> :nth-child(1)").should(
       "exist"
     );
     cy.get("[ data-testid='order-number']").should("exist");
@@ -139,9 +133,7 @@ describe("Колонка ингредиентов ", () => {
 
     //Проверяем, что ингредиенты удалены из конструктора
     //Наличие пространства для броска ингридиентов
-    cy.get("[class^=burger-constructor_bun__] > .constructor-element").should(
-      "exist"
-    );
+    cy.get("@bun").should("exist");
     cy.get(
       ".burger-constructor_single__fill__8MBli > .constructor-element"
     ).should("not.exist");
@@ -149,7 +141,7 @@ describe("Колонка ингредиентов ", () => {
     //Наличие пространства для броска ингридиентов
 
     //Конечная цена и кнопка оформления
-    cy.get("p[data-testid='final-price']").should("have.text", "0");
+    cy.get("@finalPrice").should("have.text", "0");
     cy.get("button").contains("Оформить заказ").should("exist");
     cy.get("button").contains("Оформить заказ").should("have.attr", "disabled");
     //Конечная цена и кнопка оформления

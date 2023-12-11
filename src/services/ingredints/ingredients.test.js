@@ -1,4 +1,5 @@
 import { getIngredients, ingredientsSlice } from "./ingredients-slice";
+import { initialState } from "./ingredients-slice";
 
 const ingredientsArray = [
   {
@@ -58,12 +59,6 @@ const ingredientsArray = [
     __v: 0,
   },
 ];
-
-const initialState = {
-  dataIngridients: null,
-  dataRequest: false,
-  downloadError: false,
-};
 
 describe("Тестируем слайс ингредиентов", () => {
   test("Процесс загрузки", () => {

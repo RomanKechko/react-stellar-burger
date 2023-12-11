@@ -1,6 +1,6 @@
 describe("Колонка ингредиентов ", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit("dashboard");
     cy.viewport(1920, 1080);
   });
   it("Вызов модального окна", () => {
@@ -10,7 +10,9 @@ describe("Колонка ингредиентов ", () => {
     cy.get("a[data-testid='link']").contains("Краторная булка N-200i").click();
     cy.url().should("include", "/ingredients/643d69a5c3f7b9001cfa093c");
     cy.get(".modal_container__modal_center__XfEoo").should("exist");
-    cy.get(".ingredient-details_modal__title__14-JZ > .text").should("exist");
+    cy.get("[class^=ingredient-details_modal__title__] > .text").should(
+      "exist"
+    );
     cy.get("[class^=ingredient-details_container__ingridient_image__]").should(
       "exist"
     );

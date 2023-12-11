@@ -14,7 +14,7 @@ const BurgerIngredients: FC = () => {
   const [currentTab, setCurrentTab] = React.useState("buns");
 
   const list = useAppSelector(successfulResponse);
-  console.log(list);
+  /* console.log(list); */
   const buns = useMemo(
     () => list.filter((item) => item.type === "bun"),
     [list]

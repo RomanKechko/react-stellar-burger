@@ -8,7 +8,7 @@ interface IListState {
   downloadError: boolean;
 }
 
-const initialState: IListState = {
+export const initialState: IListState = {
   dataIngridients: null,
   dataRequest: false,
   downloadError: false,

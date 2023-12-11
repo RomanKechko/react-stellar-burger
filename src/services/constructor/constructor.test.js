@@ -6,6 +6,8 @@ import {
   resetConstructor,
 } from "./constructor-slice";
 
+import { initialState } from "./constructor-slice";
+
 const bunObject = {
   _id: "643d69a5c3f7b9001cfa093c",
   name: "Краторная булка N-200i",
@@ -97,11 +99,6 @@ const stuffingIgredientsArrayСonversely = [
     __v: 0,
   },
 ];
-
-const initialState = {
-  bun: null,
-  stuffing: [],
-};
 
 const StateWidthIngredient = {
   bun: bunObject,

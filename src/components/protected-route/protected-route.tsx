@@ -11,7 +11,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ onlyUnAuth, children }) => {
   const location = useLocation();
   const currentUser = useAppSelector(user);
-  console.log(currentUser);
+  /*   console.log(currentUser); */
   const isAuthCheck = useAppSelector(check);
 
   if (!isAuthCheck) {
