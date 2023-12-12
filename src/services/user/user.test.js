@@ -20,29 +20,11 @@ const StateForgot = {
   success: true,
 };
 
-const StateWidthData = {
-  userLoaded: false,
-  isPending: true,
-  isAuthCheck: true,
-  data: {
-    email: "romankechko98@yandex.ru",
-    name: "roman",
-  },
-  passwordReset: false,
-  passwordForgot: false,
-  success: true,
-};
-
 describe("Тестируем слайс пользователя", () => {
   test("chekUserAuth тест", () => {
     expect(userSlice.reducer(initialState, chekUserAuth())).toEqual({
-      userLoaded: false,
-      isPending: false,
+      ...initialState,
       isAuthCheck: true,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("resetPassword тест", () => {
@@ -51,13 +33,8 @@ describe("Тестируем слайс пользователя", () => {
         type: resetPassword.pending.type,
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("currentUserRequest тест", () => {
@@ -66,13 +43,8 @@ describe("Тестируем слайс пользователя", () => {
         type: currentUserRequest.pending.type,
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("authUserRequest тест", () => {
@@ -81,13 +53,8 @@ describe("Тестируем слайс пользователя", () => {
         type: authUserRequest.pending.type,
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("registerUserRequest тест", () => {
@@ -96,13 +63,8 @@ describe("Тестируем слайс пользователя", () => {
         type: registerUserRequest.pending.type,
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("dataСhangeRequest тест", () => {
@@ -111,21 +73,37 @@ describe("Тестируем слайс пользователя", () => {
         type: dataСhangeRequest.pending.type,
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("logoutUserRequest тест", () => {
     expect(
-      userSlice.reducer(StateWidthData, {
-        type: logoutUserRequest.pending.type,
-      })
-    ).toEqual(StateWidthData);
+      userSlice.reducer(
+        {
+          ...initialState,
+          isPending: false,
+          isAuthCheck: true,
+          data: {
+            email: "romankechko98@yandex.ru",
+            name: "roman",
+          },
+          success: true,
+        },
+        {
+          type: logoutUserRequest.pending.type,
+        }
+      )
+    ).toEqual({
+      ...initialState,
+      isPending: true,
+      isAuthCheck: true,
+      data: {
+        email: "romankechko98@yandex.ru",
+        name: "roman",
+      },
+      success: true,
+    });
   });
   test("forgotPassword тест", () => {
     expect(
@@ -133,13 +111,8 @@ describe("Тестируем слайс пользователя", () => {
         type: "user/forgotPassword/pending",
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("currentUserRequest загрузка", () => {
@@ -154,15 +127,11 @@ describe("Тестируем слайс пользователя", () => {
         },
       })
     ).toEqual({
-      userLoaded: false,
-      isPending: false,
-      isAuthCheck: false,
+      ...initialState,
       data: {
         email: "romankechko98@yandex.ru",
         name: "roman",
       },
-      passwordReset: false,
-      passwordForgot: false,
       success: true,
     });
   });
@@ -178,15 +147,11 @@ describe("Тестируем слайс пользователя", () => {
         },
       })
     ).toEqual({
-      userLoaded: false,
-      isPending: false,
-      isAuthCheck: false,
+      ...initialState,
       data: {
         email: "romankechko98@yandex.ru",
         name: "roman",
       },
-      passwordReset: false,
-      passwordForgot: false,
       success: true,
     });
   });
@@ -202,15 +167,11 @@ describe("Тестируем слайс пользователя", () => {
         },
       })
     ).toEqual({
-      userLoaded: false,
-      isPending: false,
-      isAuthCheck: false,
+      ...initialState,
       data: {
         email: "romankechko98@yandex.ru",
         name: "roman",
       },
-      passwordReset: false,
-      passwordForgot: false,
       success: true,
     });
   });
@@ -226,31 +187,35 @@ describe("Тестируем слайс пользователя", () => {
         },
       })
     ).toEqual({
-      userLoaded: false,
-      isPending: false,
-      isAuthCheck: false,
+      ...initialState,
       data: {
         email: "romankechko98@yandex.ru",
         name: "roman",
       },
-      passwordReset: false,
-      passwordForgot: false,
       success: true,
     });
   });
 
   test("logoutUserRequest загрузка", () => {
     expect(
-      userSlice.reducer(StateWidthData, {
-        type: logoutUserRequest.fulfilled.type,
-      })
+      userSlice.reducer(
+        {
+          ...initialState,
+          isPending: true,
+          isAuthCheck: true,
+          data: {
+            email: "romankechko98@yandex.ru",
+            name: "roman",
+          },
+          success: true,
+        },
+        {
+          type: logoutUserRequest.fulfilled.type,
+        }
+      )
     ).toEqual({
-      userLoaded: false,
-      isPending: false,
+      ...initialState,
       isAuthCheck: true,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
       success: true,
     });
   });
@@ -263,7 +228,6 @@ describe("Тестируем слайс пользователя", () => {
       userLoaded: false,
       isPending: false,
       isAuthCheck: true,
-
       passwordReset: false,
       passwordForgot: true,
       success: true,
@@ -272,13 +236,8 @@ describe("Тестируем слайс пользователя", () => {
 
   test("chekUserAuth ошибка загрузки", () => {
     expect(userSlice.reducer(initialState, chekUserAuth())).toEqual({
-      userLoaded: false,
-      isPending: false,
+      ...initialState,
       isAuthCheck: true,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("resetPassword ошибка загрузки", () => {
@@ -287,13 +246,8 @@ describe("Тестируем слайс пользователя", () => {
         type: resetPassword.pending.type,
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("currentUserRequest ошибка загрузки", () => {
@@ -302,13 +256,8 @@ describe("Тестируем слайс пользователя", () => {
         type: currentUserRequest.pending.type,
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("authUserRequest ошибка загрузки", () => {
@@ -317,13 +266,8 @@ describe("Тестируем слайс пользователя", () => {
         type: authUserRequest.pending.type,
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("registerUserRequest ошибка загрузки", () => {
@@ -332,13 +276,8 @@ describe("Тестируем слайс пользователя", () => {
         type: registerUserRequest.pending.type,
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("dataСhangeRequest ошибка загрузки", () => {
@@ -347,21 +286,37 @@ describe("Тестируем слайс пользователя", () => {
         type: dataСhangeRequest.pending.type,
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
   test("logoutUserRequest ошибка загрузки", () => {
     expect(
-      userSlice.reducer(StateWidthData, {
-        type: logoutUserRequest.pending.type,
-      })
-    ).toEqual(StateWidthData);
+      userSlice.reducer(
+        {
+          ...initialState,
+          isPending: true,
+          isAuthCheck: true,
+          data: {
+            email: "romankechko98@yandex.ru",
+            name: "roman",
+          },
+          success: true,
+        },
+        {
+          type: logoutUserRequest.pending.type,
+        }
+      )
+    ).toEqual({
+      ...initialState,
+      isPending: true,
+      isAuthCheck: true,
+      data: {
+        email: "romankechko98@yandex.ru",
+        name: "roman",
+      },
+      success: true,
+    });
   });
   test("forgotPassword ошибка загрузки", () => {
     expect(
@@ -369,13 +324,8 @@ describe("Тестируем слайс пользователя", () => {
         type: "user/forgotPassword/pending",
       })
     ).toEqual({
-      userLoaded: false,
+      ...initialState,
       isPending: true,
-      isAuthCheck: false,
-      data: null,
-      passwordReset: false,
-      passwordForgot: false,
-      success: false,
     });
   });
 });

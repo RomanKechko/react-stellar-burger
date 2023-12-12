@@ -9,7 +9,7 @@ describe("Колонка ингредиентов ", () => {
       .should("exist");
     cy.get("a[data-testid='link']").contains("Краторная булка N-200i").click();
     cy.url().should("include", "/ingredients/643d69a5c3f7b9001cfa093c");
-    cy.get(".modal_container__modal_center__XfEoo").should("exist");
+    cy.get("[class^=modal_container__modal_center__]").should("exist");
     cy.get("[class^=ingredient-details_modal__title__] > .text").should(
       "exist"
     );

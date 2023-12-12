@@ -47,6 +47,7 @@ const LoginPage: FC = () => {
             value={userData.email}
             name={"email"}
             isIcon={false}
+            data-testid="email"
           />
 
           <PasswordInput
@@ -54,6 +55,7 @@ const LoginPage: FC = () => {
             value={userData.password}
             name={"password"}
             extraClass="mb-2"
+            data-testid="password"
           />
         </div>
         <Button htmlType="submit" type="primary" size="large">

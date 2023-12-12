@@ -46,17 +46,17 @@ const orderData = {
   },
 };
 
-const StateWidthorderData = {
-  status: orderData,
-  loading: false,
-  authorizationPage: false,
-};
-
 describe("Тестируем отправку заказа", () => {
   test("closeModal модалка", () => {
-    expect(modalOrderSlice.reducer(StateWidthorderData, closeModal())).toEqual(
-      initialState
-    );
+    expect(
+      modalOrderSlice.reducer(
+        {
+          ...initialState,
+          status: orderData,
+        },
+        closeModal()
+      )
+    ).toEqual(initialState);
   });
   test("openTheAuthorizationWindow модалка", () => {
     expect(
@@ -73,9 +73,8 @@ describe("Тестируем отправку заказа", () => {
         type: setData.pending.type,
       })
     ).toEqual({
-      status: null,
+      ...initialState,
       loading: true,
-      authorizationPage: false,
     });
   });
   test("Данные загруpузились", () => {
@@ -85,9 +84,8 @@ describe("Тестируем отправку заказа", () => {
         payload: orderData,
       })
     ).toEqual({
+      ...initialState,
       status: orderData,
-      loading: false,
-      authorizationPage: false,
     });
   });
   test("Ошибка загрузки", () => {

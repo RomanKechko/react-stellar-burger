@@ -27,7 +27,7 @@ describe("Модальное окно ", () => {
       "[class^=burger-ingredients_ingredient_category__] > :nth-child(3)"
     ).click();
     cy.get(
-      ".burger-ingredients_ingredient_category__7EUog > :nth-child(1) > .text"
+      "[class^=burger-ingredients_ingredient_category__] > :nth-child(1) > .text"
     ).click();
 
     cy.get("#buns").should("have.text", "Булки");

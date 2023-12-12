@@ -100,44 +100,37 @@ const stuffingIgredientsArrayСonversely = [
   },
 ];
 
-const StateWidthIngredient = {
-  bun: bunObject,
-  stuffing: stuffingArray,
-};
-
-const StateWidthBun = {
-  bun: bunObject,
-  stuffing: [],
-};
-
-const StateWidthStuffing = {
-  bun: null,
-  stuffing: stuffingIgredientsArray,
-};
-
-const StateWidthStuffingСonversely = {
-  bun: null,
-  stuffing: stuffingIgredientsArrayСonversely,
-};
-const StateUndefined = {
-  bun: null,
-  stuffing: [undefined],
-};
-
 jest.mock("react-uuid", () => () => "123");
 
 describe("Тестируем слайс конструктор", () => {
   test("deleteStuffing тест", () => {
     expect(
-      constructorSlice.reducer(StateWidthIngredient, deleteStuffing(0))
-    ).toEqual(StateWidthBun);
+      constructorSlice.reducer(
+        {
+          ...initialState,
+          bun: bunObject,
+          stuffing: stuffingArray,
+        },
+        deleteStuffing(0)
+      )
+    ).toEqual({
+      ...initialState,
+      bun: bunObject,
+    });
     expect(constructorSlice.reducer(undefined, deleteStuffing(0))).toEqual(
       initialState
     );
   });
   test("resetConstructor тест", () => {
     expect(
-      constructorSlice.reducer(StateWidthIngredient, resetConstructor())
+      constructorSlice.reducer(
+        {
+          ...initialState,
+          bun: bunObject,
+          stuffing: stuffingArray,
+        },
+        resetConstructor()
+      )
     ).toEqual(initialState);
     expect(constructorSlice.reducer(undefined, resetConstructor())).toEqual(
       initialState
@@ -146,13 +139,22 @@ describe("Тестируем слайс конструктор", () => {
   test("reorderStuffing тест", () => {
     expect(
       constructorSlice.reducer(
-        StateWidthStuffing,
+        {
+          ...initialState,
+          stuffing: stuffingIgredientsArray,
+        },
         reorderStuffing({ from: 0, to: 1 })
       )
-    ).toEqual(StateWidthStuffingСonversely);
+    ).toEqual({
+      ...initialState,
+      stuffing: stuffingIgredientsArrayСonversely,
+    });
     expect(
       constructorSlice.reducer(undefined, reorderStuffing({ from: 0, to: 1 }))
-    ).toEqual(StateUndefined);
+    ).toEqual({
+      ...initialState,
+      stuffing: [undefined],
+    });
   });
 
   test("addIngredinentConstructor.fulfilled тест", () => {
@@ -172,8 +174,8 @@ describe("Тестируем слайс конструктор", () => {
     };
 
     expect(resultState).toEqual({
+      ...initialState,
       bun: expectedBun,
-      stuffing: [],
     });
 
     const resultStateWithMain = constructorSlice.reducer(
@@ -189,7 +191,7 @@ describe("Тестируем слайс конструктор", () => {
     ];
 
     expect(resultStateWithMain).toEqual({
-      bun: null,
+      ...initialState,
       stuffing: expectedStuffing,
     });
   });
