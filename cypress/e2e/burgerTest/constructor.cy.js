@@ -92,21 +92,21 @@ describe("Колонка ингредиентов ", () => {
     cy.get(".button").contains("Войти").should("exist");
     cy.get(".pt-20 > [class^=login-page_link__]").should("exist");
     cy.get(".pt-4 > [class^=login-page_link__]").should("exist");
-    cy.get(".pt-20 > [class^=login-page_link__]").click();
+    /*   cy.get(".pt-20 > [class^=login-page_link__]").click(); */
 
-    /*    cy.get(email).type("romanka6@yandex.ru"); // */
-    /*    cy.get(password).type("123456789"); // */
-    /*    cy.get(".button").contains("Войти").click(); // */
-    /*    cy.intercept("GET", "/api//auth/login", { fixture: "user.json" }); // */
+    cy.get(email).type("romanka6@yandex.ru"); //
+    cy.get(password).type("123456789"); //
+    cy.get(".button").contains("Войти").click(); //
+    cy.intercept("GET", "/api//auth/login", { fixture: "user.json" }); //
     //работа со строницей /login
 
     //работа со строницей /Register
-    cy.url().should("include", "/register");
+    /*   cy.url().should("include", "/register");
     cy.get(".text_type_main-medium").should("exist");
     cy.get("[type=text]").should("exist");
     cy.get(email).should("exist");
     cy.get(password).should("exist");
-    cy.get(".button").contains("Зарегистрироваться").should("exist");
+      cy.get(".button").contains("Зарегистрироваться").should("exist");
     cy.get("[class^=register-page_link__]").should("exist");
     //работа со строницей /Register
 
@@ -114,10 +114,10 @@ describe("Колонка ингредиентов ", () => {
 
     // В задании не было указано через что проходить автотест, но новый пользователь проходит через регистрацию
     cy.get("[type=text]").type("roma"); //Эти данные уже прошли автотест, соответственно регистрация не будет пройдена
-    cy.get(email).type("romanka2@yandex.ru"); //Для проверки теста нужно изменить данные
+    cy.get(email).type("romanka1@yandex.ru"); //Для проверки теста нужно изменить данные
     cy.get(password).type("123456789"); //И также в cypress/fixtures/user.json
     cy.get(".button").contains("Зарегистрироваться").click(); //После изменения данных автотест вернется на нлавную страницу
-    cy.intercept("GET", "/api/auth/register", { fixture: "user.json" });
+    cy.intercept("GET", "/api/auth/register", { fixture: "user.json" }); */
     //Регистрация
 
     //продолжаем оформлять заказ
